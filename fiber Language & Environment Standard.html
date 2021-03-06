@@ -1861,6 +1861,213 @@
 
 
 
+<h1 style="color:red;"><b><i>The sections below this marker are not finalized and are subject to rapid change.</i></b></h1>
+
+
+<!----------------------------------------------------------------------------->
+	<h1>The fiber Programming Language</h1>
+	<ol>
+		<li><p>
+			fiber is a computer programming language designed for general purpose application.
+		</p></li>
+		<li><p>
+			fiber provides the programmer with the basic utilities for organizing data into arrays and records, performing arithmetic on numbers, and creating functions and variables.
+		</p></li>
+		<li><p>
+			fiber also provides the programmer with advanced capabilities for defining custom data types, creating modules, metaprogramming, higher order functions, type checking, and proof verification of program behavior.
+		</p></li>
+	</ol>
+	<h1>Environment</h1>
+	<ol>
+		<li><p>
+			A fiber implementation consists of a series of ASCII or UTF-8 encoded <u>source files</u> containing fiber syntax describing a program, and a program or set of programs that will interpret the fiber syntax in those text files and execute the program they describe.
+		</p></li>
+		<li><p>
+			The method with which a fiber program is interpreted is not specified.
+			The process of interpretation may include any number of translations to other formats describing a program identical to that of the pre-translated program which will then be executed.
+		</p></li>
+		<li><p>
+			A fiber program may include <u>cached</u> (pre-translated) source files used for interpretation.
+			The format of a cached source file is unspecified and dependent on the implementation of fiber.
+		</p></li>
+		<li><p>
+			A cached source file is only required to preserve the behavior and interface of a program or program component.
+		</p></li>
+	</ol>
+	<h2>Program Organization</h2>
+	<ol>
+		<li><p>
+			A single fiber program consists of a series of source files, some of which may be cached.
+		</p></li>
+		<li><p>
+			Source files are organized using a system of <u>modules</u> defined with fiber syntax.
+			The syntax for describing modules is specified in <a href="#fiber module">(<i>Modules</i>)</a>.
+		</p></li>
+		<li><p>
+			A module definition must be entirely contained within a single source file.
+		</p></li>
+		<li><p>
+			A source file may contain any number of complete modules.
+		</p></li>
+		<li><p>
+			A module may specify the inclusion of other modules within itself.
+			A module may also specify the inclusion of source files that do not contain modules or cached source files.
+		</p></li>
+		<li><p>
+			A module contains a number of named program components.
+			Each component may either be <u>declared</u>, or <u>defined</u>.
+		</p></li>
+		<li><p>
+			A declared program component consists of an interface described in fiber syntax with the behavior of that component described in an external source file specified by the module containing the definition.
+		</p></li>
+		<li><p>
+			A defined program component consists of an interface <i>and</i> behavior description contained within a single module containing both descriptions.
+		</p></li>
+		<li><p>
+			All program components described in a module are part of that module's <u>namespace</u> such that program component names are only required to be unique from other names within the same module.
+		</p></li>
+		<li><p>
+			In order for program components to be accessible externally from their module, they must be specified as externally accessible.
+		</p></li>
+		<li><p>
+			If a module is included that contains an externally accessible name identical to a name in an including module, the containing module must be specified when using either name.
+		</p></li>
+	</ol>
+	<h1>Language Overview</h1>
+	<ol>
+		<li><p>
+			fiber consists of Symbols, Operators, and Objects.
+			Programs are composed from the interactions of these three entities.
+		</p></li>
+		<li><p>
+			Symbols are used to name and locate Objects.
+		</p></li>
+		<li><p>
+			Operators are used to instantiate Objects and to perform data transformations on them.
+		</p></li>
+		<li><p>
+			Objects contain data that can be accessed using Symbols and can be transformed using Operators.
+		</p></li>
+		<li><p>
+			Objects are divided between those that exist during the execution of a program and those that exist during the interpretation of a program.
+		</p></li>
+		<li><p>
+			An Object that exists during execution may be associated with another Object that exists during interpretation in such a way that shall impose constraints on the possible accesses and data transformations for the first Object.
+		</p></li>
+		<li><p>
+			Objects are not required to be named with a Symbol.
+			Access and use of an unnamed Object is limited transformations immediately following its instantiation as the Object cannot be recalled afterwords.
+		</p></li>
+	</ol>
+	<h2>Memory Model</h2>
+	<ol>
+		<li><p>
+			fiber objects will exist in contiguous regions of computer memory.
+		</p></li>
+		<li><p>
+
+		</p></li>
+	</ol>
+	<h1>Basic Syntax</h1>
+	<ol>
+		<li><p>
+			The syntax of fiber is composed of <u>Symbols</u> and <u>Operators</u>.
+			Symbols and Operators are distinct syntactical entities.
+		</p></li>
+		<li>
+			<p>Symbols consist of all alphanumerical characters and blank space characters.</p>
+			<table>
+				<tr><td><i>Symbol</i> &rArr; [0-9A-Za-z][0-9A-Za-z ]*[0-9A-Za-z]</td></tr>
+			</table>
+		</li>
+		<li><p>
+			Symbols must begin and end with a printable alphanumeric character.
+		</p></li>
+		<li>
+			<p>
+				Symbols are delimited by any control character, the comma, and any non-alphanumeric character.
+			</p>
+			<table><tr><td><i>SDelimiter</i> &rArr; [\x00-\x1f,!-+\--\/:-@\\-`\{-~]*</td></tr></table>
+			<p>
+				A blank space can appear anywhere within a series of delimiting characters.
+			</p>
+		</li>
+		<li><p>
+			Multiple Symbol-delimiting characters occurring in a series are treated as one delimiter or an Operator.
+		</p></li>
+		<li>
+			<p>
+				Operators are comprised of a combination of any printable non-alphanumeric characters.
+			</p>
+			<table>
+				<tr><td><i>Operator</i> &rArr; [!-+\--\/:-@\\-`\{-~]*</td></tr>
+			</table>
+		</li>
+		<li>
+			<p>
+				Operators are delimited by any alphanumeric character, blank space, comma, and control character.
+			</p>
+			<table><tr><td><i>ODelimiter</i> &rArr; [\x00-\x1f,0-9A-Za-z ]*</td></tr></table>
+		</li>
+		<li><p>
+			Multiple Operator-delimiting characters occurring in series are treated as either one delimiter or a Symbol.
+		</p></li>
+	</ol>
+	<h2>Examples of Symbols</h2>
+	<ul>
+		<li>
+			<p>A single Symbol.</p>
+			<code>symbol</code>
+		</li>
+		<li>
+			<p>Another single Symbol.</p>
+			<code>SYMBOL</code>
+		</li>
+		<li>
+			<p>A single Symbol inluding a space.</p>
+			<code>Symbol Symbol</code>
+		</li>
+		<li>
+			<p>Two Symbols delimited by a comma.</p>
+			<code>symbol,SYMBOL</code>
+		</li>
+		<li>
+			<p>Two Symbols delimited by an Operator.</p>
+			<code>symbol+SYMBOL</code>
+		</li>
+	</ul>
+	<h2>Examples of Operators</h2>
+	<ul>
+		<li>
+			<p>A single Operator.</p>
+			<code>#</code>
+		</li>
+		<li>
+			<p>Anoher single Operator.</p>
+			<code>#*$&..&@)))';;'~</code>
+		</li>
+		<li>
+			<p>Three delimited Operators</p>
+			<code>&?&, *[] ##</code>
+		</li>
+		<li>
+			<p>Two Operators delimited by a Symbol.</p>
+			<code>*^#symbol@@|</code>
+		</li>
+	</ul>
+	<h2>Use</h2>
+	<ol>
+		<li><p>
+			Symbols are used to locate objects within a program.
+		</p></li>
+		<li><p>
+			Operators are used to instantiate objects and perform transformations on them.
+		</p></li>
+	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
 
 
 
@@ -1900,6 +2107,8 @@
 	<ul>
 		<li>
 			<p>Robin</p>
+			<p><a href="mailto:yosngne@gmail.com">contact</a></p>
+
 		</li>
 	</ul>
 </footer>
