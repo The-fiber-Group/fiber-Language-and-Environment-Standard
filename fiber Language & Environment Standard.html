@@ -48,7 +48,6 @@
 		<li><a href="#object">Binary Object Format</a></li>
 		<li><a href="#execution">Execution</a></li>
 	</ul>
-	<h1 style="color:red;"><b><i>The sections below this marker are not finalized and are subject to rapid change.</i></b></h1>
 <!----------------------------------------------------------------------------->
 
 
@@ -572,6 +571,7 @@
 			"<i>This is an implementation of the fiber 0.0 Environment.</i>"
 		</p></li>
 	</ol>
+	<h1 style="color:red;"><b><i>The sections below this marker are not finalized and are subject to rapid change.</i></b></h1>
 <!----------------------------------------------------------------------------->
 
 
@@ -783,8 +783,10 @@
 				<tr><th>Type</th><th>Mnemonic</th><th>Size</th></tr>
 				<tr><td>Signed Word</td><td>w</td><td>64 b</td></tr>
 				<tr><td>Unsigned Word</td><td>W</td></tr>
+				<tr><td>Large Floating Point</td><td>F</td></tr>
 				<tr><td>Signed Half-Word</td><td>h</td><td>32 b</td></tr>
 				<tr><td>Unsigned Half-Word</td><td>H</td></tr>
+				<tr><td>Small Floating Point</td><td>f</td></tr>
 				<tr><td>Signed Quarter-Word</td><td>q</td><td>16 b</td></tr>
 				<tr><td>Unsigned Quarter-Word</td><td>Q</td></tr>
 				<tr><td>Signed Byte</td><td>b</td><td>8 b</td></tr>
@@ -797,6 +799,9 @@
 		</p></li>
 		<li><p>
 			The Memory Address data type shall have a size in bytes equivalent to the byte-size of the memory address data type available in the target architecture.
+		</p></li>
+		<li><p>
+			The Large Floating Point and Small Floating Point data types shall conform to the IEEE 754-2008 standard 64 bit and 32 bit binary floating point formats respectively.
 		</p></li>
 	</ol>
 	<h3>Compound Data Types</h3>
@@ -1076,6 +1081,7 @@
 				<tr><td>Binary OR:</td><td>Register</td><td>|</td><td>Register</td><td>Both Operands</td><td>Primary Operand</td></tr>
 				<tr><td>Binary XOR:</td><td>Register</td><td>^</td><td>Register</td><td>Both Operands</td><td>Primary Operand</td></tr>
 				<tr><td>Binary NOT:</td><td>Register</td><td>!</td><td>-</td><td>Primary Operand</td><td>Primary Operand</td></tr>
+				<tr><td>Negate:</td><td>Register</td><td>n</td><td>-</td><td>Primary Operand</td><td>Primary Operand</td></tr>
 			</table>
 		</li>
 	</ol>
@@ -1091,6 +1097,7 @@
 				<li>Multiplication</li>
 				<li>Division</li>
 				<li>Modulus</li>
+				<li>Negate</li>
 			</ul>
 		</li>
 		<li><p>
@@ -1100,6 +1107,12 @@
 		<li><p>
 			For non-commutative operations, subtraction, division, and modulus, the primary operand is treated as the dividend or minuend.
 			The secondary operand is treated as the divisor or subtrahend of the operation.
+		</p></li>
+		<li><p>
+			The Negate instruction shall reverse the most significant bit in the register specified by the Primary Operand.
+		</p></li>
+		<li><p>
+			The Negate instruction does not accept a secondary operand.
 		</p></li>
 	</ol>
 	<h3>Logical Instructions</h3>
@@ -1215,13 +1228,17 @@
 			Bits that are shifted to a position outside the boundary are shifted back into the boundary from the opposite side from where they were shifted out of the boundary.
 		</p></li>
 	</ol>
-	<h2>Extension Instructions</h2>
+	<h2>Conversion Instructions</h2>
 	<ol>
 		<li>
 			<table>
 				<tr><th>Instruction</th><th>Primary Operand</th><th>Mnemonic</th><th>Secondary Operand</th><th>Writes to:</th></tr>
 				<tr><td>Sign Extend:</td><td>Register</td><td>x</td><td>Word Data Type</td><td>Primary Operand</td></tr>
 				<tr><td>Zero Extend:</td><td>Register</td><td>z</td><td>Word Data Type</td><td>Primary Operand</td></tr>
+				<tr><td>Convert to Large Floating Point:</td><td>Register</td><td>F</td><td>-</td><td>Primary Operand</td></tr>
+				<tr><td>Convert to Small Floating Point:</td><td>Register</td><td>f</td><td>-</td><td>Primary Operand</td></tr>
+				<tr><td>Convert from Large Floating Point:</td><td>Register</td><td>U</td><td>-</td><td>Primary Operand</td></tr>
+				<tr><td>Convert from Small Floating Point:</td><td>Register</td><td>u</td><td>-</td>Primary Operand</tr>
 			</table>
 		</li>
 		<li><p>
@@ -1244,6 +1261,15 @@
 		</p></li>
 		<li><p>
 			The Zero Extend instruction shall always preserve the literal numerical value encoded in the binary number so that it is the same before an after the instruction is carried out.
+		</p></li>
+	</ol>
+	<h3>Convert to Large/Small Floating Point</h3>
+	<ol>
+		<li><p>
+			The data type and binary format of the literal value contained in the Primary Operand will be converted to a Large or Small Floating Point data type.
+		</p></li>
+		<li><p>
+			The data type to be converted must not be a floating point data type.
 		</p></li>
 	</ol>
 	<h2>Special Instructions</h2>
