@@ -23,7 +23,8 @@
 		a{color:inherit;}
 		a:hover{background-color: lightgrey;}
 		table table{border-style:none;}
-		h3, h4, h5, h6 {text-align:center;border-bottom:1px solid black; width:50%;margin-left:25%;margin-right:50%;}
+		h3 {text-align:center;border-bottom:1px solid black; width:50%;margin-left:25%;margin-right:50%;}
+		h4, h5, h6 {text-align:center;width:50%;margin-left:25%;margin-right:50%;}
 		rec{font-size:smaller;color:#83817a;}
 		@media print {
 			h1{page-break-before:always;}
@@ -918,9 +919,13 @@
 	<h1 id="instructions">Instructions</h1>
 	<ol>
 		<li><p>
-			BRISC instructions are designed to correspond as closely as possible to instructions featured in many hardware instruction set architectures.
-			A single BRISC instruction shall always be interpreted as any available native instruction that can match the intended effect of the BRISC instruction.
-			For example, the BRISC addition instruction, <code>+</code>, used with a signed data type can be mapped to the signed addition instruction in the target architecture.
+			BRISC instructions are designed to correspond as closely as possible to instructions featured in many hardware instruction set architectures. 
+		</p></li>
+		<li><p>
+			A single BRISC instruction shall always be interpreted to the instruction on the target architecture that exactly matches its behavior.
+		</p></li>
+		<li><p>
+			If a BRISC instruction cannot be interpreted to a single counterpart instruction on the target architecture, the smallest possible number of multiple target architecture instructions shall be used to emulate the effect of the BRISC instruction.
 		</p></li>
 	</ol>
 	<h2>Instruction Encoding</h2>
@@ -929,20 +934,14 @@
 			<p>
 				Instructions are encoded in the order of...
 			</p>
-			<ul>
+			<ol>
 				<li>Primary Operand</li>
 				<li>Instruction Mnemonic</li>
 				<li>Word Data Type Specifier</li>
 				<li>Secondary Operand</li>
 				<li>Tertiary Operand</li>
 				<li>Further Instruction-dependent Operands...</li>
-			</ul>
-			<p>
-				An encoded instruction may look like <code>r1&#x2610;+wr2&#x2610;</code> which performs a word addition between the first register, <code>r1</code>, and the second, <code>r2</code>.
-				Other instructions may have different encoding.
-				(There will be a Unit Separator ASCII code following both register identifiers.
-				It is not shown here as the Unit Separator is not a printable character.)
-			</p>
+			</ol>
 		</li>
 		<li><p>
 			Depending on the instruction, operands may be register names, compound type access instructions, or either.
@@ -1154,8 +1153,11 @@
 		</p></li>
 		<li><p>
 			All branch instructions will perform a value comparison of the secondary operand against the tertiary operand.
-			For example, the instruction to branch if two is less than three would be <code>r1&#x2610;&lt;wr2&#x2610;r3&#x2610;</code>, where <code>r2</code> contains the value 2 and <code>r3</code> contains the value three.
 			The result of this comparison is discarded.
+			If the result of the comparison is successful, the value of the instruction register shall be set to the value of the Tertiary Operand.
+		</p></li>
+		<li><p>
+			A comparison is successful if the Primary Operand has a true relationship to the Seconary Operand.
 		</p></li>
 		<li><p>
 			None of the contents of any of the operands will be modified during a branch instruction.
@@ -1386,16 +1388,15 @@
 		</li>
 		<li>
 			<p>The ordering of the sections in a BOF object is as follows...</p>
-			<table>
-				<tr><td>BOF Tag ('B', 'R', 'A', 'N')</td><td>Required</td></tr>
-				<tr><td>Executable Specifier (0a)</td><td>Optional</td></tr>
-				<tr><td>Link List</td><td>Optional</td></tr>
-				<tr><td>Compound Type List</td><td>Optional</td></tr>
-				<tr><td>Surface Table</td><td>Optional</td></tr>
-				<tr><td>Structure Table</td><td>Required</td></tr>
-				<tr><td>Segment</td><td>Required</td></tr>
-				<tr><td>Additional Segments</td><td>Optional</td></tr>
-			</table>
+			<ol>
+				<li><i>Required:</i> BOF Tag ('B', 'R', 'A', 'N')</li>
+				<li><i>Optional:</i> Executable Specifier (0a)</li>
+				<li><i>Optional:</i> Link List</li>
+				<li><i>Optional:</i> Surface Table</li>
+				<li><i>Required:</i> Structure Table</li>
+				<li><i>Required:</i> Segment</li>
+				<li><i>Optional:</i> Additional Segments</li>
+			</ol>
 		</li>
 		<li><p>
 			All BOF objects begin with the four byte ASCII sequence <code>BRAN</code>, which can be used to identify that the BOF format is present.
@@ -1914,7 +1915,7 @@
 			fiber is a computer programming language designed for general purpose application.
 		</p></li>
 		<li><p>
-			fiber provides the programmer with the basic utilities for organizing data into arrays and records, performing arithmetic on numbers, and creating functions and variables.
+			fiber provides the programmer with the basic utilities for organizing data into compound structures, performing arithmetic on numbers, and creating functions and variables.
 		</p></li>
 		<li><p>
 			fiber also provides the programmer with advanced capabilities for defining custom data types, creating modules, metaprogramming, higher order functions, type checking, and proof verification of program behavior.
@@ -1976,7 +1977,21 @@
 			If a module is included that contains an externally accessible name identical to a name in an including module, the containing module must be specified when using either name.
 		</p></li>
 	</ol>
+	<h2>Program Execution</h2>
+	<ol>
+		<li><p>
+			A fiber program is executed through the interpretation of its source files.
+		</p></li>
+	</ol>
 	<h1>Language Overview</h1>
+	<ol>
+		<li><p>
+			fiber consists of syntax organized into statements and expressions.
+		</p></li>
+		<li><p>
+			Statements and expressions are each comprised of two types of tokens: <u>Symbols</u> and <u>Operators</u>.
+		</p></li>
+	</ol>
 	<ol>
 		<li><p>
 			fiber consists of Symbols, Operators, and Objects.
