@@ -1160,6 +1160,9 @@
 		<li><p>
 			None of the contents of any of the operands will be modified during a branch instruction.
 		</p></li>
+		<li><p>
+			Behavior is undefined if the data types of the Primary and Secondary Operands do not match the word data type specifier.
+		</p></li>
 	</ol>
 	<h2>Bit Shift Instructions</h2>
 	<ol>
@@ -1269,7 +1272,19 @@
 			The data type and binary format of the literal value contained in the Primary Operand will be converted to a Large or Small Floating Point data type.
 		</p></li>
 		<li><p>
-			The data type to be converted must not be a floating point data type.
+			Behavior is undefined if the data type of the Primary Operand is a Large or Small Floating Point before the instruction is executed.
+		</p></li>
+	</ol>
+	<h3>Convert from Large/Small Floating Point</h3>
+	<ol>
+		<li><p>
+			The literal value represented by the Large or Small floating point format shall be converted to a different data type format determined by the word data type specifier.
+		</p></li>
+		<li><p>
+			Behavior is undefined if the word data type specifier for the instruction is a Large or Small Floating Point.
+		</p></li>
+		<li><p>
+			Behavior is undefined if the data type of the Primary Operand is not a Large or Small Floating Point before the instruction is executed.
 		</p></li>
 	</ol>
 	<h2>Special Instructions</h2>
