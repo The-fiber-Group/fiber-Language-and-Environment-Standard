@@ -68,7 +68,7 @@
 				<li>This document shall be made freely available, within reason, at all times, so long as availability incurs no cost to the owner of a copy of this document.</li>
 				<li>There will be as little restriction as possible to reproducing this document in whole.</li>
 				<li>The concepts and workings described in this document may be used freely, without royalties, licensing fees, or other payment owed from the user.</li>
-				<li>Individuals or groups contributing to this document agree that they relinquish individual ownership of any work which becomes incorporate into this document.</li>
+				<li>Individuals or groups contributing to this document agree that they relinquish individual ownership of any work which becomes incorporated into this document.</li>
 			</ul>
 		</li>
 	</ol>
@@ -1989,10 +1989,35 @@
 	<h1>Language Overview</h1>
 	<ol>
 		<li><p>
+			The fiber language operates in a <u>language environment</u> which consists of a number of typed objects. 
+		</p></li>
+		<li><p>
+			An object can be a type of data entity, type entity, structure entity, or function entity.
+		</p></li>
+	</ol>
+	<ol>
+		<li><p>
 			fiber consists of syntax organized into statements and expressions.
 		</p></li>
 		<li><p>
 			Statements and expressions are each comprised of two types of tokens: <u>Symbols</u> and <u>Operators</u>.
+		</p></li>
+		<li><p>
+			Both Symbol and Operator tokens are delimited by blank space and non-printable characters.
+		</p></li>
+		<li><p>
+			Symbols shall consist of any contiguous series of alphanumeric characters. 
+			Symbols will be delimited by any non-alphanumeric character and Operator token as well as blank space and non-printable characters.
+		</p></li>
+		<li><p>
+			Operators shall consist of any contiguous series of non-alphanumeric characters.
+			Operators will be delimited by any alphanumeric character and Symbol token as well as blank space and non-printable characters.
+		</p></li>
+		<li><p>
+			The Unicode Blocks containing language "script" characters shall be considered alphanumeric.
+		</p></li>
+		<li><p>
+			The Unicode Blocks containing "symbols" or other non-language purposed characters shall be considered non-alphanumeric.
 		</p></li>
 	</ol>
 	<ol>
@@ -2026,7 +2051,7 @@
 			fiber objects will exist in contiguous regions of computer memory.
 		</p></li>
 		<li><p>
-
+			Objects in the language environment shall be assumed
 		</p></li>
 	</ol>
 	<h1>Basic Syntax</h1>
