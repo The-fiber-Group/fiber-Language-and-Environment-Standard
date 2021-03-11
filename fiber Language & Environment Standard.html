@@ -1924,7 +1924,67 @@
 	<h1>Environment</h1>
 	<ol>
 		<li><p>
-			A fiber implementation consists of a series of ASCII or UTF-8 encoded <u>source files</u> containing fiber syntax describing a program, and a program or set of programs that will interpret the fiber syntax in those text files and execute the program they describe.
+			The fiber language environment consists of a program or series of programs that will interpret fiber syntax stored in a number of source files and execute the program those source files describe.
+		</p></li>
+		<li><p>
+			The interpretation of a fiber program can include any number of translations to different interpretable formats representing an identical program.
+		</p></li>
+		<li><p>
+			Translation of a source file can take place at any point.
+			Translated source files are referred to as "cached" source files.
+		</p></li>
+	</ol>
+	<h2>Execution</h2>
+	<ol>
+		<li><p>
+			Execution of a fiber program shall be initiated by calling a function.
+		</p></li>
+		<li><p>
+			Any program resources or additional source files required to facilitate the execution of the called function shall be allocated after the initiation of execution and before the process of execution.
+		</p></li>
+		<li><p>
+			Any language objects with initial values shall be allocated with those initial values after the initiation of execution and before the process of execution.
+		</p></li>
+	</ol>
+	<!--
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	
+	<h1>Environment</h1>
+	<ol>
+		<li><p>
+			An implementation of fiber consists of a program or set of programs that will interpret fiber syntax stored in <u>source files</u> and execute the program behavior they describe.
+		</p></li>
+		<li><p>
+			The method with which a fiber program is interpreted is not specified.
+		</p></li>
+		<li><p>
+			Source files are ASCII or UTF-8 encoded text files containing fiber syntax describing a program.
+		</p></li>
+		<li><p>
+			The programs stored in source files may be translated to another interpretable format which will then be executed.
+			This translation can happen at any time.
+			Translated source files are referred to as "cached" source files.
+		</p></li>
+	</ol>
+	<h2>Program Organization</h2>
+	<ol>
+		<li><p>
+			A single fiber program consists of a series of source files.
+		</p></li>
+		<li><p>
+			A program is organized in one or more source files using a system of modules defined with fiber syntax.
+		</p></li>
+		<li><p>
+			A source file may contain any number of complete modules
+		</p></li>
+	</ol>
+	<h1>Environment</h1>
+	<ol>
+		<li><p>
+			The fiber programming language operates in a <u>language environment</u> consisting of a number of typed objects and functions or operations that perform data transformations on those objects.
+		</p></li>
+		<li><p>
+			A fiber implementation consists of a series of ASCII or UTF-8 encoded <u>source files</u> containing fiber syntax describing the program, and a program or set of programs that will interpret the fiber syntax in those text files and execute the program they describe.
 		</p></li>
 		<li><p>
 			The method with which a fiber program is interpreted is not specified.
@@ -1983,7 +2043,10 @@
 			A fiber program is executed through the interpretation of its source files.
 		</p></li>
 		<li><p>
-			Execution shall always begin with a single module.
+			Execution is initiated by calling a function defined in a program module.
+		</p></li>
+		<li><p>
+			When the execution of a program is initiated, a 
 		</p></li>
 	</ol>
 	<h1>Language Overview</h1>
@@ -2150,6 +2213,7 @@
 			Operators are used to instantiate objects and perform transformations on them.
 		</p></li>
 	</ol>
+-->
 <!----------------------------------------------------------------------------->
 
 
