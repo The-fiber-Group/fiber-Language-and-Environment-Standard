@@ -5,12 +5,10 @@
 		p, dl, table
 		{
 			margin:0;
-			padding-top:0;
 			margin-left:3ch;
 			margin-right:3ch;
 			padding-left:3ch;
 			padding-right:3ch;
-			padding-top:1ch;
 		}
 		h1{border-bottom:1px solid black;}
 		dt{font-style:italic;}
@@ -1934,7 +1932,49 @@
 			Translated source files are referred to as "cached" source files.
 		</p></li>
 	</ol>
-	<h2>Execution</h2>
+	<h2>Program Organization</h2>
+	<ol>
+		<li><p>
+			A single fiber program consists of a series of source files, some of which may be cached.
+		</p></li>
+		<li><p>
+			Source files are organized using a system of <u>modules</u> defined with fiber syntax.
+			The syntax for describing modules is specified in <a href="#fiber module">(<i>Modules</i>)</a>.
+		</p></li>
+		<li><p>
+			A module definition must be entirely contained within a single source file.
+		</p></li>
+		<li><p>
+			A source file may contain any number of complete modules.
+		</p></li>
+		<li><p>
+			A module may specify the inclusion of other modules within itself.
+			A module may also specify the inclusion of source files that do not contain modules or cached source files.
+		</p></li>
+		<li><p>
+			A module contains a number of named program components.
+			Each component may either be <u>declared</u>, or <u>defined</u>.
+		</p></li>
+		<li><p>
+			The definition of a declared component is required to be included before that component is used in a program.
+		</p></li>
+		<li><p>
+			A declared program component consists of an interface described in fiber syntax with the behavior of that component described in an external source file specified by the module containing the definition.
+		</p></li>
+		<li><p>
+			A defined program component consists of an interface <i>and</i> behavior description contained within a single module containing both descriptions.
+		</p></li>
+		<li><p>
+			All program components described in a module are part of that module's <u>namespace</u> such that program component names are only required to be unique from other names within the same module.
+		</p></li>
+		<li><p>
+			In order for program components to be accessible externally from their module, they must be specified as externally accessible.
+		</p></li>
+		<li><p>
+			If a module is included that contains an externally accessible name identical to a name in an including module, the containing module must be specified when using either name.
+		</p></li>
+	</ol>
+	<h2>Program Execution</h2>
 	<ol>
 		<li><p>
 			The execution of a fiber program is initiated by calling a function contained in a fiber program.
@@ -1959,10 +1999,22 @@
 			The staging process shall also set any program objects to their initial values if they any are provided.
 		</p></li>
 		<li><p>
+			The staging process shall finish when the resources and objects necessary for the execution of the function have been successfully allocated.
+		</p></li>
+		<li><p>
 			The interpretation process will begin after the staging process is complete. 
 		</p></li>
 		<li><p>
-			The interpretation process will carry out the specified behavior of the program.
+			The interpretation process shall carry out the specified behavior of the program.
+		</p></li>
+		<li><p>
+			The method or methods of interpretation with which a program is executed is not specified.
+		</p></li>
+		<li><p>
+			The interpretation process shall finish when the end of the function is reached.
+		</p></li>
+		<li><p>
+			The function called to begin execution is not required to return.
 		</p></li>
 	</ol>
 	<!--
