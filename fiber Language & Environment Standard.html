@@ -1937,13 +1937,32 @@
 	<h2>Execution</h2>
 	<ol>
 		<li><p>
-			Execution of a fiber program shall be initiated by calling a function.
+			The execution of a fiber program is initiated by calling a function contained in a fiber program.
 		</p></li>
 		<li><p>
-			Any program resources or additional source files required to facilitate the execution of the called function shall be allocated after the initiation of execution and before the process of execution.
+			The method with which a function is called is dependent on the target system.
 		</p></li>
 		<li><p>
-			Any language objects with initial values shall be allocated with those initial values after the initiation of execution and before the process of execution.
+			The function to be called in order to execute a certain program may be decided at any time.
+		</p></li>
+		<li><p>
+			There are two processes responsible for the execution of a fiber program: the <u>staging process</u> and the <u>interpretation process</u>.
+		</p></li>
+		<li><p>
+			The staging process shall begin directly after a function is called.
+		</p></li>
+		<li><p>
+			The staging process shall allocate computing resources sufficient for executing that function.
+			This may include additional source files.
+		</p></li>
+		<li><p>
+			The staging process shall also set any program objects to their initial values if they any are provided.
+		</p></li>
+		<li><p>
+			The interpretation process will begin after the staging process is complete. 
+		</p></li>
+		<li><p>
+			The interpretation process will carry out the specified behavior of the program.
 		</p></li>
 	</ol>
 	<!--
