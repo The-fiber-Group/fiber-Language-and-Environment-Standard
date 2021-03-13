@@ -765,7 +765,3 @@ now here's the proof that the function terminates
 
 *There's probably a better way to do this with fewer operators, I'll figure it out as I play with use patterns more. Like I said, verification is heuristic at best and now I'm trying to invent a different way to do a task that noboy's figured out how to do properly yet in the first place.*
 
-Example Programs
-===
-
-# QuickSort
