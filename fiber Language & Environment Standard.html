@@ -1716,7 +1716,7 @@
 				</dd>
 				<dt>n</dt>
 				<dd>
-					Indicates that the Segment associated with the Symbol is readable and executable and contains enoded instructions using the format of the target architecture, or the <i>native</i> instruction format.
+					Indicates that the Segment associated with the Symbol is readable and executable and contains encoded instructions using the format of the target architecture, or the <i>native</i> instruction format.
 				</dd>
 				<dt>f</dt>
 				<dd>
@@ -1798,6 +1798,15 @@
 		</p></li>
 		<li><p>
 			A BOF object that is marked executable is required for Broccoli to execute a program.
+		</p></li>
+		<li><p>
+			Broccoli shall support the instruction encoding format used by its host system.
+		</p></li>
+		<li><p>
+			Broccoli shall be able to load and execute a BOF object containing any combination of both <i>B</i> and <i>n</i> formatted segments.
+		</p></li>
+		<li><p>
+			Broccoli is not required to be able to manipulate any the instruction format of <i>f</i> segments.
 		</p></li>
 	</ol>
 	<h2>Linking</h2>
@@ -1889,10 +1898,10 @@
 	<h2>Verification</h2>
 	<ol>
 		<li><p>
-			It is unspecifid if Broccoli will verify the format and intgrity of BOF objects and BRISC code.
+			It is unspecified if Broccoli will verify the format and intgrity of BOF objects and BRISC code.
 		</p></li>
 		<li><p>
-			If Broccoli encounters a state where it cannot complte the execution of a BOF file, it shall communicate a failure and exit.
+			If Broccoli encounters a state where it cannot complete the execution of a BOF file, it shall communicate a failure and exit.
 		</p></li>
 		<li><p>
 			If Broccoli does inspect BOF objects and BRISC code for correctness and it encounters some error, the format and amount of information Broccoli shall provide about the error is not specified.
@@ -2017,6 +2026,16 @@
 			The function called to begin execution is not required to return.
 		</p></li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Language</h1>
 <!----------------------------------------------------------------------------->
 
 
