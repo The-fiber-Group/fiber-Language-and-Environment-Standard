@@ -1,6 +1,9 @@
 fiber Syntax
 ===
 
+This is a rough overview of the language syntax decisions that have been made so far
+---
+
 # Tokens
 Tokens are grouped into two classes: **Symbols** and **Operators**.
 All tokens are delimited by blank space and control characters.
