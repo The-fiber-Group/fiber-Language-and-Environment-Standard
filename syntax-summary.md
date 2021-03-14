@@ -131,6 +131,13 @@ Multiple variable names can have the same assignment applied to them by using th
 	|var1;Nat var2 var3 var4 ;Int = | 1 -2 -3 -4 ``four differently typed vars assigned four different constant values``
 
 
+### Multiple declaration test 2
+
+	var1 = "string"
+	\ var1 var2 var3 = "string"
+	\ var1 var2 var3 = \ "one" "two" "three"
+	\ var1 var2 var3 = \ 1 2 3
+
 # Types
 fiber has the built in types...
 
