@@ -2050,16 +2050,21 @@
 			Multiple delimiting characters occurring in an contiguous series will be treated as a single literal delimiter.
 		</p></li>
 		<li><p>
-				A symbol is a contiguous series of alphanumeric characters.
-				This includes any language script characters specified by the Unicode standard.
-		</p></li>
+			A symbol is a contiguous series of alphanumeric characters.
+			This includes any language script characters specified by the Unicode standard.
+			</p>
+			<table><tr><td><i>Symbol</i> &rArr; [0-9A-Fa-f]*</td></tr></table>
+		</li>
 		<li><p>
 			Symbols shall also be delimited by operator tokens and non-alphanumeric characters.
 		</p></li>
-		<li><p>
-			An operator is a contiguous series of non-alphanumeric characters.
-			This includes any non-lingual, symbolic characters as specified by the Unicode standard.
-		</p></li>
+		<li>
+			<p>
+				An operator is a contiguous series of non-alphanumeric characters.
+				This includes any non-lingual, symbolic characters as specified by the Unicode standard.
+			</p>
+			<table><tr><td><i>Oprator</i> &rArr; [!-\/:-@\[-`\{-~]*</td></tr></table>
+		</li>
 		<li><p>
 			Operators shall also be delimited by symbol tokens and other alphanumeric characters.
 		</p></li>
@@ -2176,7 +2181,27 @@
 			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
 		</p></li>
 	</ol>
-	<h2>Symbol Declarations</h2>
+	<h2>Identifiers</h2>
+	<ol>
+		<li><p>
+			An identifier is used to locate and reuse a data object.
+		</p></li>
+		<li><p>
+			An identifier will be associated with only one data object at any time.
+		</p></li>
+		<li><p>
+			Identifers are declared using 
+		</p></li>
+	</ol>
+	<h2>Bins</h2>
+	<ol>
+		<li><p>
+			The Bin is used to declare the composition and interface of a compound data type.
+		</p></li>
+		<li><p>
+			The Bin declaration is capable of 
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
