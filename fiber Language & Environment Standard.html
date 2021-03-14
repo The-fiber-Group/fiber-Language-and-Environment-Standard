@@ -2065,6 +2065,14 @@
 		</p></li>
 	</ol>
 	<h1>Declarations</h1>
+	<ol>
+		<li><p>
+			Declarations are expression statements that instantiate data objects and other program constructs.
+		</p></li>
+		<li><p>
+			Declarations do not produce a data object when evaluated.
+		</p></li>
+	</ol>
 	<h2>Constant Values</h2>
 	<h3>Numbers</h3>
 	<ol>
@@ -2110,7 +2118,7 @@
 		<li><p>
 			The double quotation character and the backward slash character shall be prefixed by a backward slash character before they are surrounded by double quotations. <code>"\\"</code> <code>"\""</code>
 		</p></li>
-		<li><p>
+		<li id="character literals non-printable"><p>
 			Non-printable ASCII character literals shall be represented by a two-digit hexadecimal number declaration specifying the numerical value of the character literal.
 			The number shall be prefixed with a forward slash and then surrounded by double quotations. <code>"\20"</code>
 		</p></li>
@@ -2120,7 +2128,7 @@
 		</p></li>
 		<li><p>
 			A Unicode character literal may be alternatively declared using a hexadecimal number declaration specifying the numerical value of the Unicode code point being declared.
-			The number shall be prefixed with the sequence <code>\U</code> and then surrounded by double quotations. <code>"\U2000"</code>
+			The number shall be prefixed with the sequence <code>\U</code>, delimited by a period dot, and then surrounded by double quotations. <code>"\U2000."</code>
 			This method does not require UTF-8 encoding.
 		</p></li>
 		<li><p>
@@ -2128,6 +2136,47 @@
 			This is necessary to properly express character literal values.
 		</p></li>
 	</ol>
+	<h3>String Data</h3>
+	<ol>
+		<li><p>
+			String data consists of a contiguous series of character values.
+			Character values may be ASCII or Unicode values.
+		</p></li>
+		<li><p>
+			String data is declared using the same syntax as a character literal, but including more than one character inside the pair of quotations.
+		</p></li>
+		<li><p>
+			Each character in a string shall use one of the declaration methods provided above for character literal values.
+		</p></li>
+		<li><p>
+			An ASCII string shall contain only ASCII character encodings.
+		</p></li>
+		<li><p>
+			A Unicode string shall contain at least one Unicode character that is not included in the ASCII encoding scheme.
+		</p></li>
+		<li><p>
+			Control characters and other non-printable characters shall be declared in string data exclusively with the format specified in <a href="#character literals non-printable">(<i>Character Literals, 4</i>)</a>.
+		</p></li>
+		<li><p>
+			Control character values occurring normally in the source file inside a string data declaration shall be discarded.
+		</p></li>
+	</ol>
+	<h4>Byte Strings</h4>
+	<ol>
+		<li><p>
+			Byte strings are a special instance of string data that contain no format or other encoding.
+		</p></li>
+		<li><p>
+			A byte string shall be signified by prefixing the opening quotation with the number sign <code>#"</code>.
+		</p></li>
+		<li><p>
+			A byte string shall be declared by writing a series of two-digit hexadecimal numerical constants.
+		</p></li>
+		<li><p>
+			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
+		</p></li>
+	</ol>
+	<h2>Symbol Declarations</h2>
 <!----------------------------------------------------------------------------->
 
 

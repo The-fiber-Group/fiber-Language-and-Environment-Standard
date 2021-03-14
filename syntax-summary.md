@@ -48,6 +48,7 @@ A symbol may represent a numerical constant if...
 A symbol is a decimal number if it contains only `[0-9]`.
 
 A symbol is a hexadecimal number if it contains `0x[0-9A-F]`.
+hexadecimal numbers cannot use a radix point.
 
 Two operators have special behavior when used with numerical constants: `.` and `-`.
 
@@ -177,11 +178,17 @@ fiber has the built in types...
 	a memory address. Mem is also a dependent type (used as `Mem Nat`)
 
 ## Type hierarchy
-fiber types are organized in a hierarchy
+fiber types are organized in a hierarchy using supertyps.
+The supertypes are:
+*	Number
+*	Bool
+*	Graph
+*	Bin
+*	Any
+
+The hierarchy organization is as listed below...
 
 *	Number
-
-	Used in mathematical and binary logic expressions
 	-	Nat
 	-	Int
 	-	Nat16
@@ -195,24 +202,14 @@ fiber types are organized in a hierarchy
 	-	Char
 	-	Uncd
 *	Bool
-
-	used in logic expressions
 	-	True
 	-	False
-
 *	Graph
-
-	used to represent character values
 	-	Char
 	-	Byte
 	-	Uncd
-
 *	Bin
-
-	fiber's compound data type
 *	Any
-
-	Any type
 	-	Number
 	-	Bool
 	-	Graph
@@ -221,53 +218,59 @@ fiber types are organized in a hierarchy
 ## Bin
 fiber allows for declaring compound data structures using the "Bin". A bin can be used to represent record or array types. A bin resembles the mathematical data structure Sequence. All fields are indexed starting with one. Any field may be optionally named. A bin declaration is delimited by a closed pair of square braces. A bin declaration requires a symbol be the first token after the opening square brace. The symbol will be used as the name for that bin declaration.
 
-	[B] ``no fields``
-	[B x y z] ``untyped named fields``
-	[B Nat Nat Char] ``typed unnamed fields``
-	[B x;Nat y;Nat z;Char] ``named and typed fields``
+	B = [x y z] ``untyped named fields``
+	B = [Nat Nat Char] ``typed unnamed fields``
+	B = [x;Nat y;Nat z;Char] ``named and typed fields``
 
 A Bin can be declared with unions of different fields.
 Groups of fields can be unioned using nested Bin declaration.
 Field indicies are not affected by unions. The Bin "J" below has six fields indexed 1-6.
 
-	[H x | y z] ``union of fields x and y
-	[I Nat Nat | Char] ``union of fields 2 and 3``
-	[J [x y z] | [a b c] ] ``union of x,y,z and a,b,c``
+	H = [x | y z] ``union of fields x and y
+	I = [Nat Nat | Char] ``union of fields 2 and 3``
+	J = [J [x y z] | [a b c] ] ``union of x,y,z and a,b,c``
 
 nested bin declarations are unnamed by default but can be optionally named using the `:` operator after the first symbol in the nested declaration.
 
-	[E [x: a b c] [a: x y z] ] ``two nested bins``
+	E = [ [x: a b c] [a: x y z] ] ``two nested bins``
 
 ### Bin Arrays
 Arrays are a series of the same type.
 Arrays are required to have a type.
 Arrays are declared using the `_` binary operator. It accepts a typename as the left operand and a whole number of indicies as the right operand.
 
-	[X Nat_ 10] ``an array of twenty Nats``
-	[Y Char _ 40] ``an array of 40 Chars``
-	[Z Char _ 40 x y Int] ``A Bin containing an array and some individual fields``
+	X = [Nat_ 10] ``an array of twenty Nats``
+	Y = [Char _ 40] ``an array of 40 Chars``
+	Z = [Char _ 40 x y Int] ``A Bin containing an array and some individual fields``
 
 ## Initializign Bins
 
 Bin field are initialized using a similar syntax to the function call (described later). The initialization operator `:` takes a bin declaration name as the left operand and a series of initial values as the right operands.
 The right operands are delimited by a period.
 
-	[foo x y]
+	foo = [x y]
 	var = foo: 1 2 .
 the fields populated with each initial value follow the order the fields were declared in. Not all fields are required to be initialized in one expression.
 
-	[foo x y z]
+	foo = [x y z]
 	var = foo: 1 .
 	``only the first field is initialized``
 fields can be populated in the beginning and end while skipping some middle fields using the elipses operator `...`.
 
-	[foo a b c d e f]
+	foo = [a b c d e f]
 	var = foo: 1 2 ... 9 10 .
 	``only fields "a", "b", "e", and "f" are populated``
 
 ### Accessing Bin fields
 Bin fields are accessed using the `.` operator. The operator accepts a Bin object as its left operand and a field name or index as its right operand.
 Multiple accesses can be concatenated in the case of nested declarations.
+
+	foo = [x y z]
+	bar = [ [x: a b c] [a: x y z] ]
+	X = foo
+	Y = bar
+	X.x ``access at field x``
+	X.3 ``access at field 'z'``
 
 	B.x ``produces the data at field 'x'``
 	B.3 ``produces the data at field 3``
