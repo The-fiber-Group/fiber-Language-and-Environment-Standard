@@ -2203,6 +2203,9 @@
 			An identifier will be associated with only one data object at any time.
 		</p></li>
 		<li><p>
+			An identifier may be declared with a data type annotation which will coerce the type of the data object the identifier is declared with.
+		</p></li>
+		<li><p>
 			Identifers are declared using the binary assignment operator, <code>=</code>.
 		</p></li>
 		<li>
@@ -2244,12 +2247,47 @@
 		<li><p>
 			The right side of an assignment statement shall not be multiplexed if the left side of the expression is not also multiplexed.
 		</p></li>
+		<li><p>
+			If both sides of the assignment declaration statement are multiplexed, the identifiers are associated with data objects in corresponding order of their declaration from left to right.
+		</p></li>
 		<li>
 			<p>Some examples of identifier declarations are...</p>
-			<code>variable1 = 1<br>
-			variable2 = -1.1<br>
-			\variable3 variable4 = "the same string"<br>
-			\variable5 variable6 = \ "one string" "two strings"</code>
+			<code>var1 = 1</code>
+			<p>An identifier is assigned a numerical constant.</p>
+			<code>\ var2 var3 = "the same string"</code>
+			<p>Two variables, <i>var2</i> and <i>var3</i>, are associated with two identical string data objects.</p>
+			<code>\ var4 var5 = \ 7 "seven"</code>
+			<p><i>var4</i> is assigned a numerical constant and <i>var5</i> is assigned a string data object.</p>
+			<code>var1|Int = 10</code>
+			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
+		</li>
+	</ol>
+	<h1>Type System</h1>
+	<ol>
+		<li><p>
+			Types are used in fiber to constrain program state to a set of reasonable states.
+		</p></li>
+	</ol>
+	<h2>Primitive Data Types</h2>
+	<ol>
+		<li><p>
+			Primitive data types are provided with the base language by default.
+		</p></li>
+		<li>
+			<p>The primitive data types are...</p>
+			<table>
+				<tr><th>Type Name</th><th>Size</th><th>Interface Description</th></tr>
+				<tr><td>Byte</td><td>1B</td><td>Unsigned binary number</td></tr>
+				<tr><td>Nat16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Nat</td><td>4B</td><td>...</td></tr>
+				<tr><td>Nat64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Char</td><td>1B</td><td>Signed binary number</td></tr>
+				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Int</td><td>4B</td><td>...</td></tr>
+				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number</td></tr>
+				<tr><td></td></tr>
+			</table>
 		</li>
 	</ol>
 	<h2>Bins</h2>
