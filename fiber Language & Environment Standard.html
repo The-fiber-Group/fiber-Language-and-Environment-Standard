@@ -2035,7 +2035,339 @@
 
 
 <!----------------------------------------------------------------------------->
-	<h1>Language</h1>
+	<h1>Syntax Components</h1>
+	<ol>
+		<li><p>
+			The syntax of fiber is comprised of expressions and declarations which can be decomposed into two classes of tokens: <u>Symbols</u> and <u>Operators</u>.
+		</p></li>
+		<li>
+			<p>
+				All tokens are delimited by any blank or non-printable characters. 
+				This includes any non-printable or blank characters specified by the Unicode standard.
+			</p>
+			<table><tr><td><i>Delimiter</i> &rArr; [\x00- \x7F]*</td></tr></table>
+		</li>
+		<li><p>
+			Multiple delimiting characters occurring in an contiguous series will be treated as a single literal delimiter.
+		</p></li>
+		<li><p>
+			A symbol is a contiguous series of alphanumeric characters.
+			This includes any language script characters specified by the Unicode standard.
+			</p>
+			<table><tr><td><i>Symbol</i> &rArr; [0-9A-Fa-f]*</td></tr></table>
+		</li>
+		<li><p>
+			Symbols shall also be delimited by operator tokens and non-alphanumeric characters.
+		</p></li>
+		<li>
+			<p>
+				An operator is a contiguous series of non-alphanumeric characters.
+				This includes any non-lingual, symbolic characters as specified by the Unicode standard.
+			</p>
+			<table><tr><td><i>Oprator</i> &rArr; [!-\/:-@\[-`\{-~]*</td></tr></table>
+		</li>
+		<li><p>
+			Operators shall also be delimited by symbol tokens and other alphanumeric characters.
+		</p></li>
+	</ol>
+	<h2>Comments</h2>
+	<ol>
+		<li><p>
+			Comments are bounded by the comment operator, <code>``</code>.
+		</p></li>
+		<li><p>
+			Any character will be accepted between a pair of comment operators except for two backquotes in succession, which is the comment operator.
+		</p></li>
+		<li><p>
+			The text between a pair of comment operators shall be discarded before interpretation of the fiber syntax.
+		</p></li>
+	</ol>
+	<h1>Declarations</h1>
+	<ol>
+		<li><p>
+			Declarations are expression statements that instantiate data objects and other program constructs.
+		</p></li>
+		<li><p>
+			Declarations do not produce a data object when evaluated.
+		</p></li>
+	</ol>
+	<h2>Constant Values</h2>
+	<h3>Numbers</h3>
+	<ol>
+		<li><p>
+			A Symbol shall be interpreted as a decimal value if it contains only the decimal digits zero through nine.
+			</p>
+			<table><tr><td><i>Decimal</i> &rArr; [0-9]*</td></tr></table>
+		</li>
+		<li><p>
+			A Symbol shall be interpreted as a hexadecimal value if it contains only the hexadecimal digits zero through nine, the uppercase letters <b>A</b> through <b>F</b>, and is prefixed by the sequence <code>0x</code>.
+			</p>
+			<table><tr><td><i>Hex</i> &rArr; 0x[0-9A-F]*</td></tr></table>
+		</li>
+	</ol>
+	<h4>Number Operators</h4>
+	<ol>
+		<li><p>
+			The prefix minus operator <code>-</code> shall accept a decimal or hexadecimal constant declaration as an operand and will negate the value represented by that constant.
+		</p></li>
+		<li><p>
+			The binary radix operator <code>.</code> shall accept decimal constant declarations for both operands and shall produce a rational value using the left operand as the integer component of the resulting value and the right operand as the fractional component.
+		</p></li>
+		<li><p>
+			Neither the minus operator or the radix operator shall be associative.
+		</p></li>
+		<li><p>
+			It is possible for the minus operator to prefix the left operand of a radix operator.
+			The combination of the minus prefix and the radix shall result in a negative rational value.
+		</p></li>
+		<li><p>
+			Number constant operators shall not accept identifiers or non-number declarations.
+		</p></li>
+	</ol>
+	<h3>Character Literals</h3>
+	<ol>
+		<li><p>
+			A character literal is the numerical value associated with a code point in a character encoding scheme.
+			fiber supports character literal values for ASCII and Unicode encoding.
+		</p></li>
+		<li><p>
+			An ASCII character literal value shall be declared by writing a printable ASCII character surrounded by double quotations. <code>"A"</code>
+		</p></li>
+		<li><p>
+			The double quotation character and the backward slash character shall be prefixed by a backward slash character before they are surrounded by double quotations. <code>"\\"</code> <code>"\""</code>
+		</p></li>
+		<li id="character literals non-printable"><p>
+			Non-printable ASCII character literals shall be represented by a two-digit hexadecimal number declaration specifying the numerical value of the character literal.
+			The number shall be prefixed with a forward slash and then surrounded by double quotations. <code>"\20"</code>
+		</p></li>
+		<li><p>
+			A Unicode character literal shall be declared by writing a Unicode character surrounded by double quotations in the same manner as an ASCII character.
+			This method shall require that the source file support UTF-8 encoding.
+		</p></li>
+		<li><p>
+			A Unicode character literal may be alternatively declared using a hexadecimal number declaration specifying the numerical value of the Unicode code point being declared.
+			The number shall be prefixed with the sequence <code>\U</code>, delimited by a period dot, and then surrounded by double quotations. <code>"\U2000."</code>
+			This method does not require UTF-8 encoding.
+		</p></li>
+		<li><p>
+			The symbol and operator tokenization rules are disregarded concerning the syntax between quotations.
+			This is necessary to properly express character literal values.
+		</p></li>
+	</ol>
+	<h3>String Data</h3>
+	<ol>
+		<li><p>
+			String data consists of a contiguous series of character values.
+			Character values may be ASCII or Unicode values.
+		</p></li>
+		<li><p>
+			String data is declared using the same syntax as a character literal, but including more than one character inside the pair of quotations.
+		</p></li>
+		<li><p>
+			Each character in a string shall use one of the declaration methods provided above for character literal values.
+		</p></li>
+		<li><p>
+			An ASCII string shall contain only ASCII character encodings.
+		</p></li>
+		<li><p>
+			A Unicode string shall contain at least one Unicode character that is not included in the ASCII encoding scheme.
+		</p></li>
+		<li><p>
+			Control characters and other non-printable characters shall be declared in string data exclusively with the format specified in <a href="#character literals non-printable">(<i>Character Literals, 4</i>)</a>.
+		</p></li>
+		<li><p>
+			Control character values occurring normally in the source file inside a string data declaration shall be discarded.
+		</p></li>
+	</ol>
+	<h4>Byte Strings</h4>
+	<ol>
+		<li><p>
+			Byte strings are a special instance of string data that contain no format or other encoding.
+		</p></li>
+		<li><p>
+			A byte string shall be signified by prefixing the opening quotation with the number sign <code>#"</code>.
+		</p></li>
+		<li><p>
+			A byte string shall be declared by writing a series of two-digit hexadecimal numerical constants.
+		</p></li>
+		<li><p>
+			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
+		</p></li>
+	</ol>
+	<h2>Identifiers</h2>
+	<ol>
+		<li><p>
+			An identifier is used to locate and reuse a data object.
+		</p></li>
+		<li><p>
+			An identifier will be associated with only one data object at any time.
+		</p></li>
+		<li><p>
+			An identifier may be declared with a data type annotation which will coerce the type of the data object the identifier is declared with.
+		</p></li>
+		<li><p>
+			Identifers are declared using the binary assignment operator, <code>=</code>.
+		</p></li>
+		<li>
+			<p>The syntax for declaring an identifier is as follows...</p>
+			<table>
+				<tr><td><b>Identifier</b> &rarr; <b>Id</b> <i>Assign</i> <b>Decls</b></td></tr>
+				<tr><td><i>Assign</i> &rArr; =</td></tr>
+				<tr><td><b>Id</b> &rarr; <br>
+					| <b>Name</b><br>
+					| <i>Multiplex</i> <b>Names</b></td></tr>
+				<tr><td><i>Multiplex</i> &rArr; \\</td></tr>
+				<tr><td><b>Names</b> &rarr;<br>
+				 	| <b>Name</b><br>
+					| <b>Name</b> <b>Names</b></td></tr>
+				<tr><td><b>Name</b><br>
+					| <i>Symbol</i><br> 
+					| <i>Symbol</i> <i>Annotate</i> <b>Type</b></td></tr>
+				<tr><td><i>Annotate</i> &rArr; \|</td></tr>
+				<tr><td><b>Decls</b> &rarr; <br>
+					| <b>Declaration</b><br>
+					| <i>Multiplex</i> <b>Declarations</b></td></tr>
+				<tr><td><b>Declarations</b> &rarr; <br>
+					| <b>Declaration</b><br>
+					| <b>Declaration</b> <b>Declarations</b></td></tr>
+			</table>
+		</li>
+		<li><p>
+			It is possible to declare multiple identifiers within the same statement using the "multiplex" prefix operator, <code>\</code>.
+		</p></li>
+		<li><p>
+			When the multiplex operator is used to the left of the assignment operator, any number of identifiers will be accepted.
+		</p></li>
+		<li><p>
+			When the multiplex operator is used to the right of the assignment operator, a number of declaration statements equivalent to the number of identifiers declared on the left side shall be expected.
+		</p></li>
+		<li><p>
+			When the left side of the assignment statement is multiplexed, but not the right, the declarative statement on the right will be re-evaluated to produce instantiate a data object for each identifier.
+		</p></li>
+		<li><p>
+			The right side of an assignment statement shall not be multiplexed if the left side of the expression is not also multiplexed.
+		</p></li>
+		<li><p>
+			If both sides of the assignment declaration statement are multiplexed, the identifiers are associated with data objects in corresponding order of their declaration from left to right.
+		</p></li>
+		<li>
+			<p>Some examples of identifier declarations are...</p>
+			<code>var1 = 1</code>
+			<p>An identifier is assigned a numerical constant.</p>
+			<code>\ var2 var3 = "the same string"</code>
+			<p>Two variables, <i>var2</i> and <i>var3</i>, are associated with two identical string data objects.</p>
+			<code>\ var4 var5 = \ 7 "seven"</code>
+			<p><i>var4</i> is assigned a numerical constant and <i>var5</i> is assigned a string data object.</p>
+			<code>var1|Int = 10</code>
+			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
+		</li>
+	</ol>
+	<h1>Type System</h1>
+	<ol>
+		<li><p>
+			Types are used in fiber to constrain program state to a set of reasonable states.
+		</p></li>
+	</ol>
+	<h2>Primitive Data Types</h2>
+	<ol>
+		<li><p>
+			Primitive data types are provided with the base language by default.
+		</p></li>
+		<li>
+			<p>The primitive data types are...</p>
+			<table>
+				<tr><th>Type Name</th><th>Size</th><th>Interface Description</th></tr>
+				<tr><td>Byte</td><td>1B</td><td>Unsigned binary number</td></tr>
+				<tr><td>Nat16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Nat</td><td>4B</td><td>...</td></tr>
+				<tr><td>Nat64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Char</td><td>1B</td><td>Signed binary number</td></tr>
+				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Int</td><td>4B</td><td>...</td></tr>
+				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number (Unicode values)</td></tr>
+				<tr><td>Float</td><td>4B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Real</td><td>8B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Mem</td><td>8B</td><td>Memory address</td></tr>
+				<tr><td>True</td><td>1B</td><td>Boolean value</td></tr>
+				<tr><td>False</td><td>1B</td><td>Boolean value</td></tr>
+			</table>
+		</li>
+		<li>
+			<p>
+				The primitive data types are organized in a hierarchy with a number of supertypes.
+				The type hierarchy structure is...
+			</p>
+			<ul>
+				<li>Number
+					<ul>
+						<li>Nat, Nat16, Nat64</li>
+						<li>Int, Int16, Int64</li>
+						<li>Float</li>
+						<li>Real</li>
+						<li>Mem</li>
+						<li>Byte, Char, Uncd</li>
+					</ul>
+				</li>
+				<li>Bool
+					<ul>
+						<li>True</li>
+						<li>False</li>
+					</ul>
+				</li>
+				<li>Graph
+					<ul>
+						<li>Char</li>
+						<li>Byte</li>
+						<li>Uncd</li>
+					</ul>
+				</li>
+				<li>Bin</li>
+				<li>Any
+					<ul>
+						<li>Number</li>
+						<li>Bool</li>
+						<li>Graph</li>
+						<li>Bin</li>
+						<li>Any</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ol>
+	<h2>Data Type Declarations</h2>
+	<ol>
+		<li><p>
+			It is possible to define custom data types.
+		</p></li>
+		<li><p>
+			Custom data type declarations are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
+		</p></li>
+		<li><p>
+			There are several kinds of data type declarations:
+			</p>
+			<ul>
+				<li>Singular Types</li>
+				<li>Constrained Types</li>
+				<li>Polymorphic Types</li>
+			</ul>
+		</li>
+	</ol>
+	<h3>Singular Types</h3>
+	<ol>
+		<li><p>
+			Singular types are data types that define the interface to a single data object.
+		</p></li>
+	</ol>
+	<h2>Bins</h2>
+	<ol>
+		<li><p>
+			The Bin is used to declare the composition and interface of a compound data type.
+		</p></li>
+		<li><p>
+			The Bin declaration is capable of 
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
@@ -2075,12 +2407,18 @@
 </body>
 
 <footer>
-	<h1>fiber Group Members</h1>
+	<h1>The fiber Group</h1>
 	<ul>
+		<h2>Central Author</h2>
 		<li>
 			<p>Robin</p>
 			<p><a href="mailto:yosngne@gmail.com">contact</a></p>
 
 		</li>
+		<h2>Official Members</h2>
+		<h2>Additional Contributors</h2>
+		<li><p>
+			qonfluent
+		</p></li>
 	</ul>
 </footer>
