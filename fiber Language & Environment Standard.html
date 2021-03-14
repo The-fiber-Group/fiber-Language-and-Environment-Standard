@@ -2285,9 +2285,54 @@
 				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
 				<tr><td>Int</td><td>4B</td><td>...</td></tr>
 				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
-				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number</td></tr>
-				<tr><td></td></tr>
+				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number (Unicode values)</td></tr>
+				<tr><td>Float</td><td>4B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Real</td><td>8B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Mem</td><td>8B</td><td>Memory address</td></tr>
+				<tr><td>True</td><td>1B</td><td>Boolean value</td></tr>
+				<tr><td>False</td><td>1B</td><td>Boolean value</td></tr>
 			</table>
+		</li>
+		<li>
+			<p>
+				The primitive data types are organized in a hierarchy with a number of supertypes.
+				The type hierarchy structure is...
+			</p>
+			<ul>
+				<li>Number
+					<ul>
+						<li>Nat, Nat16, Nat64</li>
+						<li>Int, Int16, Int64</li>
+						<li>Float</li>
+						<li>Real</li>
+						<li>Mem</li>
+						<li>Byte, Char, Uncd</li>
+					</ul>
+				</li>
+				<li>Bool
+					<ul>
+						<li>True</li>
+						<li>False</li>
+					</ul>
+				</li>
+				<li>Graph
+					<ul>
+						<li>Char</li>
+						<li>Byte</li>
+						<li>Uncd</li>
+					</ul>
+				</li>
+				<li>Bin</li>
+				<li>Any
+					<ul>
+						<li>Number</li>
+						<li>Bool</li>
+						<li>Graph</li>
+						<li>Bin</li>
+						<li>Any</li>
+					</ul>
+				</li>
+			</ul>
 		</li>
 	</ol>
 	<h2>Bins</h2>
