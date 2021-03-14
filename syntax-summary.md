@@ -444,7 +444,7 @@ By default, parameters are copied to the function. The `&` operator is used to p
 	``modifies whatever is passed in to "x" in-place``
 
 ## Transparent Functions
-A transparent function is declared with the `{{` operator instead of the `{` operator. A transparent function does one thing differently than other functions. A transparent function will return the object that the function it calls returns instead of its own return parameter. A transparent function will also overwrite its own stack if it calls itself. This allows for function recursion without stack overflow. A transparent function that calls itself will always occupy a static area in the program stack until it exits. Any function called by a transparent function is required to have an identical return parameter type to the transparent function.
+A transparent function is declared with two open braces instead of one. A transparent function does one thing differently than other functions. A transparent function will return the object that the function it calls returns instead of its own return parameter. A transparent function will also overwrite its own stack if it calls itself. This allows for function recursion without stack overflow. A transparent function that calls itself will always occupy a static area in the program stack until it exits. Any function called by a transparent function is required to have an identical return parameter type to the transparent function.
 
 	``a transparent function that calculates the fibbonanci sequence recursively``
 	{{fib a b c = d : 
