@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+	<title>The fiber Language and Environment Standard</title>
 	<style>
 		body{padding:3ch; background-color:#fffdf6; color:#2a0d35; font-size:large; font-family: serif;}
 		p, dl, table
@@ -216,7 +217,7 @@
 	<h2>Grammar Notation</h2>
 	<ol>
 		<li><p>
-			Syntax is organized into terminal and non-terminal entities using simple Bakus-Naur forms.
+			Syntax structure is organized into terminal and non-terminal entities using simple Bakus-Naur forms.
 		</p></li>
 		<li><p>
 			The names of non-terminal entities are written in <b>bold font</b>, followed by an arrow (&rarr;).
@@ -229,6 +230,9 @@
 		</p></li>
 		<li><p>
 			Each terminal entity is followed by a single expressin of POSIX Extended Regular Syntax.
+		</p></li>
+		<li><p>
+			An entity that is neither bold nor italicized refers to the top non-terminal entity from an external syntax diagram.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -2221,8 +2225,8 @@
 				 	| <b>Name</b><br>
 					| <b>Name</b> <b>Names</b></td></tr>
 				<tr><td><b>Name</b><br>
-					| <i>Symbol</i><br> 
-					| <i>Symbol</i> <i>Annotate</i> <b>Type</b></td></tr>
+					| Symbol<br> 
+					| Symbol <i>Annotate</i> <b>Type</b></td></tr>
 				<tr><td><i>Annotate</i> &rArr; \|</td></tr>
 				<tr><td><b>Decls</b> &rarr; <br>
 					| <b>Declaration</b><br>
@@ -2357,6 +2361,12 @@
 	<ol>
 		<li><p>
 			Singular types are data types that define the interface to a single data object.
+		</p></li>
+		<li><p>
+			Singular types are used to organize other types into a hierarchical relationship network.
+		</p></li>
+		<li><p>
+			Singular types also provide the means to alias an existing type.
 		</p></li>
 	</ol>
 	<h2>Bins</h2>
