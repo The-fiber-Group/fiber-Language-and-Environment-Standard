@@ -377,10 +377,12 @@ Parameters can be untyped, typed, named, or unnamed, or any combination of types
 	x;Nat ``a typed parameter``
 	_ ;Nat ``a typed parameter (note the whitespace between _ and ;)``
 
-The `=` operator denotes return parameters. All parameters declared after this operator are declared as return parameters.
+The `->` operator denotes return parameters. All parameters declared after this operator are declared as return parameters.
 
 	x y z ``three parameters, no return``
-	x y z = a b c ``three parameters, three returns``
+	x y z -> a b c ``three parameters, three returns``
+
+Parameters can be declared with default values using the identifier syntax.
 
 ### Unnamed Parameter Warning
 If only one function signature/declaration exists, unnamed parameters cannot be used. All parameters must be named. Unnamed parameters are only used when overloading functions with alternate signatures.

@@ -2070,6 +2070,18 @@
 			Operators shall also be delimited by symbol tokens and other alphanumeric characters.
 		</p></li>
 	</ol>
+	<h2>Comments</h2>
+	<ol>
+		<li><p>
+			Comments are bounded by the comment operator, <code>``</code>.
+		</p></li>
+		<li><p>
+			Any character will be accepted between a pair of comment operators except for two backquotes in succession, which is the comment operator.
+		</p></li>
+		<li><p>
+			The text between a pair of comment operators shall be discarded before interpretation of the fiber syntax.
+		</p></li>
+	</ol>
 	<h1>Declarations</h1>
 	<ol>
 		<li><p>
@@ -2196,15 +2208,49 @@
 		<li>
 			<p>The syntax for declaring an identifier is as follows...</p>
 			<table>
-				<tr><td><b>Identifier</b> &rarr; </td></tr>
+				<tr><td><b>Identifier</b> &rarr; <b>Id</b> <i>Assign</i> <b>Decls</b></td></tr>
+				<tr><td><i>Assign</i> &rArr; =</td></tr>
+				<tr><td><b>Id</b> &rarr; <br>
+					| <b>Name</b><br>
+					| <i>Multiplex</i> <b>Names</b></td></tr>
+				<tr><td><i>Multiplex</i> &rArr; \\</td></tr>
+				<tr><td><b>Names</b> &rarr;<br>
+				 	| <b>Name</b><br>
+					| <b>Name</b> <b>Names</b></td></tr>
+				<tr><td><b>Name</b><br>
+					| <i>Symbol</i><br> 
+					| <i>Symbol</i> <i>Annotate</i> <b>Type</b></td></tr>
+				<tr><td><i>Annotate</i> &rArr; \|</td></tr>
+				<tr><td><b>Decls</b> &rarr; <br>
+					| <b>Declaration</b><br>
+					| <i>Multiplex</i> <b>Declarations</b></td></tr>
+				<tr><td><b>Declarations</b> &rarr; <br>
+					| <b>Declaration</b><br>
+					| <b>Declaration</b> <b>Declarations</b></td></tr>
 			</table>
 		</li>
 		<li><p>
-			The assignment operator accepts a symbol as its left operand and a declaration statement as its right operand.
+			It is possible to declare multiple identifiers within the same statement using the "multiplex" prefix operator, <code>\</code>.
 		</p></li>
 		<li><p>
-			Multiple assignments can be
+			When the multiplex operator is used to the left of the assignment operator, any number of identifiers will be accepted.
 		</p></li>
+		<li><p>
+			When the multiplex operator is used to the right of the assignment operator, a number of declaration statements equivalent to the number of identifiers declared on the left side shall be expected.
+		</p></li>
+		<li><p>
+			When the left side of the assignment statement is multiplexed, but not the right, the declarative statement on the right will be re-evaluated to produce instantiate a data object for each identifier.
+		</p></li>
+		<li><p>
+			The right side of an assignment statement shall not be multiplexed if the left side of the expression is not also multiplexed.
+		</p></li>
+		<li>
+			<p>Some examples of identifier declarations are...</p>
+			<code>variable1 = 1<br>
+			variable2 = -1.1<br>
+			\variable3 variable4 = "the same string"<br>
+			\variable5 variable6 = \ "one string" "two strings"</code>
+		</li>
 	</ol>
 	<h2>Bins</h2>
 	<ol>
