@@ -2266,6 +2266,15 @@
 			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
 		</li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Type System</h1>
 	<ol>
 		<li><p>
@@ -2354,6 +2363,7 @@
 				<li>Singular Types</li>
 				<li>Constrained Types</li>
 				<li>Polymorphic Types</li>
+				<li>Compound Types</li>
 			</ul>
 		</li>
 	</ol>
@@ -2368,6 +2378,55 @@
 		<li><p>
 			Singular types also provide the means to alias an existing type.
 		</p></li>
+		<li><p>
+			A singular type definition consists of a number of type names listed in any order.
+			These types are considered subtypes of the type being defined.
+		</p></li>
+		<li><p>
+			A number of existing supertypes may be declared using a semicolon operator.
+			The type names written before the semicolon are declared as supertypes of the type being defined.
+			The type names written after the semicolon are declared as subtypes of the type being defined.
+		</p></li>
+		<li><p>
+			A singular type may also specify an expression that a data object must be included in to be of that type.
+		</p></li>
+		<li>
+			<p>Some example singular types are...</p>
+			<code>(>a)</code>
+			<p>An alias of a type <i>a</i>.</p>
+			<code>(>x y z)</code>
+			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
+			<code>(>h i ; j k)</code>
+			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
+		</li>
+	</ol>
+	<h3>Constrained Types</h3>
+	<ol>
+		<li><p>
+			Constrained types are data types that define the number of times a data object may be "used" and how the interface to a given data object may change when it is used.
+		</p></li>
+		<li><p>
+			A type listed in the definition may be prefixed with a linear operator, <code>.</code> which declares that the type being defined must be used exactly once with the interface of the type that was listed.
+		</p></li>
+		<li><p>
+			A type listed in the definition may be prefixed with an affine operator, <code>,</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
+		</p></li>
+		<li><p>
+			A decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefixe, or the maximum uses allows in the case of an affine operator prefix.
+		</p></li>
+		<li><p>
+			An elipses may be provided after a prefixed type name. The elipses specifies an unknown number of required or maximum uses.
+		</p></li>
+		<li><p>
+			A constrained type may declare that the interface of a data object will change after a certain number of uses. The binary migration operator, <code>&gt;</code> is used to declare an interface change.
+		</p></li>
+		<li><p>
+			The migration operator will accept a constrained type declaration for each operand.
+		</p></li>
+		<li><p>
+			The left operand declares the initial constrained type to be used.
+			The right operand declares the constrained type used after the use requirements of the initial type have been met.
+		</p></li>
 	</ol>
 	<h2>Bins</h2>
 	<ol>
@@ -2376,6 +2435,26 @@
 		</p></li>
 		<li><p>
 			The Bin declaration is capable of 
+		</p></li>
+	</ol>
+
+	<h1>Scope and Duration of Data Objects</h1>
+	<ol>
+		<li><p>
+			All identifiers within a given region of scope will share the same logical name space.
+			An identifier shall not be used more than once to identify multiple data objects.
+		</p></li>
+		<li><p>
+			Regions of scope will be implicitly created with function definitions and module declarations.
+			Identifiers declared within a function definition or module declaration shall reside within that region of scope.
+		</p></li>
+		<li><p>
+			Regions of scope may be nested. One region may reside within another region.
+			Some places this nesting can occur is when a function is defined within a module declaration, or when a module includes an external module.
+		</p></li>
+		<li><p>
+			If an identifier is declared in a region of scope and again in a nested region, the identifier declared in the nested region will "shadow" the identifier declared in the outer region.
+			This means that within the nested region, the local declaration of that identifier will always be used.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
