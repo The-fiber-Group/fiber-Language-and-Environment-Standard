@@ -452,7 +452,7 @@ A transparent function is declared with two open braces instead of one. A transp
 		? c > 0
 		d = fib: b a + b n,
 		d = a
-	}
+	}}
 
 ## Variadic Functions
 
