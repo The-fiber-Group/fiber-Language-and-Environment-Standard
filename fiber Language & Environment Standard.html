@@ -2483,7 +2483,7 @@
 			A type listed in the definition may be prefixed with a linear operator, <code>.</code> which declares that the type being defined must be used exactly once with the interface of the type that was listed.
 		</p></li>
 		<li><p>
-			A type listed in the definition may be prefixed with an affine operator, <code>,</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
+			A type listed in the definition may be prefixed with an affine operator, <code>'</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
 		</p></li>
 		<li><p>
 			A decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
@@ -2501,6 +2501,15 @@
 			The left operand declares the initial constrained type to be used.
 			The right operand declares the constrained type used after the use requirements of the initial type have been met.
 		</p></li>
+		<li>
+			<p>Some examples of constrained types are...</p>
+			<code>(>T .T)</code>
+			<p>This type is required to be used exactly once during program execution.</p>
+			<code>(>z 'z)</code>
+			<p>This type may be used at most once or at least no times.</p>
+			<code>(>X .a 3 > 'b)</code>
+			<p>This type is required to be used exactly three times with the type <i>a</i>, after which it can optionally be used once with the type <i>b</i>.</p>
+		</li>
 	</ol>
 	<h2>Bins</h2>
 	<ol>
