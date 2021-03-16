@@ -2096,6 +2096,11 @@
 		</p></li>
 	</ol>
 	<h2>Constant Values</h2>
+	<ol>
+		<li><p>
+			A <u>constant value</u> shall be a typed data object with a value that is expressed syntactically in writing.
+		</p></li>
+	</ol>
 	<h3>Numbers</h3>
 	<ol>
 		<li><p>
@@ -2266,6 +2271,35 @@
 			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
 		</li>
 	</ol>
+	<h3>Identifiers as Variables</h3>
+	<ol>
+		<li><p>
+			If an identifier is declared with a data object that is transformable, that identifier may be used as a program variable.
+		</p></li>
+		<li>
+			<p>
+				Data objects are transformable if their value or contents can be dynamically updated during the execution of a program.
+				Data objects that are transformable include...
+			</p>
+			<ul>
+				<li>primitive data types</li>
+				<li>compound data types</li>
+			</ul>
+		</li>
+		<li>
+			<p>
+				Data objects that cannot be variables are...
+			</p>
+			<ul>
+				<li>written constant values</li>
+				<li>type definitions</li>
+				<li>compound data type definitions</li>
+				<li>function declarations and definitions</li>
+				<li>proof statements</li>
+				<li>labels</li>
+			</ul>
+		</li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
@@ -2278,7 +2312,15 @@
 	<h1>Type System</h1>
 	<ol>
 		<li><p>
-			Types are used in fiber to constrain program state to a set of reasonable states.
+			Data types in fiber are used to constrain transformations on data objects to a reasonable set of operations for the context of each object.
+			Data types are also used to constrain change in program state during execution to a reasonable set of outcomes for the context of a program.
+		</p></li>
+		<li><p>
+			Every data object in fiber will have an associated type at any give point during execution of the program.
+			The type of a data object shall provide an interface which shall be used to perform transformations on the contents of that data object.
+		</p></li>
+		<li><p>
+			The type associated with a data object or the interface of that type may change during any point in the execution of a program.
 		</p></li>
 	</ol>
 	<h2>Primitive Data Types</h2>
@@ -2354,7 +2396,13 @@
 			It is possible to define custom data types.
 		</p></li>
 		<li><p>
-			Custom data type declarations are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
+			Custom data type definitions are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
+		</p></li>
+		<li><p>
+			The body of a type definition contains an unordered list of type names and constants. 
+		</p></li>
+		<li><p>
+			A type definition may also include special operators that enforce special type inteface behavior.
 		</p></li>
 		<li><p>
 			There are several kinds of data type declarations:
@@ -2366,6 +2414,10 @@
 				<li>Compound Types</li>
 			</ul>
 		</li>
+		<li><p>
+			A type definition shall be one of a singular, constrained, polymorphic, or compound definition. 
+			A type definition cannot contain multiple definition expressions.
+		</p></li>
 	</ol>
 	<h3>Singular Types</h3>
 	<ol>
@@ -2388,7 +2440,21 @@
 			The type names written after the semicolon are declared as subtypes of the type being defined.
 		</p></li>
 		<li><p>
-			A singular type may also specify an expression that a data object must be included in to be of that type.
+			A singular type may also specify an expression pattern that a data object must be included in to be of that type.
+			The expression pattern can be any expression which is evaluated to return a data object.
+		</p></li>
+		<li><p>
+			An expression pattern cannot include declaration or definition statements.
+		</p></li>
+		<li><p>
+			A singular type that specifies an expression must declare the expression within a closed pair of braces.
+		</p></li>
+		<li><p>
+			The expression specified within the braces must contain only type names, constants, operators, or functions.
+			An expression pattern cannot contain program variables.
+		</p></li>
+		<li><p>
+			The underscore operator shall denote the position in the expression pattern where the object of the type being defined will occur.
 		</p></li>
 		<li>
 			<p>Some example singular types are...</p>
@@ -2398,6 +2464,10 @@
 			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
 			<code>(>h i ; j k)</code>
 			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
+			<code>(> { _ + 2 } )</code>
+			<p>The type of any object given as the left operand of an expression that adds two</p>
+			<code>(> a ; b { _ - Any } )</code>
+			<p>A type that is a subtype of <i>a</i> and a supertype of <i>b</i> and any object that is the left operand in every possible subtraction expression.</p>
 		</li>
 	</ol>
 	<h3>Constrained Types</h3>
@@ -2406,13 +2476,17 @@
 			Constrained types are data types that define the number of times a data object may be "used" and how the interface to a given data object may change when it is used.
 		</p></li>
 		<li><p>
+			A "use" shall be any operation on a data object that performs a transformation on its contents.
+			Operations that read the contents of a data object without updating them are not considered a "use" in the context of a constrained type.
+		</p></li>
+		<li><p>
 			A type listed in the definition may be prefixed with a linear operator, <code>.</code> which declares that the type being defined must be used exactly once with the interface of the type that was listed.
 		</p></li>
 		<li><p>
 			A type listed in the definition may be prefixed with an affine operator, <code>,</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
 		</p></li>
 		<li><p>
-			A decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefixe, or the maximum uses allows in the case of an affine operator prefix.
+			A decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
 		</p></li>
 		<li><p>
 			An elipses may be provided after a prefixed type name. The elipses specifies an unknown number of required or maximum uses.
