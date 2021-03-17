@@ -2054,15 +2054,37 @@
 		<li><p>
 			Multiple delimiting characters occurring in an contiguous series will be treated as a single literal delimiter.
 		</p></li>
-		<li><p>
-			A symbol is a contiguous series of alphanumeric characters.
-			This includes any language script characters specified by the Unicode standard.
+	</ol>
+	<h2>Symbols</h2>
+	<ol>
+		<li>
+			<p>
+				A symbol is a contiguous series of alphanumeric characters.
+				This includes any language script characters specified by the Unicode standard.
 			</p>
 			<table><tr><td><i>Symbol</i> &rArr; [0-9A-Fa-f]*</td></tr></table>
+			<p>
+				A symbol can also contain a dash character, <code>-</code>.
+				A dash shall be interpreted as part of a symbol only if it is surrounded by alphanumeric characters.
+			</p>
 		</li>
+		<li><p>
+			Symbols are case-insensitive. The ASCII and Unicode code point ranges 41-5A and 61-7A are considered equivalent.
+			That is to say, the character value 41 shall be equivalent to 61, 42 to 62, and so on.
+		</p></li>
 		<li><p>
 			Symbols shall also be delimited by operator tokens and non-alphanumeric characters.
 		</p></li>
+		<li>
+			<p>Some examples of symbols are...</p>
+			<code>sym</code><br>
+			<code>SYM</code><br>
+			<code>Sym-with-DASH</code><br>
+			<code>another-symbol</code>
+		</li>
+	</ol>
+	<h2>Operators</h2>
+	<ol>
 		<li>
 			<p>
 				An operator is a contiguous series of non-alphanumeric characters.
@@ -2073,6 +2095,13 @@
 		<li><p>
 			Operators shall also be delimited by symbol tokens and other alphanumeric characters.
 		</p></li>
+		<li>
+			<p>Some examples of operators are...</p>
+			<code>-</code><br>
+			<code>~'_(_</code><br>
+			<code>-></code><br>
+			<code>+</code><br>
+			<code>//</code>
 	</ol>
 	<h2>Comments</h2>
 	<ol>
@@ -2486,7 +2515,7 @@
 			A type listed in the definition may be prefixed with an affine operator, <code>'</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
 		</p></li>
 		<li><p>
-			A decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
+			A positive decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
 		</p></li>
 		<li><p>
 			An elipses may be provided after a prefixed type name. The elipses specifies an unknown number of required or maximum uses.
