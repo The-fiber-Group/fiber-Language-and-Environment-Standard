@@ -2242,6 +2242,8 @@
 		</p></li>
 		<li><p>
 			An identifier may be declared with a data type annotation which will coerce the type of the data object the identifier is declared with.
+			An identifier shall be annotated with a type using the binary type annotation operator, <code>|</code>.
+			The type annotation operator accepts a symbol as its left operand and a type name as its right operand.
 		</p></li>
 		<li><p>
 			Identifers are declared using the binary assignment operator, <code>=</code>.
@@ -2419,7 +2421,7 @@
 			</ul>
 		</li>
 	</ol>
-	<h2>Data Type Declarations</h2>
+	<h2>Data Type Definitions</h2>
 	<ol>
 		<li><p>
 			It is possible to define custom data types.
@@ -2432,6 +2434,9 @@
 		</p></li>
 		<li><p>
 			A type definition may also include special operators that enforce special type inteface behavior.
+		</p></li>
+		<li><p>
+			A type definition which is empty, <code>(> )</code> shall not be accepted.
 		</p></li>
 		<li><p>
 			There are several kinds of data type declarations:
@@ -2499,6 +2504,40 @@
 			<p>A type that is a subtype of <i>a</i> and a supertype of <i>b</i> and any object that is the left operand in every possible subtraction expression.</p>
 		</li>
 	</ol>
+	<h4>Function Types</h4>
+	<ol>
+		<li><p>
+			A function type is also a singular type.
+		</p></li>
+		<li><p>
+			Function types use the implication operator, <code>=></code>, to signify a function type.
+			A number of types are listed before and after the implication.
+		</p></li>
+		<li><p>
+			The types listed before the implication operator will be interpreted as the types of the input parameters for that function type.
+		</p></li>
+		<li><p>
+			The types listed after the implication operator will be interpreted as the types of the output parameters for that function type.
+		</p></li>
+		<li><p>
+			The ordering of the parameter types is significant.
+		</p></li>
+		<li><p>
+			For a function signature to be of a function type, the types of the parameters in both the function signature and the function type must be declared in identical order, using identical type names.
+		</p></li>
+		<li><p>
+			It is possible for one of the sides of the implication operator to contain no type names.
+		</p></li>
+		<li>
+			<p>Some examples of function types are...</p>
+			<code>(> a b => c)</code>
+			<p>The type of any function that accepts type <i>a</i> as the first parameter, type <i>b</i> as the second, and returns type <i>c</i>.</p>
+			<code>(> x y => )</code>
+			<p>The type of any function that accepts two parameters of types, <i>x</i> then <i>y</i>, and does not return a value.</p>
+			<code>(> =>z)</code>
+			<p>The type of any function that accepts no parameters and returns a value of type <i>z</i>.</p>
+		</li>
+	</ol>
 	<h3>Constrained Types</h3>
 	<ol>
 		<li><p>
@@ -2545,11 +2584,25 @@
 	<h2>Bins</h2>
 	<ol>
 		<li><p>
-			The Bin is used to declare the composition and interface of a compound data type.
+			The Bin is used to declare the composition compound data type.
 		</p></li>
 		<li><p>
-			The Bin declaration is capable of 
+			A Bin contains a number of data fields which shall remain static throught the execution of a program.
 		</p></li>
+		<li><p>
+			All Bin data types have a uniform interface for accessing fields.
+		</p></li>
+		<li>
+			<p>They syntax for declaring a Bin is as follows...</p>
+			<table>
+				<tr><td><b>Bin</b> &rarr; <i>DeclBegin</i> <b>Fields</b> <i>DeclEnd</i></td></tr>
+				<tr><td><i>DeclBegin</i> &rArr; \[</td></tr>
+				<tr><td><i>DeclEnd</i> &rArr; \]</td></tr>
+				<tr><td><b>Fields</b> &rarr;<br>
+				| Identifier<br>
+				| Identifier <b>Fields</b></td></tr>
+			</table>
+		</li>
 	</ol>
 
 	<h1>Scope and Duration of Data Objects</h1>
@@ -2619,9 +2672,13 @@
 
 		</li>
 		<h2>Official Members</h2>
-		<h2>Additional Contributors</h2>
+		<li></li>
+		<h1>Additional Contributors</h1>
 		<li><p>
 			qonfluent
+		</p></li>
+		<li><p>
+			Stan Seiler
 		</p></li>
 	</ul>
 </footer>
