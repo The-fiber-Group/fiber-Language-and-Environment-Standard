@@ -2581,6 +2581,15 @@
 			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
 		</li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h2>Bins</h2>
 	<ol>
 		<li><p>
@@ -2600,9 +2609,24 @@
 				<tr><td><i>DeclEnd</i> &rArr; \]</td></tr>
 				<tr><td><b>Fields</b> &rarr;<br>
 				| Identifier<br>
-				| Identifier <b>Fields</b></td></tr>
+				| Type<br>
+				| Identifier <b>Fields</b><br>
+				| Type <b>Fields</b><br>
+				| <b>Fields</b> <i>Union<i> <b>Fields</b></td></tr>
 			</table>
 		</li>
+		<li><p>
+			A field can be either named or unnamed.
+		</p></li>
+		<li><p>
+			A named field is declared using the same syntax as an identifier.
+		</p></li>
+		<li><p>
+			An unnamed field is declared with a type name.
+		</p></li>
+		<li><p>
+			It is possible for a field to be initialized with a nested Bin declaration.
+		</p></li>
 	</ol>
 
 	<h1>Scope and Duration of Data Objects</h1>
