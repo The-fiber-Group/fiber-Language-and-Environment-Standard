@@ -1007,7 +1007,10 @@
 			</table>
 		</li>
 		<li><p>
-			The primary operand for the instructions Load, Load Immediate, Copy, and Pop from the Stack must be a new, unique register name.
+			<rec>
+				It is recommended that the primary operand for the instructions Load, Load Immediate, Copy, and Pop from the Stack must be a new, unique register name.
+				This prevents too few BRISC registers from being used which may cause efficiency problems when the BRISC program is translated to a native instruction set.
+			</rec>
 		</p></li>
 	</ol>
 	<h3>Load</h3>
@@ -1645,6 +1648,9 @@
 		</p></li>
 		<li><p>
 			An entry can optionally contain the global location of a BOF object within the target operating system's directory structure.
+		</p></li>
+		<li><p>
+			Multiple list entries are separated by the ASCII tilde character (~).
 		</p></li>
 		<li>
 			<p>
