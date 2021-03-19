@@ -2068,12 +2068,15 @@
 				A symbol is a contiguous series of alphanumeric characters.
 				This includes any language script characters specified by the Unicode standard.
 			</p>
-			<table><tr><td><i>Symbol</i> &rArr; [0-9A-Fa-f]*</td></tr></table>
-			<p>
-				A symbol can also contain a dash character, <code>-</code>.
-				A dash shall be interpreted as part of a symbol only if it is surrounded by alphanumeric characters.
-			</p>
+			<table><tr><td><i>Symbol</i> &rArr; [0-9A-Fa-f-]*</td></tr></table>
 		</li>
+		<li><p>
+			Multiple dash characters can occur in series within a symbol.
+		</p></li>
+		<li><p>
+			All symbols must begin and end with an alphanumeric character.
+			A symbol cannot begin or end with a dash character.
+		</p></li>
 		<li><p>
 			Symbols are case-insensitive. The ASCII and Unicode code point ranges 41-5A and 61-7A are considered equivalent.
 			That is to say, the character value 41 shall be equivalent to 61, 42 to 62, and so on.
@@ -2086,7 +2089,8 @@
 			<code>sym</code><br>
 			<code>SYM</code><br>
 			<code>Sym-with-DASH</code><br>
-			<code>another-symbol</code>
+			<code>another-symbol</code><br>
+			<code>mAnY-------DAshes</code>
 		</li>
 	</ol>
 	<h2>Operators</h2>
@@ -2257,8 +2261,11 @@
 		<li>
 			<p>The syntax for declaring an identifier is as follows...</p>
 			<table>
-				<tr><td><b>Identifier</b> &rarr; <b>Id</b> <i>Assign</i> <b>Decls</b></td></tr>
+				<tr><td><b>Identifier</b> &rarr; <br>
+				| <b>Id</b> <i>Assign</i> <b>Decls</b><br>
+				| Symbol <i>Annotate</i></td></tr>
 				<tr><td><i>Assign</i> &rArr; =</td></tr>
+				<tr><td><i>Annotate</i> &rArr; :</td></tr>
 				<tr><td><b>Id</b> &rarr; <br>
 					| <b>Name</b><br>
 					| <i>Multiplex</i> <b>Names</b></td></tr>
@@ -2269,7 +2276,6 @@
 				<tr><td><b>Name</b><br>
 					| Symbol<br> 
 					| Symbol <i>Annotate</i> <b>Type</b></td></tr>
-				<tr><td><i>Annotate</i> &rArr; \|</td></tr>
 				<tr><td><b>Decls</b> &rarr; <br>
 					| <b>Declaration</b><br>
 					| <i>Multiplex</i> <b>Declarations</b></td></tr>
@@ -2304,8 +2310,10 @@
 			<p>Two variables, <i>var2</i> and <i>var3</i>, are associated with two identical string data objects.</p>
 			<code>\ var4 var5 = \ 7 "seven"</code>
 			<p><i>var4</i> is assigned a numerical constant and <i>var5</i> is assigned a string data object.</p>
-			<code>var1|Int = 10</code>
+			<code>var1:Int = 10</code>
 			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
+			<code>just-a-var:Nat</code>
+			<p>An identifier declarared without an initial value.</p>
 		</li>
 	</ol>
 	<h3>Identifiers as Variables</h3>
@@ -2587,19 +2595,10 @@
 			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
 		</li>
 	</ol>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h2>Bins</h2>
+	<h3>Compound Types</h3>
 	<ol>
 		<li><p>
-			The Bin is used to declare the composition compound data type.
+			The Bin is used to declare the composition of a compound data type.
 		</p></li>
 		<li><p>
 			A Bin contains a number of data fields which shall remain static throught the execution of a program.
@@ -2614,24 +2613,31 @@
 				<tr><td><i>DeclBegin</i> &rArr; \[</td></tr>
 				<tr><td><i>DeclEnd</i> &rArr; \]</td></tr>
 				<tr><td><b>Fields</b> &rarr;<br>
+				| <b>Fields</b> <b>Fields</b><br>
 				| Identifier<br>
 				| Type<br>
-				| Identifier <b>Fields</b><br>
-				| Type <b>Fields</b><br>
-				| <b>Fields</b> <i>Union<i> <b>Fields</b></td></tr>
+				| <b>Fields</b> <i>Union</i> <b>Fields</b><br>
+				| Identifier <i>Index</i> Decimal<br>
+				| Type <i>Index</i> Number</td></tr>
+				<tr><td><i>Union</i> &rArr; \|</td></tr>
+				<tr><td><i>Index</i> &rArr; _</td></tr>
 			</table>
 		</li>
 		<li><p>
 			A field can be either named or unnamed.
 		</p></li>
 		<li><p>
-			A named field is declared using the same syntax as an identifier.
+			Each field must have an associated type.
 		</p></li>
 		<li><p>
-			An unnamed field is declared with a type name.
+			Single fields can be assigned default values using the same syntax as an identifier.
 		</p></li>
 		<li><p>
 			It is possible for a field to be initialized with a nested Bin declaration.
+		</p></li>
+		<li><p>
+			Multiple fields of the same type may be declared using the binary index operator, <code>_</code>, which accepts a field declaration as its left operand and a numerical constant as its right operand.
+			The number of fields declared using the index operator shall be equivalent to the numerical value given as the right operand.
 		</p></li>
 	</ol>
 
