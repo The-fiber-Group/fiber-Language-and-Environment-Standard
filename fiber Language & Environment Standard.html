@@ -1002,15 +1002,12 @@
 				<tr><td>Load Immediate:</td><td>Register</td><td>I</td><td>Number</td><td>Immediate Value</td><td>Primary Operand</td></tr>
 				<tr><td>Store:</td><td>Register/Address</td><td>S</td><td>Register</td><td>Secondary Operand</td><td>Primary Operand</td></tr>
 				<tr><td>Copy:</td><td>Register</td><td>C</td><td>Register</td><td>Secondary Register</td><td>Primary Register</td></tr>
-				<tr><td>Push to the Stack:</td><td>Register</td><td>P</td><td>-</td><td>Primary Operand</td><td>Program Stack</td></tr>
-				<tr><td>Pop from the Stack:</td><td>Register</td><td>p</td><td>-</td><td>Program Stack</td><td>Primary Register</td></tr>
+				<tr><td>Push:</td><td>Register</td><td>P</td><td>-</td><td>Primary Operand</td><td>Program Stack</td></tr>
+				<tr><td>Pop:</td><td>Register</td><td>p</td><td>-</td><td>Program Stack</td><td>Primary Register</td></tr>
 			</table>
 		</li>
 		<li><p>
-			<rec>
-				It is recommended that the primary operand for the instructions Load, Load Immediate, Copy, and Pop from the Stack must be a new, unique register name.
-				This prevents too few BRISC registers from being used which may cause efficiency problems when the BRISC program is translated to a native instruction set.
-			</rec>
+			The instructions Load, Load Immediate, Copy, and Pop shall require a new, unique register as the primary operand.
 		</p></li>
 	</ol>
 	<h3>Load</h3>
