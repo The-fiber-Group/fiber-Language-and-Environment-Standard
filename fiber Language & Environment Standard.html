@@ -2125,6 +2125,57 @@
 			The text between a pair of comment operators shall be discarded before interpretation of the fiber syntax.
 		</p></li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Declarations</h1>
+	<h2>Constants</h2>
+	<h2>Identifiers</h2>
+	<h2>Compound Data</h2>
+	<h2>Types</h2>
+	<h2>Functions</h2>
+	<h2>Modules</h2>
+	<h2>Verification Statements</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Expressions</h1>
+	<h2>Assignment</h2>
+	<h2>Algebra</h2>
+	<h2>Logic</h2>
+	<h3>Comparison</h3>
+	<h2>Reflection</h2>
+	<h2>Branching</h2>
+	<h2>Calling Functions</h2>
+	<h2>Order of Evaluation</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Scope and Duration of Data Objects</h1>
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Declarations</h1>
 	<ol>
 		<li><p>
@@ -2367,6 +2418,9 @@
 		<li><p>
 			The type associated with a data object or the interface of that type may change during any point in the execution of a program.
 		</p></li>
+		<li><p>
+			Each type shall have a constant size measured in bytes.
+		</p></li>
 	</ol>
 	<h2>Primitive Data Types</h2>
 	<ol>
@@ -2606,6 +2660,13 @@
 		<li><p>
 			All Bin data types have a uniform interface for accessing fields.
 		</p></li>
+		<li><p>
+			Each field in a Bin is assigned a whole, positive index number.
+		</p></li>
+		<li><p>
+			The index numbering of fields in a Bin shall begin with zero assigned to the first field declaration.
+			Following fields shall be assigned index values increasing by one for each additional field declared.
+		</p></li>
 		<li>
 			<p>The syntax for declaring a Bin is as follows...</p>
 			<table>
@@ -2614,15 +2675,29 @@
 				<tr><td><i>DeclEnd</i> &rArr; \]</td></tr>
 				<tr><td><b>Fields</b> &rarr;<br>
 				| <b>Fields</b> <b>Fields</b><br>
-				| Identifier<br>
-				| Type<br>
 				| <b>Fields</b> <i>Union</i> <b>Fields</b><br>
-				| Identifier <i>Index</i> Decimal<br>
+				| Type<br>
+				| Identifier<br>
+				| Type <i>Assignment</i> Declaration<br>
+				| Symbol <i>Index</i> Number<br>
 				| Type <i>Index</i> Number</td></tr>
+				<tr><td><i>Assignment</i> &rArr; =</td></tr>
 				<tr><td><i>Union</i> &rArr; \|</td></tr>
 				<tr><td><i>Index</i> &rArr; _</td></tr>
 			</table>
 		</li>
+		<li><p>
+			Each field in a Bin shall have a type.
+		</p></li>
+		<li>
+			<p>
+				A field may be declared using Identifier syntax.
+				This allows a field to optionally be declared with an identifier and initial value.
+			</p>
+		</li>
+		<li><p>
+			A field declared without an identifier may still be declared with an initial value by writing that field type as the left operand of the assignment operator, <code>=</code>, and providing a declaration as the right side.
+		</p></li>
 		<li><p>
 			A field can be either named or unnamed.
 		</p></li>
