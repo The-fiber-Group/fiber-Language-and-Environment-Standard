@@ -1990,10 +1990,10 @@
 			In order for program components to be accessible externally from their module, they must be specified as externally accessible.
 		</p></li>
 		<li><p>
-			If a module is included that contains an externally accessible name identical to a name in an including module, the containing module must be specified when using either name.
+			If a module is included that contains an externally accessible name identical to a name in an including module, a specific origin module must be specified when using name.
 		</p></li>
 	</ol>
-	<h2>Program Execution</h2>
+	<h2>Execution</h2>
 	<ol>
 		<li><p>
 			The execution of a fiber program is initiated by calling a function contained in a fiber program.
@@ -2036,6 +2036,23 @@
 			The function called to begin execution is not required to return.
 		</p></li>
 	</ol>
+	<h2>Data Objects</h2>
+	<ol>
+		<li><p>
+			Program execution is performed by the transformation of data held in data objects.
+		</p></li>
+		<li><p>
+			Program objects are divided into two classes, <u>variables</u> and <u>definitions</u>.
+		</p></li>
+		<li><p>
+			A program variable is a data object that exists during the execution of the program.
+			All transformations are performed on program variables.
+		</p></li>
+		<li><p>
+			A program definition is a virtual data object that is not guaranteed to exist during the execution of a program.
+			The order and nature of the transformations performed on program variables are determined using program definitions.
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
@@ -2061,7 +2078,7 @@
 			Multiple delimiting characters occurring in an contiguous series will be treated as a single literal delimiter.
 		</p></li>
 	</ol>
-	<h2>Symbols</h2>
+	<h2 id="syntax symbol">Symbols</h2>
 	<ol>
 		<li>
 			<p>
@@ -2135,48 +2152,6 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>Declarations</h1>
-	<h2>Constants</h2>
-	<h2>Identifiers</h2>
-	<h2>Compound Data</h2>
-	<h2>Types</h2>
-	<h2>Functions</h2>
-	<h2>Modules</h2>
-	<h2>Verification Statements</h2>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Expressions</h1>
-	<h2>Assignment</h2>
-	<h2>Algebra</h2>
-	<h2>Logic</h2>
-	<h3>Comparison</h3>
-	<h2>Reflection</h2>
-	<h2>Branching</h2>
-	<h2>Calling Functions</h2>
-	<h2>Order of Evaluation</h2>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Scope and Duration of Data Objects</h1>
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Declarations</h1>
 	<ol>
 		<li><p>
 			Declarations are expression statements that instantiate data objects and other program constructs.
@@ -2185,10 +2160,13 @@
 			Declarations do not produce a data object when evaluated.
 		</p></li>
 	</ol>
-	<h2>Constant Values</h2>
+	<h2>Constants</h2>
 	<ol>
 		<li><p>
-			A <u>constant value</u> shall be a typed data object with a value that is expressed syntactically in writing.
+			A <u>constant</u> shall be a typed data object with a static value that is expressed syntactically in writing.
+		</p></li>
+		<li><p>
+			A constant shall have the same type and value for every occurrence of that constant.
 		</p></li>
 	</ol>
 	<h3>Numbers</h3>
@@ -2293,6 +2271,395 @@
 			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
 		</p></li>
 	</ol>
+	<h2>Identifiers</h2>
+	<ol>
+		<li><p>
+			An identifier is used to locate and possibly reuse a data object.
+		</p></li>
+		<li><p>
+			An identifier will be associated with only one data object at any time.
+		</p></li>
+		<li><p>
+			An identifier is any well-formed Symbol as defined in <a href="#syntax symbol">(<i>Symbols</i>)</a>.
+		</p></li>
+		<li><p>
+			An identifier shall be declared as either a program variable or the name of a data type, label, function, module, or proof.
+		</p></li>
+	</ol>
+	<h3>Identifiers as Program Variables</h3>
+	<ol>
+		<li>
+			<p>
+				The syntax for an identifier declared as a program variable is as follows...
+			</p>
+			<table>
+				<tr><td><b>Variable</b> &rarr;<br>
+					| Symbol <i>Annotate</i> Type<br>
+					| Symbol <i>Assign</i> Expression<br>
+					| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
+					| <i>Multi</i> List <i>Assign</i> Expression<br>
+					| <i>Multi</i> List <i>Assign</i> <i>Multi</i> ExpressionList</td></tr>
+				<tr><td><i>Annotate</i> &rArr; :</td></tr>
+				<tr><td><i>Assign</i> &rArr; =</td></tr>
+				<tr><td><i>Multi</i> &rArr; \\</td></tr>
+			</table>
+		</li>
+		<li><p>
+			A program variable declaration consists of an identifier and a type name or type declaration associated with the binary annotation operator.
+		</p></li>
+		<li><p>
+			A program variable may be given an initial value by providing an expression which either provides a data constant or evaluates to a data object.
+			If an expression that evaluates to a data object is given, the value held by that data object will be used as the initial value of the variable being declared.
+		</p></li>
+		<li><p>
+			If a variable is declared with a type annotation and an initial value, and the type of the initial value does not match the type of the annotated variable, a type coersion from the type of the expression to the type of the variable shall be attempted. 
+			It a type coersion is not possible, a type error shall occur.
+		</p></li>
+		<li><p>
+			A program variable may alternatively be declared with an initial value and no type annotation.
+			The type of the program value in this declaration shall be determined by the literal type of the initial value provided.
+		</p></li>
+		<li><p>
+			Multiple program variables may be assigned initial values within the same expression using the multiplex operator, <code>\</code>.
+		</p></li>
+		<li><p>
+			The multiplex operator shall optionally prefix a list of variable names before the assignment operator and a list of expressions after the assignment operator.
+		</p></li>
+		<li><p>
+			Each expression in a multiplexed list must be evaluated.
+		</p></li>
+		<li><p>
+			The multiplex operator cannot prefix a list of expressions when only one variable declaration has been provided before the assignment operator.
+		</p></li>
+		<li><p>
+			When a list of variables is provided, but only one expression is provided, all variables shall be declared with initial values identical to the value of that expression.
+		</p></li>
+		<li><p>
+			When a multiplexed list of variables is assigned to a multiplexed list of expressions, the first variable shall be assigned the value of the first expression.
+			All other variables and expressions shall be assigned according to their order of occurrence.
+		</p></li>
+		<li><p>
+			If there is a greater number of variables than there are expressions in each list, the value of the last expression shall be used more than once as the initial value for the extra variables without corresponding expressions.
+		</p></li>
+		<li><p>
+			If there is a greater number of expressions than there are variables in each list, the results of the extra expressions without corresponding variables shall be discarded.
+		</p></li>
+		<li><p>
+			A program variable may optionally be given an initial value using the binary assignment operator.
+		</p></li>
+		<li>
+			<p>Some examples of program variable declarations are...</p>
+			<code>a-variable:Nat</code>
+			<p>The declaration of a program variable of the type <i>Nat</i>.</p>
+			<code>number-one:Int = 1</code>
+			<p>The declaration of a program variable of the type <i>Int</i> with an initial value of one.</p>
+			<code>\ x:Char m:Nat n z = \ "a" 10 5 #"a4b2"</code>
+			<p>The declaration of four program variables with four unique initial values.</p>
+			<code>\ x y z = 0</code>
+			<p>Three variable declarations given the initial value of zero.</p>
+		</li>
+	</ol>
+	<h3>Identifiers as Names</h3>
+	<ol>
+		<li><p>
+			Identifiers are used as names for program definition objects.
+		</p></li>
+		<li><p>
+			The syntax for declaring the name of a definition is dependent on the definition being declared.
+		</p></li>
+	</ol>
+	<h2>Data Types</h2>
+	<ol>
+		<li><p>
+			Data types in fiber are used to constrain transformations on data objects to a reasonable set of operations for the context of each object.
+			Data types are also used to constrain change in program state during execution to a reasonable set of outcomes for the context of a program.
+		</p></li>
+		<li><p>
+			Every data object in fiber will have an associated type at any give point during execution of the program.
+			The type of a data object shall provide an interface which shall be used to perform transformations on the contents of that data object.
+		</p></li>
+		<li><p>
+			The type associated with a data object or the interface of that type may change during any point in the execution of a program.
+		</p></li>
+		<li><p>
+			Each type shall have a constant size measured in bytes.
+		</p></li>
+	</ol>
+	<h2>Primitive Data Types</h2>
+	<ol>
+		<li><p>
+			Primitive data types are provided with the base language by default.
+		</p></li>
+		<li>
+			<p>The primitive data types are...</p>
+			<table>
+				<tr><th>Type Name</th><th>Size</th><th>Interface Description</th></tr>
+				<tr><td>Byte</td><td>1B</td><td>Unsigned binary number</td></tr>
+				<tr><td>Nat16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Nat</td><td>4B</td><td>...</td></tr>
+				<tr><td>Nat64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Char</td><td>1B</td><td>Signed binary number</td></tr>
+				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Int</td><td>4B</td><td>...</td></tr>
+				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number (Unicode values)</td></tr>
+				<tr><td>Float</td><td>4B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Real</td><td>8B</td><td>IEEE-754 binary floating point</td></tr>
+				<tr><td>Mem</td><td>8B</td><td>Memory address</td></tr>
+				<tr><td>True</td><td>1B</td><td>Boolean value</td></tr>
+				<tr><td>False</td><td>1B</td><td>Boolean value</td></tr>
+			</table>
+		</li>
+		<li>
+			<p>
+				The primitive data types are organized in a hierarchy with a number of supertypes.
+				The type hierarchy structure is...
+			</p>
+			<ul>
+				<li>Number
+					<ul>
+						<li>Nat, Nat16, Nat64</li>
+						<li>Int, Int16, Int64</li>
+						<li>Float</li>
+						<li>Real</li>
+						<li>Mem</li>
+						<li>Byte, Char, Uncd</li>
+					</ul>
+				</li>
+				<li>Bool
+					<ul>
+						<li>True</li>
+						<li>False</li>
+					</ul>
+				</li>
+				<li>Graph
+					<ul>
+						<li>Char</li>
+						<li>Byte</li>
+						<li>Uncd</li>
+					</ul>
+				</li>
+				<li>Bin</li>
+				<li>Any
+					<ul>
+						<li>Number</li>
+						<li>Bool</li>
+						<li>Graph</li>
+						<li>Bin</li>
+						<li>Any</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ol>
+	<h2>Data Type Definitions</h2>
+	<ol>
+		<li><p>
+			It is possible to define custom data types.
+		</p></li>
+		<li><p>
+			Custom data type definitions are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
+		</p></li>
+		<li><p>
+			The body of a type definition contains an unordered list of type names and constants. 
+		</p></li>
+		<li><p>
+			A type definition may also include special operators that enforce special type inteface behavior.
+		</p></li>
+		<li><p>
+			A type definition which is empty, <code>(> )</code> shall not be accepted.
+		</p></li>
+		<li><p>
+			A type definition is named using the assignment operator with an identifier as the left operand and the type definition as the right operand.
+		</p></li>
+		<li><p>
+			The assignment of a type definition to an identifier cannot be multiplexed.
+		</p></li>
+		<li><p>
+			There are several kinds of data type declarations:
+			</p>
+			<ul>
+				<li>Singular Types</li>
+				<li>Constrained Types</li>
+				<li>Polymorphic Types</li>
+				<li>Compound Types</li>
+			</ul>
+		</li>
+		<li><p>
+			A type definition shall be one of a singular, constrained, polymorphic, or compound definition. 
+			A type definition cannot contain multiple definition expressions.
+		</p></li>
+	</ol>
+	<h3>Singular Types</h3>
+	<ol>
+		<li><p>
+			Singular types are data types that define the interface to a single data object.
+		</p></li>
+		<li><p>
+			Singular types are used to organize other types into a hierarchical relationship network.
+		</p></li>
+		<li><p>
+			Singular types also provide the means to alias an existing type.
+		</p></li>
+		<li><p>
+			A singular type definition consists of a number of type names listed in any order.
+			These types are considered subtypes of the type being defined.
+		</p></li>
+		<li><p>
+			A number of existing supertypes may be declared using a semicolon operator.
+			The type names written before the semicolon are declared as supertypes of the type being defined.
+			The type names written after the semicolon are declared as subtypes of the type being defined.
+		</p></li>
+		<li><p>
+			A singular type may also specify an expression pattern that a data object must be included in to be of that type.
+			The expression pattern can be any expression which is evaluated to return a data object.
+		</p></li>
+		<li><p>
+			An expression pattern cannot include declaration or definition statements.
+		</p></li>
+		<li><p>
+			A singular type that specifies an expression must declare the expression within a closed pair of braces.
+		</p></li>
+		<li><p>
+			The expression specified within the braces must contain only type names, constants, operators, or functions.
+			An expression pattern cannot contain program variables.
+		</p></li>
+		<li><p>
+			The underscore operator shall denote the position in the expression pattern where the object of the type being defined will occur.
+		</p></li>
+		<li>
+			<p>Some example singular types are...</p>
+			<code>(>a)</code>
+			<p>An alias of a type <i>a</i>.</p>
+			<code>(>x y z)</code>
+			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
+			<code>(>h i ; j k)</code>
+			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
+			<code>add-two = (> { _ + 2 } )</code>
+			<p><i>add-two</i> is the type of any object given as the left operand of an expression that adds two.</p>
+			<code>(> a ; b { _ - Any } )</code>
+			<p>A type that is a subtype of <i>a</i> and a supertype of <i>b</i> and any object that is the left operand in every possible subtraction expression.</p>
+		</li>
+	</ol>
+	<h4>Function Types</h4>
+	<ol>
+		<li><p>
+			A function type is also a singular type.
+		</p></li>
+		<li><p>
+			Function types use the implication operator, <code>=></code>, to signify a function type.
+			A number of types are listed before and after the implication.
+		</p></li>
+		<li><p>
+			The types listed before the implication operator will be interpreted as the types of the input parameters for that function type.
+		</p></li>
+		<li><p>
+			The types listed after the implication operator will be interpreted as the types of the output parameters for that function type.
+		</p></li>
+		<li><p>
+			The ordering of the parameter types is significant.
+		</p></li>
+		<li><p>
+			For a function signature to be of a function type, the types of the parameters in both the function signature and the function type must be declared in identical order, using identical type names.
+		</p></li>
+		<li><p>
+			It is possible for one of the sides of the implication operator to contain no type names.
+		</p></li>
+		<li>
+			<p>Some examples of function types are...</p>
+			<code>(> a b => c)</code>
+			<p>The type of any function that accepts type <i>a</i> as the first parameter, type <i>b</i> as the second, and returns type <i>c</i>.</p>
+			<code>(> x y => )</code>
+			<p>The type of any function that accepts two parameters of types, <i>x</i> then <i>y</i>, and does not return a value.</p>
+			<code>ret = (> =>z)</code>
+			<p><i>ret</i> is the type of any function that accepts no parameters and returns a value of type <i>z</i>.</p>
+		</li>
+	</ol>
+	<h3>Constrained Types</h3>
+	<ol>
+		<li><p>
+			Constrained types are data types that define the number of times a data object may be "used" and how the interface to a given data object may change when it is used.
+		</p></li>
+		<li><p>
+			A "use" is the execution of any operation on that data object that its type interface supports.
+			This includes both operations that read and modify the contents of the data object.
+		</p></li>
+		<li><p>
+			A type listed in the definition may be prefixed with a linear operator, <code>.</code> which declares that the type being defined must be used exactly once with the interface of the type that was listed.
+		</p></li>
+		<li><p>
+			A type listed in the definition may be prefixed with an affine operator, <code>'</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
+		</p></li>
+		<li><p>
+			A positive decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
+		</p></li>
+		<li><p>
+			An elipses may be provided after a prefixed type name. The elipses specifies an unknown number of required or maximum uses.
+		</p></li>
+		<li><p>
+			A constrained type may declare that the interface of a data object will change after a certain number of uses. The binary migration operator, <code>&gt;</code> is used to declare an interface change.
+		</p></li>
+		<li><p>
+			The migration operator will accept a constrained type declaration for each operand.
+		</p></li>
+		<li><p>
+			The left operand declares the initial constrained type to be used.
+			The right operand declares the constrained type used after the use requirements of the initial type have been met.
+		</p></li>
+		<li>
+			<p>Some examples of constrained types are...</p>
+			<code>(>T .T)</code>
+			<p>This type is required to be used exactly once during program execution.</p>
+			<code>(>z 'z)</code>
+			<p>This type may be used at most once or at least no times.</p>
+			<code>(>X .a 3 > 'b)</code>
+			<p>This type is required to be used exactly three times with the type <i>a</i>, after which it can optionally be used once with the type <i>b</i>.</p>
+			<code>(>p 'q ...)</code>
+			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
+		</li>
+	</ol>
+	<h2>Compound Data</h2>
+	<h2>Functions</h2>
+	<h2>Modules</h2>
+	<h2>Proof Statements</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Expressions</h1>
+	<h2>Assignment</h2>
+	<h2>Algebra</h2>
+	<h2>Logic</h2>
+	<h3>Comparison</h3>
+	<h2>Reflection</h2>
+	<h2>Branching</h2>
+	<h2>Calling Functions</h2>
+	<h2>Order of Evaluation</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Scope and Duration of Data Objects</h1>
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Declarations</h1>
+	
+	<h2>Constant Values</h2>
+	
 	<h2>Identifiers</h2>
 	<ol>
 		<li><p>
@@ -2406,249 +2773,7 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>Type System</h1>
-	<ol>
-		<li><p>
-			Data types in fiber are used to constrain transformations on data objects to a reasonable set of operations for the context of each object.
-			Data types are also used to constrain change in program state during execution to a reasonable set of outcomes for the context of a program.
-		</p></li>
-		<li><p>
-			Every data object in fiber will have an associated type at any give point during execution of the program.
-			The type of a data object shall provide an interface which shall be used to perform transformations on the contents of that data object.
-		</p></li>
-		<li><p>
-			The type associated with a data object or the interface of that type may change during any point in the execution of a program.
-		</p></li>
-		<li><p>
-			Each type shall have a constant size measured in bytes.
-		</p></li>
-	</ol>
-	<h2>Primitive Data Types</h2>
-	<ol>
-		<li><p>
-			Primitive data types are provided with the base language by default.
-		</p></li>
-		<li>
-			<p>The primitive data types are...</p>
-			<table>
-				<tr><th>Type Name</th><th>Size</th><th>Interface Description</th></tr>
-				<tr><td>Byte</td><td>1B</td><td>Unsigned binary number</td></tr>
-				<tr><td>Nat16</td><td>2B</td><td>...</td></tr>
-				<tr><td>Nat</td><td>4B</td><td>...</td></tr>
-				<tr><td>Nat64</td><td>8B</td><td>...</td></tr>
-				<tr><td>Char</td><td>1B</td><td>Signed binary number</td></tr>
-				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
-				<tr><td>Int</td><td>4B</td><td>...</td></tr>
-				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
-				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number (Unicode values)</td></tr>
-				<tr><td>Float</td><td>4B</td><td>IEEE-754 binary floating point</td></tr>
-				<tr><td>Real</td><td>8B</td><td>IEEE-754 binary floating point</td></tr>
-				<tr><td>Mem</td><td>8B</td><td>Memory address</td></tr>
-				<tr><td>True</td><td>1B</td><td>Boolean value</td></tr>
-				<tr><td>False</td><td>1B</td><td>Boolean value</td></tr>
-			</table>
-		</li>
-		<li>
-			<p>
-				The primitive data types are organized in a hierarchy with a number of supertypes.
-				The type hierarchy structure is...
-			</p>
-			<ul>
-				<li>Number
-					<ul>
-						<li>Nat, Nat16, Nat64</li>
-						<li>Int, Int16, Int64</li>
-						<li>Float</li>
-						<li>Real</li>
-						<li>Mem</li>
-						<li>Byte, Char, Uncd</li>
-					</ul>
-				</li>
-				<li>Bool
-					<ul>
-						<li>True</li>
-						<li>False</li>
-					</ul>
-				</li>
-				<li>Graph
-					<ul>
-						<li>Char</li>
-						<li>Byte</li>
-						<li>Uncd</li>
-					</ul>
-				</li>
-				<li>Bin</li>
-				<li>Any
-					<ul>
-						<li>Number</li>
-						<li>Bool</li>
-						<li>Graph</li>
-						<li>Bin</li>
-						<li>Any</li>
-					</ul>
-				</li>
-			</ul>
-		</li>
-	</ol>
-	<h2>Data Type Definitions</h2>
-	<ol>
-		<li><p>
-			It is possible to define custom data types.
-		</p></li>
-		<li><p>
-			Custom data type definitions are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
-		</p></li>
-		<li><p>
-			The body of a type definition contains an unordered list of type names and constants. 
-		</p></li>
-		<li><p>
-			A type definition may also include special operators that enforce special type inteface behavior.
-		</p></li>
-		<li><p>
-			A type definition which is empty, <code>(> )</code> shall not be accepted.
-		</p></li>
-		<li><p>
-			There are several kinds of data type declarations:
-			</p>
-			<ul>
-				<li>Singular Types</li>
-				<li>Constrained Types</li>
-				<li>Polymorphic Types</li>
-				<li>Compound Types</li>
-			</ul>
-		</li>
-		<li><p>
-			A type definition shall be one of a singular, constrained, polymorphic, or compound definition. 
-			A type definition cannot contain multiple definition expressions.
-		</p></li>
-	</ol>
-	<h3>Singular Types</h3>
-	<ol>
-		<li><p>
-			Singular types are data types that define the interface to a single data object.
-		</p></li>
-		<li><p>
-			Singular types are used to organize other types into a hierarchical relationship network.
-		</p></li>
-		<li><p>
-			Singular types also provide the means to alias an existing type.
-		</p></li>
-		<li><p>
-			A singular type definition consists of a number of type names listed in any order.
-			These types are considered subtypes of the type being defined.
-		</p></li>
-		<li><p>
-			A number of existing supertypes may be declared using a semicolon operator.
-			The type names written before the semicolon are declared as supertypes of the type being defined.
-			The type names written after the semicolon are declared as subtypes of the type being defined.
-		</p></li>
-		<li><p>
-			A singular type may also specify an expression pattern that a data object must be included in to be of that type.
-			The expression pattern can be any expression which is evaluated to return a data object.
-		</p></li>
-		<li><p>
-			An expression pattern cannot include declaration or definition statements.
-		</p></li>
-		<li><p>
-			A singular type that specifies an expression must declare the expression within a closed pair of braces.
-		</p></li>
-		<li><p>
-			The expression specified within the braces must contain only type names, constants, operators, or functions.
-			An expression pattern cannot contain program variables.
-		</p></li>
-		<li><p>
-			The underscore operator shall denote the position in the expression pattern where the object of the type being defined will occur.
-		</p></li>
-		<li>
-			<p>Some example singular types are...</p>
-			<code>(>a)</code>
-			<p>An alias of a type <i>a</i>.</p>
-			<code>(>x y z)</code>
-			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
-			<code>(>h i ; j k)</code>
-			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
-			<code>(> { _ + 2 } )</code>
-			<p>The type of any object given as the left operand of an expression that adds two</p>
-			<code>(> a ; b { _ - Any } )</code>
-			<p>A type that is a subtype of <i>a</i> and a supertype of <i>b</i> and any object that is the left operand in every possible subtraction expression.</p>
-		</li>
-	</ol>
-	<h4>Function Types</h4>
-	<ol>
-		<li><p>
-			A function type is also a singular type.
-		</p></li>
-		<li><p>
-			Function types use the implication operator, <code>=></code>, to signify a function type.
-			A number of types are listed before and after the implication.
-		</p></li>
-		<li><p>
-			The types listed before the implication operator will be interpreted as the types of the input parameters for that function type.
-		</p></li>
-		<li><p>
-			The types listed after the implication operator will be interpreted as the types of the output parameters for that function type.
-		</p></li>
-		<li><p>
-			The ordering of the parameter types is significant.
-		</p></li>
-		<li><p>
-			For a function signature to be of a function type, the types of the parameters in both the function signature and the function type must be declared in identical order, using identical type names.
-		</p></li>
-		<li><p>
-			It is possible for one of the sides of the implication operator to contain no type names.
-		</p></li>
-		<li>
-			<p>Some examples of function types are...</p>
-			<code>(> a b => c)</code>
-			<p>The type of any function that accepts type <i>a</i> as the first parameter, type <i>b</i> as the second, and returns type <i>c</i>.</p>
-			<code>(> x y => )</code>
-			<p>The type of any function that accepts two parameters of types, <i>x</i> then <i>y</i>, and does not return a value.</p>
-			<code>(> =>z)</code>
-			<p>The type of any function that accepts no parameters and returns a value of type <i>z</i>.</p>
-		</li>
-	</ol>
-	<h3>Constrained Types</h3>
-	<ol>
-		<li><p>
-			Constrained types are data types that define the number of times a data object may be "used" and how the interface to a given data object may change when it is used.
-		</p></li>
-		<li><p>
-			A "use" shall be any operation on a data object that performs a transformation on its contents.
-			Operations that read the contents of a data object without updating them are not considered a "use" in the context of a constrained type.
-		</p></li>
-		<li><p>
-			A type listed in the definition may be prefixed with a linear operator, <code>.</code> which declares that the type being defined must be used exactly once with the interface of the type that was listed.
-		</p></li>
-		<li><p>
-			A type listed in the definition may be prefixed with an affine operator, <code>'</code> which declares that the type being defined may be used at least once with the interface of the type that was listed.
-		</p></li>
-		<li><p>
-			A positive decimal number constant may be provided after a prefixed type name. The number specifies the number of uses that are required in the case of a linear operator prefix, or the maximum uses allows in the case of an affine operator prefix.
-		</p></li>
-		<li><p>
-			An elipses may be provided after a prefixed type name. The elipses specifies an unknown number of required or maximum uses.
-		</p></li>
-		<li><p>
-			A constrained type may declare that the interface of a data object will change after a certain number of uses. The binary migration operator, <code>&gt;</code> is used to declare an interface change.
-		</p></li>
-		<li><p>
-			The migration operator will accept a constrained type declaration for each operand.
-		</p></li>
-		<li><p>
-			The left operand declares the initial constrained type to be used.
-			The right operand declares the constrained type used after the use requirements of the initial type have been met.
-		</p></li>
-		<li>
-			<p>Some examples of constrained types are...</p>
-			<code>(>T .T)</code>
-			<p>This type is required to be used exactly once during program execution.</p>
-			<code>(>z 'z)</code>
-			<p>This type may be used at most once or at least no times.</p>
-			<code>(>X .a 3 > 'b)</code>
-			<p>This type is required to be used exactly three times with the type <i>a</i>, after which it can optionally be used once with the type <i>b</i>.</p>
-			<code>(>p 'q ...)</code>
-			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
-		</li>
-	</ol>
+	
 	<h3>Compound Types</h3>
 	<ol>
 		<li><p>
