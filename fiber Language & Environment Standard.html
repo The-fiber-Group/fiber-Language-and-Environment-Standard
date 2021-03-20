@@ -2618,163 +2618,7 @@
 			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
 		</li>
 	</ol>
-	<h2>Compound Data</h2>
-	<h2>Functions</h2>
-	<h2>Modules</h2>
-	<h2>Proof Statements</h2>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Expressions</h1>
-	<h2>Assignment</h2>
-	<h2>Algebra</h2>
-	<h2>Logic</h2>
-	<h3>Comparison</h3>
-	<h2>Reflection</h2>
-	<h2>Branching</h2>
-	<h2>Calling Functions</h2>
-	<h2>Order of Evaluation</h2>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Scope and Duration of Data Objects</h1>
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Declarations</h1>
-	
-	<h2>Constant Values</h2>
-	
-	<h2>Identifiers</h2>
-	<ol>
-		<li><p>
-			An identifier is used to locate and reuse a data object.
-		</p></li>
-		<li><p>
-			An identifier will be associated with only one data object at any time.
-		</p></li>
-		<li><p>
-			An identifier may be declared with a data type annotation which will coerce the type of the data object the identifier is declared with.
-			An identifier shall be annotated with a type using the binary type annotation operator, <code>|</code>.
-			The type annotation operator accepts a symbol as its left operand and a type name as its right operand.
-		</p></li>
-		<li><p>
-			Identifers are declared using the binary assignment operator, <code>=</code>.
-		</p></li>
-		<li>
-			<p>The syntax for declaring an identifier is as follows...</p>
-			<table>
-				<tr><td><b>Identifier</b> &rarr; <br>
-				| <b>Id</b> <i>Assign</i> <b>Decls</b><br>
-				| Symbol <i>Annotate</i></td></tr>
-				<tr><td><i>Assign</i> &rArr; =</td></tr>
-				<tr><td><i>Annotate</i> &rArr; :</td></tr>
-				<tr><td><b>Id</b> &rarr; <br>
-					| <b>Name</b><br>
-					| <i>Multiplex</i> <b>Names</b></td></tr>
-				<tr><td><i>Multiplex</i> &rArr; \\</td></tr>
-				<tr><td><b>Names</b> &rarr;<br>
-				 	| <b>Name</b><br>
-					| <b>Name</b> <b>Names</b></td></tr>
-				<tr><td><b>Name</b><br>
-					| Symbol<br> 
-					| Symbol <i>Annotate</i> <b>Type</b></td></tr>
-				<tr><td><b>Decls</b> &rarr; <br>
-					| <b>Declaration</b><br>
-					| <i>Multiplex</i> <b>Declarations</b></td></tr>
-				<tr><td><b>Declarations</b> &rarr; <br>
-					| <b>Declaration</b><br>
-					| <b>Declaration</b> <b>Declarations</b></td></tr>
-			</table>
-		</li>
-		<li><p>
-			It is possible to declare multiple identifiers within the same statement using the "multiplex" prefix operator, <code>\</code>.
-		</p></li>
-		<li><p>
-			When the multiplex operator is used to the left of the assignment operator, any number of identifiers will be accepted.
-		</p></li>
-		<li><p>
-			When the multiplex operator is used to the right of the assignment operator, a number of declaration statements equivalent to the number of identifiers declared on the left side shall be expected.
-		</p></li>
-		<li><p>
-			When the left side of the assignment statement is multiplexed, but not the right, the declarative statement on the right will be re-evaluated to produce instantiate a data object for each identifier.
-		</p></li>
-		<li><p>
-			The right side of an assignment statement shall not be multiplexed if the left side of the expression is not also multiplexed.
-		</p></li>
-		<li><p>
-			If both sides of the assignment declaration statement are multiplexed, the identifiers are associated with data objects in corresponding order of their declaration from left to right.
-		</p></li>
-		<li>
-			<p>Some examples of identifier declarations are...</p>
-			<code>var1 = 1</code>
-			<p>An identifier is assigned a numerical constant.</p>
-			<code>\ var2 var3 = "the same string"</code>
-			<p>Two variables, <i>var2</i> and <i>var3</i>, are associated with two identical string data objects.</p>
-			<code>\ var4 var5 = \ 7 "seven"</code>
-			<p><i>var4</i> is assigned a numerical constant and <i>var5</i> is assigned a string data object.</p>
-			<code>var1:Int = 10</code>
-			<p>An identifier declaration that coerces the type of the numerical constant declaration to a signed integer data type.</p>
-			<code>just-a-var:Nat</code>
-			<p>An identifier declarared without an initial value.</p>
-		</li>
-	</ol>
-	<h3>Identifiers as Variables</h3>
-	<ol>
-		<li><p>
-			If an identifier is declared with a data object that is transformable, that identifier may be used as a program variable.
-		</p></li>
-		<li>
-			<p>
-				Data objects are transformable if their value or contents can be dynamically updated during the execution of a program.
-				Data objects that are transformable include...
-			</p>
-			<ul>
-				<li>primitive data types</li>
-				<li>compound data types</li>
-			</ul>
-		</li>
-		<li>
-			<p>
-				Data objects that cannot be variables are...
-			</p>
-			<ul>
-				<li>written constant values</li>
-				<li>type definitions</li>
-				<li>compound data type definitions</li>
-				<li>function declarations and definitions</li>
-				<li>proof statements</li>
-				<li>labels</li>
-			</ul>
-		</li>
-	</ol>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Type System</h1>
-	
-	<h3>Compound Types</h3>
+	<h2>Compound Data Types</h2>
 	<ol>
 		<li><p>
 			The Bin is used to declare the composition of a compound data type.
@@ -2840,7 +2684,36 @@
 			The number of fields declared using the index operator shall be equivalent to the numerical value given as the right operand.
 		</p></li>
 	</ol>
+	<h2>Functions</h2>
+	<h2>Modules</h2>
+	<h2>Proof Statements</h2>
+<!----------------------------------------------------------------------------->
 
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Expressions</h1>
+	<h2>Assignment</h2>
+	<h2>Algebra</h2>
+	<h2>Logic</h2>
+	<h3>Comparison</h3>
+	<h2>Reflection</h2>
+	<h2>Branching</h2>
+	<h2>Calling Functions</h2>
+	<h2>Order of Evaluation</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Scope and Duration of Data Objects</h1>
 	<ol>
 		<li><p>
