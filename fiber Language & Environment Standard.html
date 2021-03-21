@@ -2922,24 +2922,120 @@
 		<li><p>
 			A generic function can be overloaded with multiple specific function signatures containing unique parameter type annotations.
 		</p></li>
+		<li><p>
+			The type of an output parameter with no type annotation shall be determined by the type of the last data object assigned to that parameter before the function definition ends.
+		</p></li>
 		<li>
 			<p>The syntax for function declarations is as follows...</p>
 			<table>
 				<tr><td><b>FunctionDecl</b> &rarr; <br>
-				| <i>FDBegin</i> Symbol <b>Parameters</b> <i>FDEnd</i><br>
-				| <i>FDBegin</i> Symbol <i>Output</i> <b>Parameters</b><br>
-				| <i>FDBegin</i> Symbol <b>Parameters</b> <i>Output</i> <b>Parameters</b></td></tr>
-				<tr><td><i>FDBegin</i> &rArr; \{</td></tr>
+				| <b>FBegin</b> Symbol <i>FDEnd</i><br>
+				| <b>FBegin</b> Symbol <b>Parameters</b> <i>FDEnd</i><br>
+				| <b>FBegin</b> Symbol <i>Output</i> <b>Parameters</b><br>
+				| <b>FBegin</b> Symbol <b>Parameters</b> <i>Output</i> <b>Parameters</b></td></tr>
+				<tr><td><b>FBegin</b> &rarr; <br>
+				| <i>Normal</i><br>
+				| <i>Transparent</i><br>
+				| <i>Inline</i></td></tr>
 				<tr><td><i>FDEnd</i> &rArr; \}</td></tr>
+				<tr><td><i>Output</i> &rArr; -></td></tr>
 				<tr><td><b>Parameters</b> &rarr; <br>
 				| <b>Parameters</b> <b>Parameters</b><br>
 				| Symbol<br>
-				| Symbol <i>Annotate</i> Type</td></tr>
+				| Symbol <i>Assign</i> Expression<br>
+				| Symbol <i>Annotate</i> Type<br>
+				| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
+				| <i>Reference</i> Symbol<br>
+				| <i>Reference</i> Symbol <i>Annotate</i> Type</td></tr>
+				<tr><td><i>Normal</i> &rArr; \{</td></tr>
+				<tr><td><i>Transparent</i> &rArr; \{\{</td></tr>
+				<tr><td><i>Inline</i> &rArr; \{~</td></tr>
 			</table>
+		</li>
+		<li><p>
+			There are three types of prefix operators that can be used when declaring a function signature, normal, <u>transparent</u>, and <u>inline</u>.
+			These three types of operators affect how a function is evaluated.
+			Functions declared with the normal operator are evaluated with no unique behavior.
+		</p></li>
+		<li><p>
+			The function declaration operators do not affect the uniqueness of a function signature.
+		</p></li>
+		<li><p>
+			A function that is declared as transparent has different behavior when evaluating function call expressions in its definition.
+			When a function call is evaluated during the execution of a transparent function, all program variables and other state held by the transparent function is discarded.
+			When the function called by the transparent function exits, execution shall resume with the next expression following the function call expression for the transparent function.
+		</p></li>
+		<li><p>
+			A transparent function cannot call a function whose output parameters do not share the data types of the output parameters in the transparent function signature.
+		</p></li>
+		<li><p>
+			A function that is declared as inline has different behavior when evaluating its definition.
+			A function call expression that calls an inline function shall be explicitly replaced with the definition of that inline function. 
+			The replacement shall occur in such a way that the program behaves as if the body of the inline function had been written as a normal series of expressions written at the same position as the calling expression.
+		</p></li>
+		<li>
+			<p>Some examples of function declarations are...</p>
+			<code>{f x y -> z}</code>
+			<p>A generic function that accepts two parameters and returns a third.</p>
+			<code>{f x:Int y:N-Bytes 5 -> z:Int}</code>
+			<p>A specific function overloading the generic function in the previous example.</p>
+			<code>{only-ret -> a}</code>
+			<p>A generic function that has only a single output parameter.</p>
+			<code>{{f x}</code>
+			<p>A generic transparent function.</p>
+			<code>{~f x}</code>
+			<p>A generic inline function.</p>
+		</li>
+	</ol>
+	<h3>Function Definitions</h3>
+	<ol>
+		<li><p>
+			A function definition contains the series of expressions that will be evaluated when a function call expression for that function is evaluated.
+		</p></li>
+		<li><p>
+			There will only ever be one function definition for each function declaration.
+		</p></li>
+		<li>
+			<p>The syntax for function definitions is as follows...</p>
+			<table>
+				<tr><td><b>FunctionDef</b> &rarr; <i>Begin</i> <b>Expressions</b></td></tr>
+				<tr><td><i>Begin</i> &rArr; :</td></tr>
+				<tr><td><b>Expressions</b> &rarr; <br>
+				| <b>Expressions</b> <b>Expressions</b><br>
+				| Expression</td></tr>
+			</table>
+		</li>
+		<li><p>
+			A function definition may occur after the last parameter of the function signarure before the closing brace.
+		</p></li>
+		<li><p>
+			If a function definition is declared separately from the function definition, the function declaration must be repeated where the function definition is written.
+		</p></li>
+		<li>
+			<p>Some examples of function definitions are...</p>
+			<code>{f x y -> z : z = x + y}</code>
+			<p>A function definition included with a generic function signature declaration.</p>
+			<code>{f a:Byte} {f a:Byte : a = a + 1}</code>
+			<p>A function definition that occurs separately from the function signature declaration.</p>
 		</li>
 	</ol>
 	<h2>Syntax Extension</h2>
 	<h2>Modules</h2>
+	<ol>
+		<li><p>
+			Modules are used to group parts of a program into logical components.
+			Modules are also used to encapsulate parts of a program.
+		</p></li>
+		<li><p>
+			A module can have <u>internal</u> and <u>external</u> data objects.
+		</p></li>
+		<li><p>
+			Internal data objects shall be visible and accessible only to other data objects within the local module definition.
+		</p></li>
+		<li><p>
+			External data objects shall be visible and accessible to other data objects within the local module definition <i>and</i> other objects external to the local module.
+		</p></li>
+	</ol>
 	<h2>Proof Statements</h2>
 <!----------------------------------------------------------------------------->
 
