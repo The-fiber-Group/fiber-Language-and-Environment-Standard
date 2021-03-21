@@ -2737,7 +2737,9 @@
 				<tr><td><b>Fields</b> &rarr;<br>
 				| <b>Fields</b> <b>Fields</b><br>
 				| <b>Field</b><br>
+				| <i>Pack</i> <b>Field</b><br>
 				| <b>Field</b> <i>Union</i> <b>Field</b><br></td></tr>
+				<tr><td><i>Pack</i> &rArr; \.</td></tr>
 				<tr><td><b>Field</b> &rarr; <br>
 				| <i>Pack</i> <b>Field</b><br>
 				| Type<br>
@@ -2746,7 +2748,6 @@
 				| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
 				| Type <i>Index</i> Number<br>
 				| Symbol <i>Annotate</i> Type <i>Index</i> Number</td></tr>
-				<tr><td><i>Pack</i> &rArr; \.</td></tr>
 				<tr><td><i>Assignment</i> &rArr; =</td></tr>
 				<tr><td><i>Union</i> &rArr; \|</td></tr>
 				<tr><td><i>Index</i> &rArr; _</td></tr>
@@ -2779,6 +2780,9 @@
 			The inner bin declaration shall be included as an ordinary typed field.
 		</p></li>
 		<li><p>
+			A field cannot be declared with a Bin type that is either the type of the Bin being defined, or the type of a Bin with a nested field containing the Bin being defined.
+		</p></li>
+		<li><p>
 			The index numbering of each field is not contiguous over nested Bin definitions.
 			For example, in the Bin definition, <code>[ [a:Int b:Int] c:Nat]</code>, <i>a</i> will have the index 0, <i>b</i> will have the index 1, and <i>c</i> will have the index 1.
 			Both <i>a</i> and <i>b</i> are declared within a nested Bin definition so their indexes begin again with zero.
@@ -2798,7 +2802,19 @@
 			<p>A Bin definition with a union of two nested Bin-typed fields.</p>
 		</li>
 	</ol>
-	<h2>Polymorphic Types</h2>
+	<h2>Type Relationships</h2>
+	<ol>
+		<li><p>
+			Two data types are considered equivalent if their definitions are identical.
+		</p></li>
+		<li><p>
+			A data type cannot be defined as a supertype or a subtype of itself.
+		</p></li>
+		<li><p>
+			A data type cannot be defined as a subtype of another data type which is already a subtype of the first.
+			Similarly, a data type cannot be defined as a supertype of another data type which is already a supertype of the first.
+		</p></li>
+	</ol>
 	<h2>Functions</h2>
 	<h2>Syntax Extension</h2>
 	<h2>Modules</h2>
