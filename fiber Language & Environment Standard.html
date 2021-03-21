@@ -2436,6 +2436,8 @@
 				<tr><td>Mem</td><td>8B</td><td>Memory address</td></tr>
 				<tr><td>True</td><td>1B</td><td>Boolean value</td></tr>
 				<tr><td>False</td><td>1B</td><td>Boolean value</td></tr>
+				<tr><td>N-Bits</td><td>?</td><td>Unsigned binary number</td></tr>
+				<tr><td>I-Bits</td><td>?</td><td>Signed binary number</td></tr>
 			</table>
 		</li>
 		<li>
@@ -2452,6 +2454,7 @@
 						<li>Real</li>
 						<li>Mem</li>
 						<li>Byte, Char, Uncd</li>
+						<li>Bits, SBits</li>
 					</ul>
 				</li>
 				<li>Bool
@@ -2488,8 +2491,18 @@
 	<h3>Dependent Primitive Types</h3>
 	<ol>
 		<li><p>
-			The <i>Mem</i> data type is a dependent type which holds the type of the data object the memory address references.
+			The <i>Mem</i> data type is a dependent type which holds the type of the data object the memory address references as the secondary type.
 			The address of a <i>Char</i> data type would be written as <code>Mem Char</code>.
+		</p></li>
+		<li><p>
+			The <i>Bin</i>, <i>Function</i>, and <i>Type</i> data types are dependent types which accept data type definition objects of Bins, functions, and data types, rspectively, as secondary types.
+			The type of the <i>Bool</i> data type would be written as <code>Type Bool</code>.
+			The type of a function type that accepts two parameters and returns a third would be written as <code>Function (&gt; a b -> c)</code>.
+		</p></li>
+		<li><p>
+			The <i>N-Bits</i> and <i>I-Bits</i> types are dependent types which accept a whole positive numerical constant as a seconary type.
+			The numerical constant determines the size in bits of the dependent type.
+			For example, the <i>Char</i> data type could be emulated using <i>I-Bits</i> by writing <code>I-Bits 8</code>.
 		</p></li>
 	</ol>
 	<h2>Data Type Definitions</h2>
@@ -2851,6 +2864,80 @@
 		</p></li>
 	</ol>
 	<h2>Functions</h2>
+	<ol>
+		<li><p>
+			A function in fiber defines a number of expressions which are evaluated when a function call expression including that function is evaluated.
+		</p></li>
+		<li><p>
+			The expressions provided in the function definition shall be evaluated in the order that they were written.
+		</p></li>
+		<li><p>
+			A function may be defined with input parameters that will be used in the expressions within the function definition.
+		</p></li>
+		<li><p>
+			A function may also specify output parameters whose contents are preserved when the function exits.
+		</p></li>
+		<li><p>
+			A function declared with output parameters shall produce those parameters upon evaluation of a function call.
+		</p></li>
+		<li><p>
+			A function definition may specify program variables that will be used in the expressions provided in that definition.
+		</p></li>
+		<li><p>
+			A function is defined in two stages which may optionally occur in lexially separate locations, the <u>function declaration</u> and the <u>function definition</u>.
+		</p></li>
+	</ol>
+	<h3>Function Declarations</h3>
+	<ol>
+		<li><p>
+			A function declaration expression defines a <u>function signature</u>. 
+			A function signature contains declarations of the name of that function, its input parameter names, and its output parameter names.
+		</p></li>
+		<li><p>
+			A function signature may be declared with any number of input and output parameters.
+		</p></li>
+		<li><p>
+			Function parameters may be annotated with data types.
+		</p></li>
+		<li><p>
+			Function signatures with identical function and parameter names but unique parameter data type annotations shall be considered unique function signatures.
+		</p></li>
+		<li><p>
+			A single function name can be included in multiple unique function signature declarations.
+		</p></li>
+		<li><p>
+			If a function name occurs in more than one function signature, that function name shall be considered <u>overloaded</u>.
+		</p></li>
+		<li><p>
+			Overloading function signatures are considered unique only if the number of input parameters or the type annotations for those parameters are unique.
+			The number of output parameters or their type annotations do not affect whether an overloading function signature will be unique.
+		</p></li>
+		<li><p>
+			A function signature without data type-annotated parameter names shall be considered a <u>generic function</u>.
+			A function signature with data type-annotated parameter names shall be considered a <u>specific function</u>, or <u>type-specific function</u>.
+		</p></li>
+		<li><p>
+			A function name can be overloaded with multiple generic functions with different numbers of input parameters.
+		</p></li>
+		<li><p>
+			A generic function can be overloaded with multiple specific function signatures containing unique parameter type annotations.
+		</p></li>
+		<li>
+			<p>The syntax for function declarations is as follows...</p>
+			<table>
+				<tr><td><b>FunctionDecl</b> &rarr; <br>
+				| <i>FDBegin</i> Symbol <b>Parameters</b> <i>FDEnd</i><br>
+				| <i>FDBegin</i> Symbol <i>Output</i> <b>Parameters</b><br>
+				| <i>FDBegin</i> Symbol <b>Parameters</b> <i>Output</i> <b>Parameters</b></td></tr>
+				<tr><td><i>FDBegin</i> &rArr; \{</td></tr>
+				<tr><td><i>FDEnd</i> &rArr; \}</td></tr>
+				<tr><td><b>Parameters</b> &rarr; <br>
+				| <b>Parameters</b> <b>Parameters</b><br>
+				| Symbol<br>
+				| Symbol <i>Annotate</i> Type</td></tr>
+			</table>
+		</li>
+	</ol>
 	<h2>Syntax Extension</h2>
 	<h2>Modules</h2>
 	<h2>Proof Statements</h2>
@@ -2900,6 +2987,30 @@
 			This means that within the nested region, the local declaration of that identifier will always be used.
 		</p></li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Errors</h1>
+	<ol>
+		<li><p>
+			There are two classifications of errors that this standard acknowledges: <u>hardware error</u> and <u>environment error</u>.
+		</p></li>
+		<li><p>
+			Hardware error refers to unexpected hardware failure or limitations occurring during the execution of a fiber program.
+			Specific types of hardware errors are not specified.
+		</p></li>
+		<li><p>
+			If a hardware error should occur, recovery to a previous stable program state may be automatically attempted.
+			It is also acceptable for execution of a program to fail or exit without providing information depending on the nature and severity of the hardware error encountered.
+		</p></li>
+	</ol>
+	<h2>Classification of Environment Errors</h2>
 <!----------------------------------------------------------------------------->
 
 
