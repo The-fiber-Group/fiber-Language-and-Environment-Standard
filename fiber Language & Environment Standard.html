@@ -1531,8 +1531,8 @@
 			A Box enforces that its data fields are adjacent in memory in the order that they were declared in the Box data type declaration.
 		</p></li>
 		<li><p>
-			Data fields in a Box can optionally be declared as memory-word aligned.
-			This will cause the Box type to allow gaps of unused memory around those fields in order to preserve their alignment.
+			Data fields in a Box can optionally be declared as memory-word aligned by appending an ASCII space character after the data field declaration.
+			This will cause the Box type to allow gaps of unused memory around those fields in order to force the base address of the following field to begin on a memory-word boundary.
 		</p></li>
 		<li>
 			<p>
@@ -2718,6 +2718,16 @@
 			The index numbering of fields in a Bin shall begin with zero assigned to the first field declaration.
 			Following fields shall be assigned index values increasing by one for each additional field declared.
 		</p></li>
+		<li><p>
+			All fields in a Bin data type shall be stored adjacent to each other, with the same ordering as they were declared.
+		</p></li>
+		<li><p>
+			A field shall occupy a space at least as large as the number of bytes in the size of that field's data type.
+			Additional unused space may be assigned to a field to preserve any necessary memory-word alignment for the following fields.
+		</p></li>
+		<li><p>
+			If a field declaration is prefixed with the pack operator, <code>.</code>, the field shall occupy a space that is exactly as large as the number of bytes in the size of that field's data type.
+		</p></li>
 		<li>
 			<p>The syntax for declaring a Bin is as follows...</p>
 			<table>
@@ -2729,12 +2739,14 @@
 				| <b>Field</b><br>
 				| <b>Field</b> <i>Union</i> <b>Field</b><br></td></tr>
 				<tr><td><b>Field</b> &rarr; <br>
+				| <i>Pack</i> <b>Field</b><br>
 				| Type<br>
 				| Symbol <i>Annotate</i> Type<br>
 				| Type <i>Assign</i> Expression<br>
 				| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
 				| Type <i>Index</i> Number<br>
 				| Symbol <i>Annotate</i> Type <i>Index</i> Number</td></tr>
+				<tr><td><i>Pack</i> &rArr; \.</td></tr>
 				<tr><td><i>Assignment</i> &rArr; =</td></tr>
 				<tr><td><i>Union</i> &rArr; \|</td></tr>
 				<tr><td><i>Index</i> &rArr; _</td></tr>
@@ -2755,6 +2767,30 @@
 		<li><p>
 			The number of fields declared using the index operator shall be equivalent to the numerical value given as the right operand.
 		</p></li>
+		<li><p>
+			Two fields may occupy the same position if they are declared as a union with the binary union operator.
+			The union operator accepts two field declarations as each operand.
+		</p></li>
+		<li><p>
+			If two fields are part of a union declaration they shall occupy a space equivalent to the space required for storing the largest of the two field declarations.
+		</p></li>
+		<li><p>
+			It is possible for Bin declarations to be nested.
+			The inner bin declaration shall be included as an ordinary typed field.
+		</p></li>
+		<li><p>
+			The index numbering of each field will not be affected by nested definitions.
+			For example, in the Bin definition, <code>[ [a:Int b:Int] c:Nat]</code>, <i>a</i> will have the index 0, <i>b</i> will have the index 1, and <i>c</i> will have the index 2.
+		</p></li>
+		<li>
+			<p>Some examples of Bin definitions are...</p>
+			<code>[Nat Int three:Int]</code>
+			<p>A Bin definition with the last field assigned the name <i>three</i>.</p>
+			<code>No-Padding = [.Char .Char .Char]</code>
+			<p>A Bin definition that is exactly three bytes in size.</p>
+			<code>Nested-bins = [x: [Char Char] | y: [Int Int] ]</code>
+			<p>A Bin definition with a union of two nested Bin-typed fields.</p>
+		</li>
 	</ol>
 	<h2>Polymorphic Types</h2>
 	<h2>Functions</h2>
