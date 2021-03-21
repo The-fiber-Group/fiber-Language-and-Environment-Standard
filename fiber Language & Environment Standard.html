@@ -2440,6 +2440,8 @@
 					</ul>
 				</li>
 				<li>Bin</li>
+				<li>Function</li>
+				<li>Type</li>
 				<li>Any
 					<ul>
 						<li>Number</li>
@@ -2450,6 +2452,9 @@
 					</ul>
 				</li>
 			</ul>
+			<p><rec>
+				The first letter is capitalized in primitive data type names by convention only as all symbol tokens are case-insensitive.
+			</rec></p>
 		</li>
 	</ol>
 	<h2>Data Type Definitions</h2>
@@ -2469,11 +2474,21 @@
 		<li><p>
 			A type definition which is empty, <code>(> )</code> shall not be accepted.
 		</p></li>
+		<li>
+			<p>The syntax for assigning an identifier to a data type definition is as follows...</p>
+			<table>
+				<tr><td><b>TypeName</b> &rarr; Symbol <i>Assign</i> Type</td></tr>
+				<tr><td><i>Assign</i> &rArr; =</td></tr>
+			</table>
+		</li>
+		<li><p>
+			The right operand of the identifier assignment shall only accept a data type definition expression.
+		</p></li>
 		<li><p>
 			A type definition is named using the assignment operator with an identifier as the left operand and the type definition as the right operand.
 		</p></li>
 		<li><p>
-			The assignment of a type definition to an identifier cannot be multiplexed.
+			The assignment of an identifier to a type definition cannot be multiplexed.
 		</p></li>
 		<li><p>
 			There are several kinds of data type declarations:
@@ -2685,6 +2700,7 @@
 		</p></li>
 	</ol>
 	<h2>Functions</h2>
+	<h2>Syntax Extension</h2>
 	<h2>Modules</h2>
 	<h2>Proof Statements</h2>
 <!----------------------------------------------------------------------------->

@@ -1,15 +1,4 @@
 fiber syntax (only the things that aren't already written into the standard)
 
 
-function syntax:
-
-functions are declared with curly braces.
-the first symbol after the opening curly brace is the function name.
-functions can use generic, or type-specific parameters.
-functions can be overloaded with different arity.
-functions can be declared and defined separately.
-
-function parameters are listed using the identifier syntax.
-parameters after the '=' are return parameters.
-the colon is used after the parameter list to signify the beginning of a 
-function body.
+more here later...
