@@ -2525,6 +2525,14 @@
 			The type names written before the semicolon are declared as supertypes of the type being defined.
 			The type names written after the semicolon are declared as subtypes of the type being defined.
 		</p></li>
+	<h3>Constant Types</h3>
+		<li><p>
+			A data constant may be written inside a type definition.
+		</p></li>
+		<li><p>
+			The type containing one or more data constant declarations shall be either the supertpe or alias of those declarations.
+		</p></li>
+	<h3>Expression Types</h3>
 		<li><p>
 			A singular type may also specify an expression pattern that a data object must be included in to be of that type.
 			The expression pattern can be any expression which is evaluated to return a data object.
@@ -2548,6 +2556,8 @@
 			<p>An alias of a type <i>a</i>.</p>
 			<code>(>x y z)</code>
 			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
+			<code>prime = (> 2 3 5 7)</code>
+			<p>The type <i>prime</i> is the supertype of the decimal constants 2, 3, 5, and 7.</p>
 			<code>(>h i ; j k)</code>
 			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
 			<code>add-two = (> { _ + 2 } )</code>
@@ -2562,7 +2572,7 @@
 			A function type is also a singular type.
 		</p></li>
 		<li><p>
-			Function types use the implication operator, <code>=></code>, to signify a function type.
+			Function types use the implication operator, <code>-></code>, to signify a function type.
 			A number of types are listed before and after the implication.
 		</p></li>
 		<li><p>
@@ -2582,11 +2592,11 @@
 		</p></li>
 		<li>
 			<p>Some examples of function types are...</p>
-			<code>(> a b => c)</code>
+			<code>(> a b -> c)</code>
 			<p>The type of any function that accepts type <i>a</i> as the first parameter, type <i>b</i> as the second, and returns type <i>c</i>.</p>
-			<code>(> x y => )</code>
+			<code>(> x y -> )</code>
 			<p>The type of any function that accepts two parameters of types, <i>x</i> then <i>y</i>, and does not return a value.</p>
-			<code>ret = (> =>z)</code>
+			<code>ret = (> -> z)</code>
 			<p><i>ret</i> is the type of any function that accepts no parameters and returns a value of type <i>z</i>.</p>
 		</li>
 	</ol>
@@ -2659,40 +2669,28 @@
 				<tr><td><i>DeclEnd</i> &rArr; \]</td></tr>
 				<tr><td><b>Fields</b> &rarr;<br>
 				| <b>Fields</b> <b>Fields</b><br>
-				| <b>Fields</b> <i>Union</i> <b>Fields</b><br>
+				| <b>Field</b><br>
+				| <b>Field</b> <i>Union</i> <b>Field</b><br></td></tr>
+				<tr><td><b>Field</b> &rarr; <br>
 				| Type<br>
-				| Identifier<br>
-				| Type <i>Assignment</i> Declaration<br>
-				| Symbol <i>Index</i> Number<br>
-				| Type <i>Index</i> Number</td></tr>
+				| Symbol <i>Annotate</i> Type<br>
+				| Type <i>Assign</i> Expression<br>
+				| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
+				| Type <i>Index</i> Number<br>
+				| Symbol <i>Annotate</i> Type <i>Index</i> Number</td></tr>
 				<tr><td><i>Assignment</i> &rArr; =</td></tr>
 				<tr><td><i>Union</i> &rArr; \|</td></tr>
 				<tr><td><i>Index</i> &rArr; _</td></tr>
 			</table>
 		</li>
 		<li><p>
-			Each field in a Bin shall have a type.
-		</p></li>
-		<li>
-			<p>
-				A field may be declared using Identifier syntax.
-				This allows a field to optionally be declared with an identifier and initial value.
-			</p>
-		</li>
-		<li><p>
-			A field declared without an identifier may still be declared with an initial value by writing that field type as the left operand of the assignment operator, <code>=</code>, and providing a declaration as the right side.
+			Each field in a Bin shall be declared using the name of a data type.
 		</p></li>
 		<li><p>
-			A field can be either named or unnamed.
+			Fields can optionally be named.
 		</p></li>
 		<li><p>
-			Each field must have an associated type.
-		</p></li>
-		<li><p>
-			Single fields can be assigned default values using the same syntax as an identifier.
-		</p></li>
-		<li><p>
-			It is possible for a field to be initialized with a nested Bin declaration.
+			Fields declared with a name use the type annotation operator similarly to program variable declarations.
 		</p></li>
 		<li><p>
 			Multiple fields of the same type may be declared using the binary index operator, <code>_</code>, which accepts a field declaration as its left operand and a numerical constant as its right operand.
