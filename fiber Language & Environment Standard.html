@@ -2271,6 +2271,34 @@
 			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
 		</p></li>
 	</ol>
+	<h3>Relation to Data Types</h3>
+	<ol>
+		<li><p>
+			All constants have a related data type.
+			These relationships are constant.
+		</p></li>
+		<li>
+			<table>
+				<tr><th>Constant</th><th>Data Type</th></tr>
+				<tr><td>Decimal Number (no radix/sign)</td><td>Nat</td></tr>
+				<tr><td>Signed Decimal Number (no radix)</td><td>Int</td></tr>
+				<tr><td>Real Number (with radix, no sign)</td><td>Float</td></tr>
+				<tr><td>Signed Real Number (with radix/sign)</td><td>Float</td></tr>
+				<tr><td>Large Signed Real Number</td><td>Real</td></tr>
+				<tr><td>ASCII Character Literal</td><td>Char</td></tr>
+				<tr><td>Unicode Character Literal</td><td>Uncd</td></tr>
+				<tr><td>ASCII Character String</td><td>[Char_ <i>Nat</i>]</td></tr>
+				<tr><td>Unicode Character String</td><td>[Uncd_<i>Nat</i>]</td></tr>
+				<tr><td>Byte String</td><td>[Byte_<i>Nat</i>]</td></tr>
+			</table>
+		</li>
+		<li><p>
+			If a floating point constant is determined to be beyond the precision of the <i>Float</i> data type, the <i>Real</i> data type will be used for that constant instead.
+		</p></li>
+		<li><p>
+			The natural number used in the the indexed fields for string data is equivalent to the number of characters or bytes in the string data declaration.
+		</p></li>
+	</ol>
 	<h2>Identifiers</h2>
 	<ol>
 		<li><p>
@@ -2456,6 +2484,13 @@
 				The first letter is capitalized in primitive data type names by convention only as all symbol tokens are case-insensitive.
 			</rec></p>
 		</li>
+	</ol>
+	<h3>Dependent Primitive Types</h3>
+	<ol>
+		<li><p>
+			The <i>Mem</i> data type is a dependent type which holds the type of the data object the memory address references.
+			The address of a <i>Char</i> data type would be written as <code>Mem Char</code>.
+		</p></li>
 	</ol>
 	<h2>Data Type Definitions</h2>
 	<ol>
