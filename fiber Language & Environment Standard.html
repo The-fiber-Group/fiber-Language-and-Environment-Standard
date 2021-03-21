@@ -3021,6 +3021,14 @@
 		</li>
 	</ol>
 	<h2>Syntax Extension</h2>
+	<ol>
+		<li><p>
+			Syntax extension allows a function body to be associated with a unique syntax pattern.
+		</p></li>
+		<li><p>
+			When the syntax pattern occurs, the function body will be evaluated.
+		</p></li>
+	</ol>
 	<h2>Modules</h2>
 	<ol>
 		<li><p>
@@ -3036,6 +3044,85 @@
 		<li><p>
 			External data objects shall be visible and accessible to other data objects within the local module definition <i>and</i> other objects external to the local module.
 		</p></li>
+		<li><p>
+			A mmodule is declared in two components, the externally visible objects, and the internally visible objects.
+		</p></li>
+		<li><p>
+			A module can additionally declare other modules and source files which will be logically included within the local module.
+		</p></li>
+		<li><p>
+			A module or file is included in the definition of that module by prefixing a string constant with the include operator.
+			The usual string constant operator, <code>"</code>, is replaced with the inclusion operator <code>&$"</code>
+		</p></li>
+		<li><p>
+			The external objects declared in an included module shall be visible to the local module that included it.
+		</p></li>
+		<li>
+			<p>The syntax for declaring a module is as follows...</p>
+			<table>
+				<tr><td><b>Module</b> &rarr; <i>MBegin</i> Symbol <b>Include</b> Expressions <i>Boundary</i> Expressions <i>MEnd</i></td></tr>
+				<tr><td><i>MBegin</i> &rArr; %=</td></tr>
+				<tr><td><b>Include</b> &rArr; <br>
+				| <b>Include</b> <b>Include</b><br>
+				| <i>InclPrefix</i> Path</td></tr>
+				<tr><td><i>InclPrefix</i> &rArr; $"</td></tr>
+				<tr><td><i>Boundary</i> &rArr; %$</td></tr>
+				<tr><td><i>MEnd</i> &rArr; %&</td></tr>
+			</table>
+		</li>
+		<li>
+			<p>Some example modules are...</p>
+			<code>&%= small-module x = 1 y = 2 z = 3 %&</code>
+			<p>A module declared with three externally visible numerical variables.</p>
+			<code>
+				%= funcs<br> 
+				$"defs"<br> 
+				{foo x y -> z}<br> 
+				{bar a b c -> k}<br> 
+				%$<br> 
+				x = 1<br>
+				y = 2<br> 
+				%&</code>
+			<p>A module that contains externally visible function declarations, some internally visible variables, and includes another source file (assumed here to be function definitions).</p>
+		</li>
+	</ol>
+	<h3>Identifier Shadowing</h3>
+	<ol>
+		<li><p>
+			When a module that includes another module is included inside a third, the externally visible names from the first two modules shall be visible in the third. 
+			If the third module is included, the externally visible names in all three modules become visible in the fourth including module.
+		</p></li>
+		<li><p>
+			If a local name is identical to an externally visible name, the data object declared locally with that name is always used within that local module.
+		</p></li>
+		<li><p>
+			When two externally visible names are identical and neither of them were declared with a local data object, the data object declared in the module closest to the local module in the inclusion hierarchy shall be used.
+			For example, in
+			</p>
+			<code>
+				%= a x = 1 %&<br>
+				%= b &"a" x = 2 %&<br>
+				%= c &"b" x = 3 %&<br>
+				%= d &"c" %&<br>
+			</code>
+			<p>The program variable <i>x</i> in the module <i>d</i> will have the value 3.</p>
+		</p></li>
+		<li><p>
+			The binary domain operator <code>::</code> allows a domain module to be specified when a name is used. 
+			This allows the data object declared with that name to be used when the containing module name is specified.
+		</p></li>
+		<li><p>
+			The domain operator accepts a module name as the left operand and the name of a program variable or other object name as the right operand.
+		</p></li>
+		<li><p>
+			The domain operator cannot resolve names that are not declared externally visible.
+		</p></li>
+		<li><p>
+			In the previous example of nested domain inclusion, in order to use the program variable <i>x</i> with the value 1 in the module <i>d</i>, the name would be written as <code>a::x</code>.
+		</p></li>
+		<li><p>
+			If two module names are inluded in a program that are not unique, the resulting behavior is not specified.
+		</p></li>
 	</ol>
 	<h2>Proof Statements</h2>
 <!----------------------------------------------------------------------------->
@@ -3048,6 +3135,20 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>Expressions</h1>
+	<ol>
+		<li><p>
+			An expression is the juxtaposition of an operator and some operands that evaluates to a data object.
+		</p></li>
+		<li><p>
+			Expressions can be nested as sub-expression operands in a larger expression such that the evaluation of the outer expression depends on the evaluation result of the nested expression.
+		</p></li>
+		<li><p>
+			All operators are left associative and are evaluated from left to right.
+		</p></li>
+		<li><p>
+			Expressions do not have operator precedence.
+		</p></li>
+	</ol>
 	<h2>Assignment</h2>
 	<h2>Accessing Fields</h2>
 	<h2>Calling Functions</h2>
