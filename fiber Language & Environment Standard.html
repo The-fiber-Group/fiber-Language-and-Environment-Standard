@@ -2463,7 +2463,7 @@
 			It is possible to define custom data types.
 		</p></li>
 		<li><p>
-			Custom data type definitions are prefixed with the type definition operator, <code>(></code>, and delimited by a closed parenthese, <code>)</code>.
+			Custom data type definitions are prefixed with the type definition operator, <code>(&gt;</code>, and delimited by a closed parenthese, <code>)</code>.
 		</p></li>
 		<li><p>
 			The body of a type definition contains an unordered list of type names and constants. 
@@ -2472,7 +2472,7 @@
 			A type definition may also include special operators that enforce special type inteface behavior.
 		</p></li>
 		<li><p>
-			A type definition which is empty, <code>(> )</code> shall not be accepted.
+			A type definition which is empty, <code>(&gt; )</code> shall not be accepted.
 		</p></li>
 		<li>
 			<p>The syntax for assigning an identifier to a data type definition is as follows...</p>
@@ -2508,13 +2508,10 @@
 	<h3>Singular Types</h3>
 	<ol>
 		<li><p>
-			Singular types are data types that define the interface to a single data object.
-		</p></li>
-		<li><p>
 			Singular types are used to organize other types into a hierarchical relationship network.
 		</p></li>
 		<li><p>
-			Singular types also provide the means to alias an existing type.
+			Singular types provide the means to alias an existing type with a new data type name.
 		</p></li>
 		<li><p>
 			A singular type definition consists of a number of type names listed in any order.
@@ -2522,17 +2519,39 @@
 		</p></li>
 		<li><p>
 			A number of existing supertypes may be declared using a semicolon operator.
+		</p></li>
+		<li><p>
 			The type names written before the semicolon are declared as supertypes of the type being defined.
 			The type names written after the semicolon are declared as subtypes of the type being defined.
 		</p></li>
-	<h3>Constant Types</h3>
+		<li>
+			<p>Some examples of singular types are...</p>
+			<code>(&gt;a)</code>
+			<p>An alias of the type <i>a</i>.</p>
+			<code>(&gt;x y z)</code>
+			<p>A supertype of types <i>x</i>, <i>y</i>, and <i>z</i>.</p>
+			<code>(&gt; h i ; j k)</code>
+			<p>A supertype of <i>j</i> and <i>k</i> an a subtype of <i>h</i> and <i>i</i>.</p>
+		</li>
+	</ol>
+	<h4>Constant Types</h4>
+	<ol>
 		<li><p>
-			A data constant may be written inside a type definition.
+			A data constant may be written inside a type definition resulting in a constant type.
 		</p></li>
 		<li><p>
 			The type containing one or more data constant declarations shall be either the supertpe or alias of those declarations.
 		</p></li>
-	<h3>Expression Types</h3>
+		<li>
+			<p>Some examples of constant types are...</p>
+			<code>prime = (&gt; 2 3 5 7)</code>
+			<p>The type <i>prime</i> is the supertype of the number constants 2, 3, 5, and 7.</p>
+			<code>some-string = (&gt; "some string" )</code>
+			<p>The type <i>some-string</i> is the type alias of the string data constant containing "some string".</p>
+		</li>
+	</ol>
+	<h4>Expression Types</h4>
+	<ol>
 		<li><p>
 			A singular type may also specify an expression pattern that a data object must be included in to be of that type.
 			The expression pattern can be any expression which is evaluated to return a data object.
@@ -2551,19 +2570,31 @@
 			The underscore operator shall denote the position in the expression pattern where the object of the type being defined will occur.
 		</p></li>
 		<li>
-			<p>Some example singular types are...</p>
-			<code>(>a)</code>
-			<p>An alias of a type <i>a</i>.</p>
-			<code>(>x y z)</code>
-			<p>A supertype of the types <i>x</i>, <i>y</i>, and <i>z</i></p>
-			<code>prime = (> 2 3 5 7)</code>
-			<p>The type <i>prime</i> is the supertype of the decimal constants 2, 3, 5, and 7.</p>
-			<code>(>h i ; j k)</code>
-			<p>A supertype of <i>j</i> and <i>k</i> and a subtype of <i>h</i> and <i>i</i></p>
+			<p>Some examples of expression types are...</p>
 			<code>add-two = (> { _ + 2 } )</code>
 			<p><i>add-two</i> is the type of any object given as the left operand of an expression that adds two.</p>
 			<code>(> a ; b { _ - Any } )</code>
 			<p>A type that is a subtype of <i>a</i> and a supertype of <i>b</i> and any object that is the left operand in every possible subtraction expression.</p>
+		</li>
+	</ol>
+	<h4>Dependent Types</h4>
+	<ol>
+		<li><p>
+			A dependent type is a singular type that consists of a primary type and a secondary type which together determine the exact meaning of the type.
+		</p></li>
+		<li><p>
+			Dependent types are declared using a single underscore operator, <code>_</code> to represent the requirement of a seconary type.
+		</p></li>
+		<li><p>
+			Dependent type definitions may include multiple underscores to represent a requirement of more than one secondary type.
+		</p></li>
+		<li><p>
+			Dependent types are expressed by writing the name of the primary type immediately followed by a number of type names equivalent to the number of underscores used in the dependent type definition.
+		</p></li>
+		<li>
+			<p>Some examples of dependent types are...</p>
+			<code>Z = (> _ _ )</code>
+			<p>A dependent type <i>z</i> that requires two secondary types.</p>
 		</li>
 	</ol>
 	<h4>Function Types</h4>
@@ -2643,6 +2674,32 @@
 			<p>This type is defined with an unlimited number of optional uses. It has the same behavior as the singular type, <code>(>p q)</code>.</p>
 		</li>
 	</ol>
+	<h2>Polymorphic Types</h2>
+	<ol>
+		<li><p>
+			A polymorphic type is a data type that also defines one or more functions to be used as the interface for that type.
+		</p></li>
+		<li><p>
+			A polymorphic type uses the same syntax as the dependent type definition, but only one underscore is allowed.
+		</p></li>
+		<li><p>
+			The underscore is followed by one or more generic function declaration expressions <a href="#functions generic">(see <i>Generic Functions</i>)</a>.
+		</p></li>
+		<li><p>
+			A polymorphic type is expressed using the same syntax as a dependent type, the polymorphic type name is written then the name of a secondary type is written immediately afterwords.
+		</p></li>
+		<li><p>
+			The overloading definitions for the functions declared in a polymorphic type definition shall require at least one parameter to be of the polymorphic type.
+		</p></li>
+		<li><p>
+			The overloading definitions for the functions declared in a polymorphic type definition shall always be defined using the same generic signature as the declarations.
+		</p></li>
+		<li>
+			<p>some examples of polymorphic types are...</p>
+			<code>P = (&gt; _ {foo x y} {bar x} {baz x y -> z}</code>
+			<p>A polymorphic type, <i>p</i> defined with three function declarations.</p>
+		</li>
+	</ol>
 	<h2>Compound Data Types</h2>
 	<ol>
 		<li><p>
@@ -2694,9 +2751,12 @@
 		</p></li>
 		<li><p>
 			Multiple fields of the same type may be declared using the binary index operator, <code>_</code>, which accepts a field declaration as its left operand and a numerical constant as its right operand.
+		</p></li>
+		<li><p>
 			The number of fields declared using the index operator shall be equivalent to the numerical value given as the right operand.
 		</p></li>
 	</ol>
+	<h2>Polymorphic Types</h2>
 	<h2>Functions</h2>
 	<h2>Syntax Extension</h2>
 	<h2>Modules</h2>
@@ -2712,13 +2772,13 @@
 <!----------------------------------------------------------------------------->
 	<h1>Expressions</h1>
 	<h2>Assignment</h2>
+	<h2>Accessing Fields</h2>
+	<h2>Calling Functions</h2>
 	<h2>Algebra</h2>
 	<h2>Logic</h2>
 	<h3>Comparison</h3>
 	<h2>Reflection</h2>
 	<h2>Branching</h2>
-	<h2>Calling Functions</h2>
-	<h2>Order of Evaluation</h2>
 <!----------------------------------------------------------------------------->
 
 
