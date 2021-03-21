@@ -2779,8 +2779,10 @@
 			The inner bin declaration shall be included as an ordinary typed field.
 		</p></li>
 		<li><p>
-			The index numbering of each field will not be affected by nested definitions.
-			For example, in the Bin definition, <code>[ [a:Int b:Int] c:Nat]</code>, <i>a</i> will have the index 0, <i>b</i> will have the index 1, and <i>c</i> will have the index 2.
+			The index numbering of each field is not contiguous over nested Bin definitions.
+			For example, in the Bin definition, <code>[ [a:Int b:Int] c:Nat]</code>, <i>a</i> will have the index 0, <i>b</i> will have the index 1, and <i>c</i> will have the index 1.
+			Both <i>a</i> and <i>b</i> are declared within a nested Bin definition so their indexes begin again with zero.
+			The entire Bin containing <i>a</i> and <i>b</i> is given the index zero in the outer Bin definition.
 		</p></li>
 		<li>
 			<p>Some examples of Bin definitions are...</p>
