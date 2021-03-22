@@ -2288,9 +2288,9 @@
 				<tr><td>Large Signed Real Number</td><td>Real</td></tr>
 				<tr><td>ASCII Character Literal</td><td>Char</td></tr>
 				<tr><td>Unicode Character Literal</td><td>Uncd</td></tr>
-				<tr><td>ASCII Character String</td><td>[Char_ <i>Nat</i>]</td></tr>
-				<tr><td>Unicode Character String</td><td>[Uncd_<i>Nat</i>]</td></tr>
-				<tr><td>Byte String</td><td>[Byte_<i>Nat</i>]</td></tr>
+				<tr><td>ASCII Character String</td><td>Bin [Char_Nat]</td></tr>
+				<tr><td>Unicode Character String</td><td>Bin [Uncd_Nat]</td></tr>
+				<tr><td>Byte String</td><td>Bin [Byte_Nat]</td></tr>
 			</table>
 		</li>
 		<li><p>
@@ -2315,7 +2315,7 @@
 			An identifier shall be declared as either a program variable or the name of a data type, label, function, module, or proof.
 		</p></li>
 	</ol>
-	<h3>Identifiers as Program Variables</h3>
+	<h3 id="identifiers variables">Identifiers as Program Variables</h3>
 	<ol>
 		<li>
 			<p>
@@ -2368,10 +2368,7 @@
 			All other variables and expressions shall be assigned according to their order of occurrence.
 		</p></li>
 		<li><p>
-			If there is a greater number of variables than there are expressions in each list, the value of the last expression shall be used more than once as the initial value for the extra variables without corresponding expressions.
-		</p></li>
-		<li><p>
-			If there is a greater number of expressions than there are variables in each list, the results of the extra expressions without corresponding variables shall be discarded.
+			The number of expressions in a multiplexed list of expressions must exactly match the number of variables in the multiplexed list of variables.
 		</p></li>
 		<li><p>
 			A program variable may optionally be given an initial value using the binary assignment operator.
@@ -2497,8 +2494,9 @@
 		</p></li>
 		<li><p>
 			The <i>Bin</i>, <i>Function</i>, and <i>Type</i> data types are dependent types which accept data type definition objects of Bins, functions, and data types, rspectively, as secondary types.
-			The type of the <i>Bool</i> data type would be written as <code>Type Bool</code>.
+			The type of a Bin type that contains two named fields is <code>Bin (> [Nat Nat] )</code>
 			The type of a function type that accepts two parameters and returns a third would be written as <code>Function (&gt; a b -> c)</code>.
+			The type of the <i>Bool</i> data type would be written as <code>Type Bool</code>.
 		</p></li>
 		<li><p>
 			The <i>N-Bits</i> and <i>I-Bits</i> types are dependent types which accept a whole positive numerical constant as a seconary type.
@@ -2680,6 +2678,33 @@
 			<p><i>ret</i> is the type of any function that accepts no parameters and returns a value of type <i>z</i>.</p>
 		</li>
 	</ol>
+	<h4>Bin Types</h4>
+	<ol>
+		<li><p>
+			The contents of a compound data type may be described using a data type definition.
+		</p></li>
+		<li><p>
+			The type definition of a compound data type is written using closed pairs of square brackets containing a number of data type names. 
+		</p></li>
+		<li><p>
+			The index operator may be used within the type definition of a compound type.
+		</p></li>
+		<li><p>
+			The union operator may be used within the type definition of a compound type.
+		</p></li>
+		<li><p>
+			Named fields cannot be used in the type definition of a compound data type.
+		</p></li>
+		<li>
+			<p>Some examples of compound data type type definitions are...</p>
+			<code>(> [Nat Nat] )</code>
+			<p>The type of any compound data type that contains two <i>Nat</i> fields.</p>
+			<code>(> [Int_20] )</code>
+			<p>The type of any compound data type that contains 20 <i>Int</i> fields.</p>
+			<code>(> [ [Int | Mem Nat] [Char | Nat] ] )</code>
+			<p>The type of any compound data type that contains two nested unions with those specified types.</p>
+		</li>
+	</ol>
 	<h3>Constrained Types</h3>
 	<ol>
 		<li><p>
@@ -2818,6 +2843,12 @@
 			The number of fields declared using the index operator shall be equivalent to the numerical value given as the right operand.
 		</p></li>
 		<li><p>
+			It is possible to provide the index operator with a number using an expression surrounded by parentheses that when evaluated shall produce a whole positive number.
+		</p></li>
+		<li><p>
+			If an expression is used to provide the index operator with a number, the expression must operate on numerical constants and program variables whose values are known before execution.
+		</p></li>
+		<li><p>
 			Two fields may occupy the same position if they are declared as a union with the binary union operator.
 			The union operator accepts two field declarations as each operand.
 		</p></li>
@@ -2849,6 +2880,8 @@
 			<p>A Bin definition that is exactly three bytes in size.</p>
 			<code>Nested-bins = [x: [Char Char] | y: [Int Int] ]</code>
 			<p>A Bin definition with a union of two nested Bin-typed fields.</p>
+			<code>Array = [x:Bin_ (1 + 4 - 23) ]</code>
+			<p>A number of Bin fields declared with the index operator using an expression to specify the number of fields being declared.</p>
 		</li>
 	</ol>
 	<h2>Type Relationships</h2>
@@ -3148,10 +3181,114 @@
 		<li><p>
 			Expressions do not have operator precedence.
 		</p></li>
+		<li><p>
+			Parentheses are used to force the evaluation of an entire sub-expression before the entire expression is evaluated.
+			For example, <code>1 - 2 - 1</code> evaluates to -2, but <code>1 - (2 - 1)</code> evaluates to 0 because the parentheses force the second subtraction expression to be evaluated before the first.
+		</p></li>
 	</ol>
 	<h2>Assignment</h2>
+	<ol>
+		<li><p>
+			Assignment is performed with the binary assignment operator, <code>=</code>.
+		</p></li>
+		<li><p>
+			The left operand of the assignment operator accepts the name of a program variable or compound data field.
+		</p></li>
+		<li><p>
+			The right operand of the assignment operator accepts an expression or constant.
+		</p></li>
+		<li><p>
+			For the assignment operation to be performed, the object returned when evaluating the expression on the right must be of a compatible type with the right operand.
+		</p></li>
+		<li><p>
+			The assignment operation will always produce the right operand with the newly assigned value.
+		</p></li>
+	</ol>
+	<h3>Multiple Assignment</h3>
+	<ol>
+		<li><p>
+			Multiple assignments can be made in the same expression using the same syntax and multiplex operator as in <a href="#identifiers variables">(<i>Identifiers as Program Variables, 1</i>)</a>.
+		</p></li>
+		<li><p>
+			The right side of the assignment accepts a multiplexed list of expressions which will be evaluated and then assigned in the order in which they occur.
+		</p></li>
+		<li><p>
+			The number of expressions in a multiplexed list of expressions must exactly match the number of variables in the multiplexed variable list.
+		</p></li>
+	</ol>
 	<h2>Accessing Fields</h2>
+	<ol>
+		<li><p>
+			Compound data type fields are accessed using the binary access operator, <code>.</code>.
+		</p></li>
+		<li><p>
+			The left operand accepts an object with a compound data type.
+		</p></li>
+		<li><p>
+			The right operand accepts an index name or whole, positive numerical value.
+		</p></li>
+		<li><p>
+			The name or value provided as the right operand must match an index number or name in the compound data type provided as the left operand.
+		</p></li>
+		<li><p>
+			Field access expressions always return the data object located at the field being accessed.
+		</p></li>
+		<li><p>
+			Field access expressions may be composed if the initial access expression produces another compound data object.
+		</p></li>
+	</ol>
 	<h2>Calling Functions</h2>
+	<ol>
+		<li><p>
+			Functions are called using parentheses.
+		</p></li>
+		<li><p>
+			If the first symbol that occurs within a closed set of parentheses is the name of a function, that function is evaluated.
+		</p></li>
+		<li><p>
+			The expressions following the function name within the parentheses will be evaluated before the function is evaluated.
+		</p></li>
+		<li><p>
+			The values produced by the evaluation of the expressions after the function name shall be copied to the functions input parameters.
+		</p></li>
+		<li><p>
+			The number of expressions within the parentheses following the function name shall exactly match the number of parameters in the function signature of the function being called.
+		</p></li>
+		<li><p>
+			If the function being called is an overloaded function, the number of expressions following the function name shall exactly match the number of parameters in at least on of the overloading function signatures.
+		</p></li>
+		<li><p>
+			The values produced by the expressions shall be copied to the input parameters according to the order of occurrance.
+			The value produced by the first expression following the function name shall be copied to the first parameter declared.
+		</p></li>
+		<li><p>
+			The values produced by evaluating the expressions must be identical in both data type and ordering to at least one of the function signatures of the function being called.
+			For example, given the function declaration, <code>{f x:Nat y:Nat}</code>, the function call <code>(f "String" "string")</code> will result in a type error because the types <i>Bin [Char_Nat]</i> and <i>Nat</i> cannot be reconciled.
+		</p></li>
+		<li><p>
+			A function call will always produce its output parameters.
+		</p></li>
+		<li><p>
+			If a function call is nested within a larger expression, and the function being called is declared with multiple output parameters, the first output parameter declared for that function shall be used in the evaluation of the outer expression.
+			The values of any additional output parameters will be discarded.
+		</p></li>
+	</ol>
+	<h3>Assigning Multiple Output Parameters</h3>
+	<ol>
+		<li><p>
+			A function declared with more than one output parameter will produce more than one object when a function call to it is evaluated.
+		</p></li>
+		<li><p>
+			A multiplexed assignment expression can be used to assign each output of a function to a different variable.
+		</p></li>
+		<li><p>
+			A function with multiple output parameters does not need to be prefixed by the multiplex operator.
+		</p></li>
+		<li><p>
+			If only one variable is provided when assigning the output of a function with multiple output parameters, the value of the first lexically declared output parameter for that function will be assigned to the function.
+			The values of any following output parameters will be discarded.
+		</p></li>
+	</ol>
 	<h2>Algebra</h2>
 	<h2>Logic</h2>
 	<h2>Comparison</h2>
