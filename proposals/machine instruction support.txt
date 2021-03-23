@@ -1,0 +1,15 @@
+Proposal for Machine Instruction Support
+
+Purpose:
+To allow program components to be constructed in the assembly language of the
+host system and incorporated into a fiber source file.
+
+Description:
+The fiber programming language will support an assembly syntax that can be used
+to write parts of a fiber program directly as machine instructions. Fiber should
+support writing instructions in both BRISC format and some other native format 
+related to the target system.
+
+Additional Details:
+Should this support be implemented in the base language or in the standard 
+libraries?
