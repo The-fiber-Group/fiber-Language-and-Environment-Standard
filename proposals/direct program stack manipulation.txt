@@ -1,3 +1,16 @@
 A Proposal to Implement an Ordered Type Interface to the Program Stack
 
 Author: fiber Group
+
+Purpose:
+  Explicit allocation and deallocation to the program stack would allow for 
+faster program memory allocation when dealing with small amounts of memory.
+If enough stack memory is allowed to the program, a small memory allocator could
+be implemented on the stack for a static arena, making some programs more 
+readily portable as they perform less interaction with the operating system.
+
+Description:
+  The base fiber programming language syntax would be extended with three 
+operators: one to push program data to the stack, one to pop data from the stack
+and copy it to a program variable, and one to remove data from the stack without
+preserving it.
