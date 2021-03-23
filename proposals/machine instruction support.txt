@@ -1,5 +1,7 @@
 Proposal for Machine Instruction Support
 
+Author: fiber Group
+
 Purpose:
 To allow program components to be constructed in the assembly language of the
 host system and incorporated into a fiber source file.

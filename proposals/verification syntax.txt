@@ -1,0 +1,44 @@
+Proposal for Implementing Verification Syntax in the Fiber Programming Language
+
+Author: fiber Group
+
+Purpose:
+  Implementing a program verification syntax will allow formal verification to 
+take place as a stage during the compilation/interpretation of a program without
+the need for additional software or higher-abstraction languages.
+
+Description:
+  The Verification Syntax would use an extended form of Hoare Logic. Execution 
+points could be annotated in the program allowing for the domain of the 
+"command" portion of the Hoare triple to be set to any granularity and position.
+
+  The syntax for annotating a program would share the namespace properties of 
+the branch label system. The domain of a single command would be set with a 
+closed set of operator tokens such that a command domain could be set to contain
+an arbitrary number of expressions. The two operators being closed allows for
+nested command domains. A unique symbol would be written after the opening 
+operator for each command domain so that the domains could be referred to 
+individually.
+
+  Each opening and closing operator for a command domain would be followed by
+a comparison expression. Special operators shall be provided to refer to 
+variables as they were before the command and after the command. The comparison
+expression following the domain opening operator shall implicitly compare 
+variable states as they are before the command has been executed. The comparison
+expression following the domain closing operator shall implicitly compare 
+variable states as they are after the command has been executed. 
+
+Syntax:
+  The proposed operator for annotating the beginning of a command domain is...
+	#!
+
+  The proposed operator for annotating the end of a command domain is...
+	!#
+
+  The proposed operator for referring to a variable state before command 
+execution is...
+	#<
+
+  The proposed operator for referring to a variable state after command 
+execution is...
+	#>
