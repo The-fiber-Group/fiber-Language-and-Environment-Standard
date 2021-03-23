@@ -1,10 +1,3 @@
 A Proposal to Implement an Ordered Type Interface to the Program Stack
 
 Author: fiber Group
-
-Purpose:
-  The fiber programming language already allows ad-hoc overloading of functions,
-operators, and arbitrary syntax patterns. Interface data types would explicitly
-require the overloading of a set of functions for each instantiation of that
-data type. This allows for normal dependent data types to be extended with 
-associated functions and syntax.
