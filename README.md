@@ -15,6 +15,8 @@ Proposals for additional language features are found in the *proposals* folder.
 
 Within the Proposals folder the denied proposals are found in the *denied* folder.
 
+Proposals that have been accepted into the standard document are found in the *accepted* folder.
+
 # Status
 
 This standard is currently incomplete.
