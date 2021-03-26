@@ -2869,6 +2869,41 @@
 			<p>A number of Bin fields declared with the index operator using an expression to specify the number of fields being declared.</p>
 		</li>
 	</ol>
+	<h3>Initializing Compound Data Types</h3>
+	<ol>
+		<li><p>
+			The values of the fields of a compound data type may be set to certain values in the same expression that instantiates a variable of that compound data type.
+		</p></li>
+		<li><p>
+			The result of this expression is that the values of a number of fields in an instantiation of a program variable with a Bin data type shall be set to some specific value before the variable is used.
+		</p></li>
+		<li>
+			<p>
+				The syntax for initializing the fields of a compound data type is as follows...
+			</p>
+			<table>
+				<tr><td><b>CompInit</b> &rarr; <i>InitBegin</i> Symbol <b>FieldValues</b> <i>InitEnd</i></td></tr>
+				<tr><td><i>InitBegin</i> &rArr; \(</td></tr>
+				<tr><td><i>InitEnd</i> &rArr; \)</td></tr>
+				<tr><td><b>FieldValues</b> &rarr; <br>
+				| <b>FieldValues</b> <b>FieldValues</b><br>
+				| Expression<br>
+				| Constant</td></tr>
+			</table>
+		</li>
+		<li><p>
+			The symbol token following the opening parenthese must be the name of a Bin data type that has previously been declared.
+		</p></li>
+		<li><p>
+			The name of the Bin data type will be followed by a number of expressions or constants.
+		</p></li>
+		<li><p>
+			If an expression is provided as the initial value of a field, the expression shall be evaluated before the value of the field is set.
+		</p></li>
+		<li><p>
+			The number of initial values provided after the Bin data type name shall be less than or equal to the number of fields declared for the Bin data type specified.
+		</p></li>
+	</ol>
 	<h2>Type Relationships</h2>
 	<ol>
 		<li><p>
@@ -2880,6 +2915,9 @@
 		<li><p>
 			A data type cannot be defined as a subtype of another data type which is already a subtype of the first.
 			Similarly, a data type cannot be defined as a supertype of another data type which is already a supertype of the first.
+		</p></li>
+		<li><p>
+			An operation defined for a given type shall be applicable to all subtypes of that type.
 		</p></li>
 	</ol>
 	<h2>Functions</h2>
