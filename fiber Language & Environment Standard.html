@@ -3199,7 +3199,15 @@
 			Expressions can be nested as sub-expression operands in a larger expression such that the evaluation of the outer expression depends on the evaluation result of the nested expression.
 		</p></li>
 		<li><p>
-			All operators are left associative and are evaluated from left to right.
+			All operators are right associative and are evaluated from left to right.
+		</p></li>
+		<li><p>
+			Evaluation of a nested expression shall begin with the rightmost and innermost nested, single expression.
+			The object produced by evaluating that expression shall be used as an operand in the new rightmost and innermost nested, single expression.
+			Evaluation of a nested expression will continue in this manner until no expressions are left.
+		</p></li>
+		<li><p>
+			Evaluation of an expression may produce multiple objects.
 		</p></li>
 		<li><p>
 			Expressions do not have operator precedence.
