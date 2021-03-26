@@ -1,0 +1,8 @@
+Proposal to change the name of the BOF Link List section to Import List
+
+Purpose:
+  To improve the clarity about the role of the Link List section of a BOF object
+the name "Link List" should be changed to "Import List". The name "Import List"
+more aptly describes what the list is used for and avoids ambiguity with the 
+data structure name "linked list" which is an unrelated concept to the Link List
+in the BOF format.
