@@ -2003,7 +2003,7 @@
 			The method with which a function is called is dependent on the target system.
 		</p></li>
 		<li><p>
-			The function to be called in order to execute a certain program may be decided at any time.
+			The function to be called in order to execute a certain program may be decided at any time before the execution of a program begins.
 		</p></li>
 		<li><p>
 			There are two processes responsible for the execution of a Fiber program: the <u>staging process</u> and the <u>interpretation process</u>.
@@ -2134,13 +2134,16 @@
 	<h2>Comments</h2>
 	<ol>
 		<li><p>
-			Comments are bounded by the comment operator, <code>``</code>.
+			Comments are prefixed by the comment operator, <code>``</code>.
 		</p></li>
 		<li><p>
-			Any character will be accepted between a pair of comment operators except for two backquotes in succession, which is the comment operator.
+			Comments are delimited by a <u>line break</u> which consists of some combination of ASCII Line Feed and Carriage Return control characters.
 		</p></li>
 		<li><p>
-			The text between a pair of comment operators shall be discarded before interpretation of the Fiber syntax.
+			Any character will be accepted between a comment operator and a line break, including additional comment operators and excluding line breaks.
+		</p></li>
+		<li><p>
+			The text in a comment shall be discarded before the staging process of a program.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -2314,6 +2317,12 @@
 		<li><p>
 			An identifier shall be declared as either a program variable or the name of a data type, label, function, module, or proof.
 		</p></li>
+		<li><p>
+			Identifiers of program variables, data types, and functions shall share the same namespace such that an identifier may be used only once within a given scope to identify one of a program variable, data type, or function.
+		</p></li>
+		<li><p>
+			Labels, modules, and proofs shall each have separate namespaces.
+		</p></li>
 	</ol>
 	<h3 id="identifiers variables">Identifiers as Program Variables</h3>
 	<ol>
@@ -2323,66 +2332,33 @@
 			</p>
 			<table>
 				<tr><td><b>Variable</b> &rarr;<br>
-					| Symbol <i>Annotate</i> Type<br>
-					| Symbol <i>Assign</i> Expression<br>
-					| Symbol <i>Annotate</i> Type <i>Assign</i> Expression<br>
-					| <i>Multi</i> List <i>Assign</i> Expression<br>
-					| <i>Multi</i> List <i>Assign</i> <i>Multi</i> ExpressionList</td></tr>
+				| Symbol<br>
+				| Symbol <i>Annotate</i></td></tr>
 				<tr><td><i>Annotate</i> &rArr; :</td></tr>
-				<tr><td><i>Assign</i> &rArr; =</td></tr>
-				<tr><td><i>Multi</i> &rArr; \\</td></tr>
 			</table>
 		</li>
 		<li><p>
-			A program variable declaration consists of an identifier and a type name or type declaration associated with the binary annotation operator.
+			A program variable declaration consists of an identifier and a type name or type declaration.
 		</p></li>
 		<li><p>
-			A program variable may be given an initial value by providing an expression which either provides a data constant or evaluates to a data object.
-			If an expression that evaluates to a data object is given, the value held by that data object will be used as the initial value of the variable being declared.
+			The binary annotation operator shall associate a type with a program variable.
+			The annotation operator will accept a program variable name as the left operand and a type name or declaration as the right operand.
 		</p></li>
 		<li><p>
-			If a variable is declared with a type annotation and an initial value, and the type of the initial value does not match the type of the annotated variable, a type coersion from the type of the expression to the type of the variable shall be attempted. 
-			It a type coersion is not possible, a type error shall occur.
+			A variable may be declared without a type annotation.
 		</p></li>
 		<li><p>
-			A program variable may alternatively be declared with an initial value and no type annotation.
-			The type of the program value in this declaration shall be determined by the literal type of the initial value provided.
+			The data type associated with a program variable not declared with a data type annotation shall be as the type of the object provided in the first assignment to that program variable.
 		</p></li>
 		<li><p>
-			Multiple program variables may be assigned initial values within the same expression using the multiplex operator, <code>\</code>.
-		</p></li>
-		<li><p>
-			The multiplex operator shall optionally prefix a list of variable names before the assignment operator and a list of expressions after the assignment operator.
-		</p></li>
-		<li><p>
-			Each expression in a multiplexed list must be evaluated.
-		</p></li>
-		<li><p>
-			The multiplex operator cannot prefix a list of expressions when only one variable declaration has been provided before the assignment operator.
-		</p></li>
-		<li><p>
-			When a list of variables is provided, but only one expression is provided, all variables shall be declared with initial values identical to the value of that expression.
-		</p></li>
-		<li><p>
-			When a multiplexed list of variables is assigned to a multiplexed list of expressions, the first variable shall be assigned the value of the first expression.
-			All other variables and expressions shall be assigned according to their order of occurrence.
-		</p></li>
-		<li><p>
-			The number of expressions in a multiplexed list of expressions must exactly match the number of variables in the multiplexed list of variables.
-		</p></li>
-		<li><p>
-			A program variable may optionally be given an initial value using the binary assignment operator.
+			The association between a program variable and a data type is permanent for that individual variable's lifetime for a given region of scope.
 		</p></li>
 		<li>
 			<p>Some examples of program variable declarations are...</p>
-			<code>a-variable:Nat</code>
-			<p>The declaration of a program variable of the type <i>Nat</i>.</p>
-			<code>number-one:Int = 1</code>
-			<p>The declaration of a program variable of the type <i>Int</i> with an initial value of one.</p>
-			<code>\ x:Char m:Nat n z = \ "a" 10 5 #"a4b2"</code>
-			<p>The declaration of four program variables with four unique initial values.</p>
-			<code>\ x y z = 0</code>
-			<p>Three variable declarations given the initial value of zero.</p>
+			<code>var:Nat</code>
+			<p>The declaration of a variable with a <i>Nat</i> data type.</p>
+			<code>x</code>
+			<p>A program variable declared without a data type.</p>
 		</li>
 	</ol>
 	<h3>Identifiers as Names</h3>
@@ -2920,6 +2896,10 @@
 			An operation defined for a given type shall be applicable to all subtypes of that type.
 		</p></li>
 	</ol>
+	<h3>Type Coersion</h3>
+	<ol>
+		<li></li>
+	</ol>
 	<h2>Functions</h2>
 	<ol>
 		<li><p>
@@ -3213,11 +3193,60 @@
 			Expressions do not have operator precedence.
 		</p></li>
 		<li><p>
-			Parentheses are used to force the evaluation of an entire sub-expression before the entire expression is evaluated.
-			For example, <code>1 - 2 - 1</code> evaluates to -2, but <code>1 - (2 - 1)</code> evaluates to 0 because the parentheses force the second subtraction expression to be evaluated before the first.
+			Parentheses are used to force the evaluation of the expression bounded by them before the external expression.
+			For example, <code>1 - 2 - 1</code> evaluates to 0, but <code>(1 - 2) - 1</code> evaluates to -2 because the parentheses force the first subtraction expression to be evaluated before the second.
 		</p></li>
 	</ol>
 	<h2>Assignment</h2>
+	<ol>
+		<li><p>
+			Assignment is performed with the binary assignment operator, <code>=</code>.
+		</p></li>
+		<li>
+			<p>
+				The syntax for assignment expressions is as follows...
+			</p>
+			<table>
+				<tr><td><b>Assignment</b> &rarr; <br>
+				| Variable <i>Assign</i> Expression<br>
+				| <i>Multiplex</i> <i>Assign</i> Expression<br>
+				| <i>Multiplex</i> VarList <i>Assign</i> <i>Multiplex</i> ExprList</td></tr>
+				<tr><td><i>Assign</i> &rArr; =</td></tr>
+				<tr><td><i>Multiplex</i> &rArr; \\</td></tr>
+			</table>
+		</li>
+		<li><p>
+			A program variable may be assigned a value represented by a constant, an expression, or another object.
+		</p></li>
+		<li><p>
+			If an expression is provided as the right operator, the expression shall be evaluated before the variable is assigned any value.
+		</p></li>
+		<li><p>
+			Multiple variables and expressions may be provided to a single assignment operator using the multiplex operator, <code>\</code>.
+		</p></li>
+		<li><p>
+			An assignment expression may be between one variable and one expression, one expression and multiple variables using the multiplex operator, or multiple variable and expression pairs both using the multiplex operator.
+		</p></li>
+		<li><p>
+			Multiple expressions cannot be assigned to a single variable.
+		</p></li>
+		<li><p>
+			If a variable list and an expression list have been provided with the multiplex operator, the variables and expressions will be paired for individual assignments according to their corresponding lexical order of apperance.
+			i.e. the rightmost variable in a multiplexed variable list shall be assigned to the rightmost expression in a multiplexed expression list, the second rightmost to the second, and so on.
+		</p></li>
+		<li><p>
+			The type of the variable on the right must be compatible with the type of the object on the right.
+			If the data types are not compatible, a type error will be issued.
+		</p></li>
+		<li><p>
+			If the data types of the variable and object being assigned are incompatible, a type coersion will be attempted to assign the variable a logically equivalent value to the one contained by the object on the right.
+		</p></li>
+		<li>
+			<p>Some examples of assignment expressions are...</p>
+			<code>a = 1</code>
+			<p>The constant value 1 is assigned to the variable <i>a</i>.</p>
+		</li>
+	</ol>
 	<ol>
 		<li><p>
 			Assignment is performed with the binary assignment operator, <code>=</code>.

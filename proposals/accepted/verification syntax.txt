@@ -42,3 +42,14 @@ execution is...
   The proposed operator for referring to a variable state after command 
 execution is...
 	#>
+
+Examples:
+
+  a simple addition function with proofs
+
+	{add-two x y :
+		#!pre
+		x = x + y
+		!#
+	}
+	x >= 0 & x != y pre x > 0
