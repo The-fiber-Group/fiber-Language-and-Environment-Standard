@@ -34,26 +34,16 @@
 		#contents{
 			position:sticky;
 			top:0;
-			z-index:10;
 			background-color:inherit;
-			margin-bottom:0;
-			padding-bottom:0;
 		}
-		#contentslist{
-			background-color:inherit;
-			height:0;
-			padding-top:0;
-			margin-top:0;
-			overflow-y:scroll;
-			overflow-x:hidden;
-			border-bottom: 1px solid #2a0d35ff;
-			position:relative;
-			z-index:10;
-			transition-property:all;
-			transition-duration:0.5s;
+		#contentslist {
+			display:none;
+		}
+		#navlist {
+			border-bottom: 1px solid;
 		}
 		#contents:hover #contentslist {
-			height:20vh;
+			display:block;
 		}
 	</style>
 </head>
@@ -62,24 +52,26 @@
 	<h2>Revision 0.0</h2>
 	<div id="contents">
 		<h1>Contents</h1>
-		<ul id="contentslist">
-			<li><a href="#foreword">Foreword</a>
-				<ul>
-					<li><a href="#">Authoring</a></li>
-					<li><a href="#">Document Organization</a></li>
-					<li><a href="#">Versioning</a></li>
-				</ul>
-			</li>
-			<li><a href="#introduction">Introduction</a></li>
-			<li><a href="#scope">Scope</a></li>
-			<li><a href="#terms">Terms</a></li>
-			<li><a href="#conformance">Conformance</a></li>
-			<li><a href="#environment">Environment</a></li>
-			<li><a href="#isa">Architecture</a></li>
-			<li><a href="#instructions">Instructions</a></li>
-			<li><a href="#object">Binary Object Format</a></li>
-			<li><a href="#execution">Execution</a></li>
-		</ul>
+		<div id="contentslist">
+			<ul id="navlist">
+				<li><a href="#foreword">Foreword</a>
+					<ul>
+						<li><a href="#">Authoring</a></li>
+						<li><a href="#">Document Organization</a></li>
+						<li><a href="#">Versioning</a></li>
+					</ul>
+				</li>
+				<li><a href="#introduction">Introduction</a></li>
+				<li><a href="#scope">Scope</a></li>
+				<li><a href="#terms">Terms</a></li>
+				<li><a href="#conformance">Conformance</a></li>
+				<li><a href="#environment">Environment</a></li>
+				<li><a href="#isa">Architecture</a></li>
+				<li><a href="#instructions">Instructions</a></li>
+				<li><a href="#object">Binary Object Format</a></li>
+				<li><a href="#execution">Execution</a></li>
+			</ul>
+		</div>
 	</div>
 <!----------------------------------------------------------------------------->
 
