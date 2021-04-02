@@ -12,33 +12,49 @@ Description:
 points could be annotated in the program allowing for the domain of the 
 "command" portion of the Hoare triple to be set to any granularity and position.
 
-  The syntax for annotating a program would share the namespace properties of 
-the branch label system. The domain of a single command would be set with a 
-closed set of operator tokens such that a command domain could be set to contain
-an arbitrary number of expressions. The two operators being closed allows for
-nested command domains. A unique symbol would be written after the opening 
-operator for each command domain so that the domains could be referred to 
-individually.
+  The command of the hoare tripele is identified using a Symbol. A logical 
+assignment operator is then used to assoiate that command with a number of pre
+and post conditions. The conditions for that command are specified using an 
+expression containing comparisons and logical connectives. A special prefix 
+operator is used to refer to program variable state post-command. Variables 
+used in the logical expression normally refer to their state pre-command.
 
-  Each opening and closing operator for a command domain would be followed by
-a comparison expression. Special operators shall be provided to refer to 
-variables as they were before the command and after the command. The comparison
-expression following the domain opening operator shall implicitly compare 
-variable states as they are before the command has been executed. The comparison
-expression following the domain closing operator shall implicitly compare 
-variable states as they are after the command has been executed. 
+  The names of other commands can be included in any logic statement as a 
+boolean value. If the assertions for that command are met, then the command 
+represents a true value in other logic expressions, otherwise it represents 
+false. Command names must be prefixed to distinct them from normal program 
+object names.
+
+  Normal fiber syntax is annotated with command names and command domains. Two
+enclosing operators are used to declare the syntax included in the domain of a 
+command. The pre and post conditions for that command will be compared against 
+the effects of the program contained in the command domain.
 
 Syntax:
-  The proposed operator for annotating the beginning of a command domain is...
+
+  logical assignment of command to conditions:	=:
+
+  post-command state prefix:			'
+
+  command distinction prefix:			!#
+
+  logical and operator:				&&
+
+  logical or operator:				||
+
+  logical not operator:				!!
+
+  logical implication operator:			=>
+
+  command domain opening operator:			!#
+
+  command domain closing operator:			#!
+
+
+Example:
+
+	command-x =: (x < 100) && ( 'x > 100)
+
+	!#command 
+		x = x + 100
 	#!
-
-  The proposed operator for annotating the end of a command domain is...
-	!#
-
-  The proposed operator for referring to a variable state before command 
-execution is...
-	#<
-
-  The proposed operator for referring to a variable state after command 
-execution is...
-	#>

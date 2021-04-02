@@ -1,0 +1,43 @@
+Proposal to Add a Module System to the fiber Language
+
+Purpose:
+  A Module system will allow for source code to be organized into reuseable 
+packages and will allow for separate compilation schemes.
+
+Description:
+  The module system will allow the programmer to declare a module containing a 
+number of object declarations and definitions. Each module will have two 
+distinct sections, public and private. Objects declared in the public section 
+will be visible both inside the local module and outside the local module. 
+Objects declared in the private section will only be visible to other objects 
+within the local module.
+
+  Modules may include other modules and normal source files. If another module
+is included, its public objects may be used in the including module. If a 
+normal source file that does not contain a module is included, that source code
+is interpreted as being part of the module.
+
+  Objects can be declared in any order in a module.
+
+  Objects are declared public by default in a module. A delimiting operator 
+denotes where the private section of the module begins lexically.
+
+  Modules can include a section containing program verification code that will
+be compared against the objects in that module. This section is bounded by a
+pair of operators. Program assertions can only apply to objects within the 
+local module.
+
+Syntax:
+  Module opening delimiter:		&%
+
+  Module closing delimiter:		%&
+
+  file include prefix:		$"
+
+  module include prefix:		&$
+
+  private delimiter:			&$
+
+  assertion opening delimiter:	%$
+
+  assertion closing delimiter:	$%
