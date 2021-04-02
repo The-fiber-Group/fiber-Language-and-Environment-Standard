@@ -2034,6 +2034,12 @@
 		<li><p>
 			The execution of a fiber program is facilitated by two processes, the <u>staging process</u> and the <u>interpretation process</u>.
 		</p></li>
+		<li><p>
+			Program execution is carried out within an abstract environment containing the program being executed and the data objects it defines.
+		</p></li>
+		<li><p>
+			The execution of a program is required to produce effects that conform to the semantics of the program as it is defined in the source files.
+		</p></li>
 	</ol>
 	<h3>Program Staging</h3>
 	<ol>
@@ -2061,11 +2067,31 @@
 			A program is required to be well-formed before any translation is performed.
 		</p></li>
 	</ol>
+	<h3>Program Translation</h3>
+	<ol>
+		<li><p>
+			When a program is translated, the resulting interpretable output shall produce identical effects to the evaluation of the original program when interpreted.
+		</p></li>
+		<li><p>
+			Translation of an entire program is not required to be completed entirely at a single time.
+		</p></li>
+		<li><p>
+			All program components are not required to be translated before a whole program is interpreted.
+		</p></li>
+		<li><p>
+			If any part of a function defined in a program is translated, the entire function is required to be translated before that function can be interpreted.
+		</p></li>
+		<li><p>
+			The process of translating a program shall conform to the semantic constraints specified for the fiber programming language.
+		</p></li>
+		<li><p>
+			The method of translation is implementation dependent.
+		</p></li>
+	</ol>
 	<h3>Program Interpretation</h3>
 	<ol>
 		<li><p>
 			The interpretation process is performed by evaluating the expressions contained in the definition of that program.
-			The evaluation is performed in an abstract execution environment containing program variables and the program as it is being interpreted.
 		</p></li>
 		<li><p>
 			The order in which the expressions are evaluated shall follow the lexical order in which those expressions were defined in the source files.
@@ -2089,32 +2115,8 @@
 			The resolution of conflicting or simultaneous transformations on a single program object by multiple interpretation processes is implementation dependent.
 		</p></li>
 	</ol>
-	<h3>Program Translation</h3>
-	<ol>
-		<li><p>
-			When a program is translated, the resulting interpretable output shall produce identical effects to the evaluation of the original program when interpreted.
-		</p></li>
-		<li><p>
-			Translation of an entire program is not required to be completed entirely at a single time.
-		</p></li>
-		<li><p>
-			All program components are not required to be translated before a whole program is interpreted.
-		</p></li>
-		<li><p>
-			If any part of a function defined in a program is translated, the entire function is required to be translated before that function can be interpreted.
-		</p></li>
-		<li><p>
-			The process of translating a program shall conform to the semantic constraints specified for the fiber programming language.
-		</p></li>
-		<li><p>
-			The method of translation is implementation dependent.
-		</p></li>
-	</ol>
 	<h2>Data Objects</h2>
 	<ol>
-		<li><p>
-			Program execution is performed by the transformation of values held in data objects.
-		</p></li>
 		<li><p>
 			Data objects are divided into two classes, <u>variables</u> and <u>definitions</u>.
 		</p></li>
@@ -2123,14 +2125,14 @@
 			All transformations are performed on program variables.
 		</p></li>
 		<li><p>
-			All program variables have a single data type associated with them for their duration of use during the execution of a program.
+			All program variables have a single data type associated with them for the duration of their use during the execution of a program.
 		</p></li>
 		<li><p>
 			A program definition is a virtual data object that is not guaranteed to exist during the execution of a program.
 			The order and nature of the transformations performed on program variables are determined using program definitions.
 		</p></li>
 		<li><p>
-			Program definition objects include 
+			Program definition objects include data types, functions, modules, and assertions.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -3239,7 +3241,12 @@
 			If two module names are inluded in a program that are not unique, the resulting behavior is not specified.
 		</p></li>
 	</ol>
-	<h2>Proof Statements</h2>
+	<h2>Assertions</h2>
+	<ol>
+		<li><p>
+			Assertions are statements that express logical quantifications and 
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
