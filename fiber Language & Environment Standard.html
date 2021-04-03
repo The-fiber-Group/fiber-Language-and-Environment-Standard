@@ -253,13 +253,16 @@
 			Each non-terminal is followed by a series of other terminal or non-terminal entities separated by vertical bars.
 		</p></li>
 		<li><p>
-			The names of terminal entities are writetn in <i>italicized font</i> followed by an arrow (&rArr;).
+			The names of terminal entities are written in <i>italicized font</i> followed by an arrow (&rArr;).
 		</p></li>
 		<li><p>
 			Each terminal entity is followed by a single expressin of POSIX Extended Regular Syntax.
 		</p></li>
 		<li><p>
 			An entity that is neither bold nor italicized refers to the top non-terminal entity from an external syntax diagram.
+		</p></li>
+		<li><p>
+			An entity that is optional shall be <u>underlined</u>.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -1954,59 +1957,21 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>The fiber Programming Language</h1>
-	<h1>Environment</h1>
-	<h1>Program Execution</h1>
-	<h1>Program Organization</h1>
-	<h1>Declarations</h1>
-	<h2>Constants</h2>
-	<h2>Program Variables</h2>
-	<h2>Data Types</h2>
-	<h3>Primitive Types</h3>
-	<h3>Singular Types</h3>
-	<h3>Compound and Function Types</h3>
-	<h3>Constrained Types</h3>
-	<h3>Polymorphic Types</h3>
-	<h2>Compound Data Types</h2>
-	<h1>Expressions</h1>
-	<h2>Assignment</h2>
-	<h2>Accessing Fields</h2>
-	<h2>Calling Functions</h2>
-	<h2>Arithmetic</h2>
-	<h2>Logic</h2>
-	<h2>Comparisons</h2>
-	<h2>Conditional Branching</h2>
-	<h2>Reflection</h2>
-	<h2>Type Coercion</h2>
-	<h3>Implicit Coercions</h3>
-	<h1>Functions</h1>
-	<h1>Scope</h1>
-	<h1>Object Duration</h1>
-	<h1>Program Modelling</h1>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>The fiber Programming Language</h1>
 	<ol>
 		<li><p>
 			fiber is a computer programming language designed for general purpose application.
 		</p></li>
 		<li><p>
-			fiber provides the programmer with the basic utilities for organizing data into compound structures, performing arithmetic on numbers, and creating functions and variables.
+			fiber provides the programmer with the basic utilities for organizing data into compound data structures, performing arithmetic on numbers, and creating functions and variables.
 		</p></li>
 		<li><p>
-			fiber also provides the programmer with advanced capabilities for defining custom data types, creating modules, metaprogramming, higher order functions, type checking, and proof verification of program behavior.
+			fiber also provides the programmer with advanced capabilities for defining custom data types, creating program modules, metaprogramming, higher order functions, type checking, and abstract modelling of program behavior.
 		</p></li>
 	</ol>
 	<h1>Environment</h1>
 	<ol>
 		<li><p>
-			The fiber language environment consists of a program or series of programs that will interpret fiber syntax stored in a number of source files and execute the program those source files describe.
+			The fiber language environment consists of a program or series of programs that will interpret fiber syntax stored in a number of source files and exeute the program those source files.
 		</p></li>
 		<li><p>
 			The interpretation of a fiber program can include any number of translations to different interpretable formats representing an identical program.
@@ -2019,49 +1984,7 @@
 			The environment for the fiber programming language shall conform to the constraints specified in <a href="#environment">(<i>Environment</i>)</a>.
 		</p></li>
 	</ol>
-	<h2>Program Organization</h2>
-	<ol>
-		<li><p>
-			A single fiber program consists of a series of source files, some of which may be cached.
-		</p></li>
-		<li><p>
-			Source files are organized using a system of <u>modules</u> defined with fiber syntax.
-			The syntax for describing modules is specified in <a href="#fiber module">(<i>Modules</i>)</a>.
-		</p></li>
-		<li><p>
-			A module definition must be entirely contained within a single source file.
-		</p></li>
-		<li><p>
-			A source file may contain any number of complete modules.
-		</p></li>
-		<li><p>
-			A module may specify the inclusion of other modules within itself.
-			A module may also specify the inclusion of source files that do not contain modules or cached source files.
-		</p></li>
-		<li><p>
-			A module contains a number of named program components.
-			Each component may either be <u>declared</u>, or <u>defined</u>.
-		</p></li>
-		<li><p>
-			The definition of a declared component is required to be included before that component is used in a program.
-		</p></li>
-		<li><p>
-			A declared program component consists of an interface described in fiber syntax with the behavior of that component described in an external source file specified by the module containing the definition.
-		</p></li>
-		<li><p>
-			A defined program component consists of an interface <i>and</i> behavior description contained within a single module containing both descriptions.
-		</p></li>
-		<li><p>
-			All program components described in a module are part of that module's <u>namespace</u> such that program component names are only required to be unique from other names within the same module.
-		</p></li>
-		<li><p>
-			In order for program components to be accessible externally from their module, they must be specified as externally accessible.
-		</p></li>
-		<li><p>
-			If a module is included that contains an externally accessible name identical to a name in an including module, a specific origin module must be specified when using name.
-		</p></li>
-	</ol>
-	<h2>Execution</h2>
+	<h1>Program Execution</h1>
 	<ol>
 		<li><p>
 			The execution of a fiber program is facilitated by two processes, the <u>staging process</u> and the <u>interpretation process</u>.
@@ -2167,6 +2090,156 @@
 			Program definition objects include data types, functions, modules, and assertions.
 		</p></li>
 	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Program Organization</h1>
+	<ol>
+		<li><p>
+			A fiber program is stored in a number of ASCII or Unicode encoded text files called <u>source files</u>.
+			A fiber program may also be stored in pre-translated source files called <u>cached files</u>.
+		</p></li>
+		<li><p>
+			The programs contained within source files shall be organized into modules.
+		</p></li>
+		<li>
+			<p>The syntax for declaring a module is as follows...</p>
+			<table>
+				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Includes</u></b> <b><u>Model</u></b> Declarations <i>ModEnd</i></td></tr>
+			</table>
+		</li>
+		<li><p>
+			Modules will group program variables and definitions into cohesive units that may be re-used in multiple programs.
+			The description of a single module may be contained in multiple source files.
+		</p></li>
+	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>Declarations</h1>
+	<h2>Constants</h2>
+	<h2>Program Variables</h2>
+	<h2>Data Types</h2>
+	<h3>Primitive Types</h3>
+	<h3>Singular Types</h3>
+	<h3>Compound and Function Types</h3>
+	<h3>Constrained Types</h3>
+	<h3>Polymorphic Types</h3>
+	<h2>Compound Data Types</h2>
+	<h1>Expressions</h1>
+	<h2>Assignment</h2>
+	<h2>Accessing Fields</h2>
+	<h2>Calling Functions</h2>
+	<h2>Arithmetic</h2>
+	<h2>Logic</h2>
+	<h2>Comparisons</h2>
+	<h2>Conditional Branching</h2>
+	<h2>Reflection</h2>
+	<h2>Type Coercion</h2>
+	<h3>Implicit Coercions</h3>
+	<h1>Functions</h1>
+	<h1>Scope</h1>
+	<h1>Object Duration</h1>
+	<h1>Program Modelling</h1>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
+	<h1>The fiber Programming Language</h1>
+	<ol>
+		<li><p>
+			fiber is a computer programming language designed for general purpose application.
+		</p></li>
+		<li><p>
+			fiber provides the programmer with the basic utilities for organizing data into compound structures, performing arithmetic on numbers, and creating functions and variables.
+		</p></li>
+		<li><p>
+			fiber also provides the programmer with advanced capabilities for defining custom data types, creating modules, metaprogramming, higher order functions, type checking, and proof verification of program behavior.
+		</p></li>
+	</ol>
+	<h1>Environment</h1>
+	<ol>
+		<li><p>
+			The fiber language environment consists of a program or series of programs that will interpret fiber syntax stored in a number of source files and execute the program those source files describe.
+		</p></li>
+		<li><p>
+			The interpretation of a fiber program can include any number of translations to different interpretable formats representing an identical program.
+		</p></li>
+		
+	</ol>
+	<h2>Program Organization</h2>
+	<ol>
+		<li><p>
+			A single fiber program consists of a series of source files, some of which may be cached.
+		</p></li>
+		<li><p>
+			Source files are organized using a system of <u>modules</u> defined with fiber syntax.
+			The syntax for describing modules is specified in <a href="#fiber module">(<i>Modules</i>)</a>.
+		</p></li>
+		<li><p>
+			A module definition must be entirely contained within a single source file.
+		</p></li>
+		<li><p>
+			A source file may contain any number of complete modules.
+		</p></li>
+		<li><p>
+			A module may specify the inclusion of other modules within itself.
+			A module may also specify the inclusion of source files that do not contain modules or cached source files.
+		</p></li>
+		<li><p>
+			A module contains a number of named program components.
+			Each component may either be <u>declared</u>, or <u>defined</u>.
+		</p></li>
+		<li><p>
+			The definition of a declared component is required to be included before that component is used in a program.
+		</p></li>
+		<li><p>
+			A declared program component consists of an interface described in fiber syntax with the behavior of that component described in an external source file specified by the module containing the definition.
+		</p></li>
+		<li><p>
+			A defined program component consists of an interface <i>and</i> behavior description contained within a single module containing both descriptions.
+		</p></li>
+		<li><p>
+			All program components described in a module are part of that module's <u>namespace</u> such that program component names are only required to be unique from other names within the same module.
+		</p></li>
+		<li><p>
+			In order for program components to be accessible externally from their module, they must be specified as externally accessible.
+		</p></li>
+		<li><p>
+			If a module is included that contains an externally accessible name identical to a name in an including module, a specific origin module must be specified when using name.
+		</p></li>
+	</ol>
+	<h2>Execution</h2>
+	<ol>
+		<li><p>
+			The execution of a fiber program is facilitated by two processes, the <u>staging process</u> and the <u>interpretation process</u>.
+		</p></li>
+		<li><p>
+			Program execution is carried out within an abstract environment containing the program being executed and the data objects it defines.
+		</p></li>
+		<li><p>
+			The execution of a program is required to produce effects that conform to the semantics of the program as it is defined in the source files.
+		</p></li>
+	</ol>
+	
+	
 <!----------------------------------------------------------------------------->
 
 
