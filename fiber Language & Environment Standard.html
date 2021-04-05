@@ -2111,12 +2111,27 @@
 		<li>
 			<p>The syntax for declaring a module is as follows...</p>
 			<table>
-				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Includes</u></b> <b><u>Model</u></b> Declarations <i>ModEnd</i></td></tr>
+				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Includes</u></b> <b><u>Model</u></b> <u>Declarations</u> <i>ModEnd</i></td></tr>
+				<tr><td><i>ModBegin</i> &rArr; &amp;%</td></tr>
+				<tr><td><i>ModEnd</i> &rArr; %&amp;</td></tr>
+				<tr><td><i>Internal</i> &rArr; &amp;~</td></tr>
+				<tr><td><b>Includes</b> &rarr;<br>
+				| <b>Includes</b> <b>Includes</b><br>
+				| <i>FileStringPrefix</i> String <i>EndQuote</i><br>
+				| <i>ModulePrefix</i> Symbol</td></tr>
+				<tr><td><i>FileStringPrefix</i> &rArr; $"</td></tr>
+				<tr><td><i>ModulePrefix</i> &rArr; $&amp;</td></tr>
+				<tr><td><b>Model</b> &rarr; <i>ModelBegin</i> Logic <i>ModelEnd</i></td></tr>
+				<tr><td><i>ModelBegin</i> &rArr; %$</td></tr>
+				<tr><td><i>ModelEnd</i> &rArr; $%</td></tr>
 			</table>
 		</li>
 		<li><p>
 			Modules will group program variables and definitions into cohesive units that may be re-used in multiple programs.
 			The description of a single module may be contained in multiple source files.
+		</p></li>
+		<li><p>
+			Module descriptions may contain several distinct sections: An <u>include</u> section, a <u>model</u> section, a <u>declaration</u> section, and an <u>external declaration</u> section.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
