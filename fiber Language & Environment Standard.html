@@ -2007,15 +2007,18 @@
 			The staging process is also responsible for any translations of a fiber program.
 		</p></li>
 		<li><p>
+			The manner with which the initial source files or cached files containing a program are given to the implementation is not specified.
+		</p></li>
+		<li><p>
 			The staging process will be initiated by calling a function which shall be treated as the entry to a program.
 			The staging process will allocate the resources specifically required to interpret that function.
 		</p></li>
 		<li><p>
 			The staging process is required to verify that a program is <u>well-formed</u>.
-			A well-formed program complies with all semantic and meaning constraints specified in this document.
+			A well-formed program complies with all semantic constraints specified in this document.
 		</p></li>
 		<li><p>
-			If the program being interpreted is not well-formed, the staging process shall immediately exit and produce a diagnostic message describing the cause of the exit.
+			If the program being interpreted is not well-formed, the staging process shall immediately exit.
 			If the staging process exits, the interpretation process that would have followed will not be perfomed.
 		</p></li>
 		<li><p>
@@ -2111,12 +2114,12 @@
 		<li>
 			<p>The syntax for declaring a module is as follows...</p>
 			<table>
-				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Includes</u></b> <b><u>Model</u></b> <u>Declarations</u> <i>ModEnd</i></td></tr>
+				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Include</u></b> <b><u>Model</u></b> <u>Declarations</u> <u><i>Internal</i></u> <u>Declarations</u> <i>ModEnd</i></td></tr>
 				<tr><td><i>ModBegin</i> &rArr; &amp;%</td></tr>
 				<tr><td><i>ModEnd</i> &rArr; %&amp;</td></tr>
 				<tr><td><i>Internal</i> &rArr; &amp;~</td></tr>
-				<tr><td><b>Includes</b> &rarr;<br>
-				| <b>Includes</b> <b>Includes</b><br>
+				<tr><td><b>Include</b> &rarr;<br>
+				| <b>Include</b> <b>Include</b><br>
 				| <i>FileStringPrefix</i> String <i>EndQuote</i><br>
 				| <i>ModulePrefix</i> Symbol</td></tr>
 				<tr><td><i>FileStringPrefix</i> &rArr; $"</td></tr>
@@ -2127,11 +2130,45 @@
 			</table>
 		</li>
 		<li><p>
+			A module description is delimited by a closed pair of operators. Within those operators are a number of declarations and definitions of program objects.
+		</p></li>
+		<li><p>
+			The objects declared within a module are accessible to any objects outside the module.
+		</p></li>
+		<li><p>
+			A number of declarations and definitions may optionally be written after a marker operator, <code>&amp;~</code>.
+			The objects declared after this marker will be visible only to other objects declared or defined within the same module.
+		</p></li>
+	</ol>
+	<h2>Including</h2>
+	<ol>
+		<li><p>
+			A module may contain a number of statements that specify the names of source files and modules that will be included in the module description.
+		</p></li>
+		<li><p>
+
+		</p></li>
+	</ol>
+	<h2></h2>
+		<li><p>
 			Modules will group program variables and definitions into cohesive units that may be re-used in multiple programs.
 			The description of a single module may be contained in multiple source files.
 		</p></li>
 		<li><p>
+			A module description contains a number of program object declarations and definitions.
+		</p></li>
+		<li><p>
+			A module description may contain a number of statements specifying the names of source files and modules that will be included in the module description.
+		</p></li>
+		<li><p>
+			A module description may contain a number
+		</p></li>
+		<li><p>
 			Module descriptions may contain several distinct sections: An <u>include</u> section, a <u>model</u> section, a <u>declaration</u> section, and an <u>external declaration</u> section.
+			These sections must appear in a module description in the order that they were presented in the syntax diagram.
+		</p></li>
+		<li><p>
+			The include section 
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -2153,6 +2190,15 @@
 	<h3>Constrained Types</h3>
 	<h3>Polymorphic Types</h3>
 	<h2>Compound Data Types</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Expressions</h1>
 	<h2>Assignment</h2>
 	<h2>Accessing Fields</h2>
