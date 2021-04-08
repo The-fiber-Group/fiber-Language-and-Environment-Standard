@@ -1971,7 +1971,7 @@
 	<h1>Environment</h1>
 	<ol>
 		<li><p>
-			The fiber language environment consists of a program or series of programs that will interpret fiber syntax stored in a number of source files and exeute the program those source files.
+			The fiber language environment consists of one or more programs that will read fiber syntax representing a program and execute that program's effects.
 		</p></li>
 		<li><p>
 			The interpretation of a fiber program can include any number of translations to different interpretable formats representing an identical program.
@@ -1999,27 +1999,26 @@
 	<h3>Program Staging</h3>
 	<ol>
 		<li><p>
-			The staging process must be performed first before the interpretation process and is required to be completed before the interpretation process begins.
-			The staging process is not required to be completed at one time.
+			The staging proess begins when an implementation is provided program to execute.
 		</p></li>
 		<li><p>
-			The staging process shall read a number of source files and cached files representing a complete program and allocate computing resources to facilitate the interpretation of that program.
-			The staging process is also responsible for any translations of a fiber program.
+			The staging process must be completed before the interpretation process begins.
 		</p></li>
 		<li><p>
-			The manner with which the initial source files or cached files containing a program are given to the implementation is not specified.
+			The staging process can be performed in any order and is not required to be completed at one time.
+			<rec>There is such a thing as a "reasonable ordering" between the individual parts of the staging process being fulfilled, where one part may require the completion of another.</rec>
 		</p></li>
+		<li>
+			<p>The staging process includes...</p>
+			<ul>
+				<li>the reading of source files and cached files representing a program</li>
+				<li>the verification of the program's well-formedness, or that the program fulfills all the semantic constraints specified in this Standard</li>
+				<li>the translation of source files to cached files or other formats</li>
+				<li>the allocation of computing resources necessary to facilitate the interpretation of that program</li>
+			</ul>
+		</li>
 		<li><p>
-			The staging process will be initiated by calling a function which shall be treated as the entry to a program.
-			The staging process will allocate the resources specifically required to interpret that function.
-		</p></li>
-		<li><p>
-			The staging process is required to verify that a program is <u>well-formed</u>.
-			A well-formed program complies with all semantic constraints specified in this document.
-		</p></li>
-		<li><p>
-			If the program being interpreted is not well-formed, the staging process shall immediately exit.
-			If the staging process exits, the interpretation process that would have followed will not be perfomed.
+			If a program is not well-formed, it shall result in a terminal error.
 		</p></li>
 		<li><p>
 			A program is required to be well-formed before any translation is performed.
@@ -2028,16 +2027,13 @@
 	<h3>Program Translation</h3>
 	<ol>
 		<li><p>
-			When a program is translated, the resulting interpretable output shall produce identical effects to the evaluation of the original program when interpreted.
+			When a program is translated, the resulting output shall produce identical effects to the evaluation of the original program when interpreted.
 		</p></li>
 		<li><p>
-			Translation of an entire program is not required to be completed entirely at a single time.
+			Translation of an entire program is not required to be completed at one time.
 		</p></li>
 		<li><p>
-			All program components are not required to be translated before a whole program is interpreted.
-		</p></li>
-		<li><p>
-			If any part of a function defined in a program is translated, the entire function is required to be translated before that function can be interpreted.
+			All program components are not required to be translated before a program is interpreted.
 		</p></li>
 		<li><p>
 			The process of translating a program shall conform to the semantic constraints specified for the fiber programming language.
@@ -2083,14 +2079,66 @@
 			All transformations are performed on program variables.
 		</p></li>
 		<li><p>
-			All program variables have a single data type associated with them for the duration of their use during the execution of a program.
+			All program variables have a single data type associated with them for the duration of their use.
 		</p></li>
 		<li><p>
-			A program definition is a virtual data object that is not guaranteed to exist during the execution of a program.
+			A program definition is a data object that may not exist during the execution of a program.
 			The order and nature of the transformations performed on program variables are determined using program definitions.
 		</p></li>
 		<li><p>
-			Program definition objects include data types, functions, modules, and assertions.
+			Program definitions include data types, functions, modules, and models.
+		</p></li>
+	</ol>
+	<h1>Object Scope</h1>
+	<ol>
+		<li><p>
+			Program execution is performed within an abstract context comprised of all accessible program objects that have been bound to variable names.
+			This context is called <u>scope</u>.
+		</p></li>
+		<li><p>
+			New program objects are introduced to execution scope by declaring them, which binds the objects to variable names.
+		</p></li>
+		<li><p>
+			Objects may dynamically enter and leave scope throughout program execution.
+		</p></li>
+		<li><p>
+			A program is well-formed if all objects are in scope at every point where they are used in execution.
+		</p></li>
+	</ol>
+	<h2>Shadowing</h2>
+	<ol>
+		<li><p>
+			Shadowing is a phenomenon where two objects may be associated with the same name and one will be given access precedence when that variable name is used.
+		</p></li>
+		<li><p>
+			Shadowing occurs when a function call is evaluated and within modules.
+		</p></li>
+		<li><p>
+			When a function call is evaluated, its parameter names are introduced into scope.
+			These parameters may share the same variable names with objects that were previously accessible using those names.
+		</p></li>
+		<li><p>
+			A shadowed object will be inaccessible for the duration of the object that has taken access precedence.
+		</p></li>
+		<li><p>
+			Shadowing will take place when two modules declare an object using the same name and one module includes the other.
+			The object declared in the including module will be give access precedence over the object in the included module.
+		</p></li>
+	</ol>
+	<h1>Object Duration</h1>
+	<ol>
+		<li><p>
+			All program objects are affected by the discreet property of <u>duration</u>.
+			Duration is the period where an object persists during execution.
+		</p></li>
+		<li><p>
+			Objects are given a duration by <u>instantiating</u> them in the environment.
+		</p></li>
+		<li><p>
+			The length of an object's duration is bounded by the first and last use of that object in a program.
+		</p></li>
+		<li><p>
+			The resources required for persisting an object may be released after an object's duration has ended.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
