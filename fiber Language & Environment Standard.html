@@ -3,7 +3,7 @@
 	<title>The fiber Language and Environment Standard</title>
 	<meta charset="UTF-8">
 	<style>
-		body{padding:3ch; background-color:#fffdf6ff; color:#2a0d35ff; font-size:large; font-family: serif;}
+		body{padding:3ch; background-color:rgb(241, 237, 221); color:rgb(35, 9, 41); font-size:large; font-family: serif;}
 		p, dl, table
 		{
 			margin:0;
@@ -1968,22 +1968,156 @@
 			fiber also provides the programmer with advanced capabilities for defining custom data types, creating program modules, metaprogramming, higher order functions, type checking, and abstract modelling of program behavior.
 		</p></li>
 	</ol>
-	<h1>Environment</h1>
+	<h1>Concepts</h1>
+	<h2>Execution</h2>
 	<ol>
 		<li><p>
-			The fiber language environment consists of one or more programs that will read fiber syntax representing a program and execute that program's effects.
+			Program execution is facilitated by the evaluation of expressions in an environment of data objects.
 		</p></li>
 		<li><p>
-			The interpretation of a fiber program can include any number of translations to different interpretable formats representing an identical program.
+			The evaluation of expressions may produce some value or effect on the data held in the data objects.
 		</p></li>
 		<li><p>
-			Translation of a source file can take place at any point.
-			Translated source files are referred to as "cached" source files.
+			There are three discreet stages in program execution they occur in the order of, <u>initialization</u>, <u>translation</u>, then <u>interpretation</u>.
 		</p></li>
 		<li><p>
-			The environment for the fiber programming language shall conform to the constraints specified in <a href="#environment">(<i>Environment</i>)</a>.
+			The execution process may be applied individually to parts of a program, or a whole program.
+			The granularity of the application is implementation dependent.
 		</p></li>
 	</ol>
+	<h3>Program Initialization</h3>
+	<ol>
+		<li><p>
+			The initialization stage begins when an implementation is provided a program to execute in the form of one or more <u>streams</u> containing fiber syntax to be read.
+		</p></li>
+		<li><p>
+			A stream is required to be capable of storing ASCII or Unicode encoded text in a traversable format.
+			The exact structure of a stream is implementation dependent.
+		</p></li>
+		<li><p>
+			A stream may be statically stored as a source file.
+		</p></li>
+		<li><p>
+			The initialization stage must be completed before any other stage.
+		</p></li>
+		<li><p>
+			The initialization stage is not required to be completed at one time.
+		</p></li>
+	</ol>
+	<h2>Data Objects</h2>
+	<ol>
+		<li><p>
+			A fiber program is executed through the manipulation of <u>data objects</u>.
+		</p></li>
+		<li><p>
+			All data objects shall be associated with a single name and a single data type for the duration of their existence.
+		</p></li>
+		<li><p>
+			There are two classes of objects, <u>variables</u> and <u>definitions</u>.
+			All kinds of data objects available for use in the fiber programming language shall be classified as either a variable or a definition.
+		</p></li>
+		<li>
+			<p>The kinds of data objects abailable in fiber are...</p>
+			<ul>
+				<li>variables</li>
+				<li>constants</li>
+				<li>primitive data types</li>
+				<li>data types</li>
+				<li>compound data types</li>
+				<li>function signatures</li>
+				<li>function definitions</li>
+				<li>labels</li>
+				<li>modules</li>
+				<li>behavior models</li>
+				<li>model domains</li>
+			</ul>
+		</li>
+	</ol>
+	<h3>Variables</h3>
+	<ol>
+		<li><p>
+			Variables are data objects that are mutable and contain data that may be transformed by the program being executed.
+		</p></li>
+		<li><p>
+			Variables will have an implicit property of duration where the data they contain is accessible for transformation during a program.
+		</p></li>
+		<li><p>
+			All variables will automatically be initialized with a default value.
+			Variables may be manually initialized with a default value that may vary from the automatic value.
+		</p></li>
+	</ol>
+	<h3>Definitions</h3>
+	<ol>
+		<li><p>
+			Definitions are data objects that are immutable and comtain information about the behavior of a program.
+		</p></li>
+		<li><p>
+			Definitions may not be available during the execution of a program.
+			The availability of definitions during runtime is implementation dependent.
+		</p></li>
+	</ol>
+	<h2>Environment</h2>
+	<ol>
+		<li><p>
+			An <u>environment</u> is an implicit abstract object that contains all data objects and their associated names.
+		</p></li>
+		<li><p>
+			Expressions are evaluated within the context of an environment.
+		</p></li>
+		<li><p>
+			The names used in an expression are the names associated with the data objects in the environment.
+		</p></li>
+		<li><p>
+			If a data object is used by a program, it shall be <u>instantiated</u> in the environment.
+			When a data object is instantiated, its default value is stored in the environment and its name becomes available to the expressions being evaluated.
+		</p></li>
+		<li><p>
+			When an object is no longer used by a program, it may be removed from the environment.
+		</p></li>
+		<li><p>
+			At any point during program execution, data objects may be removed from the environment or instantiated with their default values in the environment.
+		</p></li>
+	</ol>
+	<h3>Namespaces</h3>
+	<ol>
+		<li><p>
+			Within the environment there are a number of <u>namespaces</u>.
+			Every possible name may be used only once within a namespace.
+		</p></li>
+		<li>
+			<p>A number of discrete namespaces exist automatically for various kinds of data objects. They are...</p>
+			<ul>
+				<li>the <u>program namespace</u> containing the names for...
+					<ul>
+						<li>variables</li>
+						<li>constants</li>
+						<li>primitive data types</li>
+						<li>data types</li>
+						<li>compound data types</li>
+						<li>function signatures</li>
+						<li>function definitions</li>
+						<li>modules</li>
+					</ul>
+				</li>
+				<li>the <u>label namespace</u> containing the names for labels</li>
+				<li>the <u>model namespace</u> containing the names for behavior models and model domains</li>
+			</ul>
+		</li>
+		<li><p>
+			Each module shall contain a unique namespace within the program namespace.
+		</p></li>
+	</ol>
+	<h2>Well-formedness</h2>
+	<h2>Errors</h2>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Program Execution</h1>
 	<ol>
 		<li><p>
@@ -2089,6 +2223,13 @@
 			Program definitions include data types, functions, modules, and models.
 		</p></li>
 	</ol>
+	<h1>Concepts</h1>
+	<h2>Environments</h2>
+	<ol>
+		<li><p>
+			An environment is a collection of data objects.
+		</p></li>
+	</ol>
 	<h1>Object Scope</h1>
 	<ol>
 		<li><p>
@@ -2151,6 +2292,11 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>Program Organization</h1>
+	<ol>
+		<li><p>
+			A program consists of one or more 
+		</p></li>
+	</ol>
 	<ol>
 		<li><p>
 			A fiber program is stored in a number of ASCII or Unicode encoded text files called <u>source files</u>.
