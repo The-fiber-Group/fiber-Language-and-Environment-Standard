@@ -1978,30 +1978,90 @@
 			The evaluation of expressions may produce some value or effect on the data held in the data objects.
 		</p></li>
 		<li><p>
-			There are three discreet stages in program execution they occur in the order of, <u>initialization</u>, <u>translation</u>, then <u>interpretation</u>.
+			There are three discreet stages in program execution which occur in the order, <u>inspection</u>, <u>translation</u>, then <u>interpretation</u>.
+		</p></li>
+		<li><p>
+			Each stage must be completed before the next can occur.
+		</p></li>
+		<li><p>
+			No stage is required to be completed at one time.
 		</p></li>
 		<li><p>
 			The execution process may be applied individually to parts of a program, or a whole program.
 			The granularity of the application is implementation dependent.
 		</p></li>
+		<li><p>
+			Program execution begins when an implementation is provided a program to execute through one or more <u>streams</u> containing source text.
+		</p></li>
 	</ol>
-	<h3>Program Initialization</h3>
+	<h3>Streams</h3>
 	<ol>
 		<li><p>
-			The initialization stage begins when an implementation is provided a program to execute in the form of one or more <u>streams</u> containing fiber syntax to be read.
+			A <u>stream</u> is an abstract data buffer containing traversable ASCII or Unicode text.
 		</p></li>
 		<li><p>
-			A stream is required to be capable of storing ASCII or Unicode encoded text in a traversable format.
-			The exact structure of a stream is implementation dependent.
+			Streams are required to be traversable in at least one direction so that source text may be read in the order it was written.
 		</p></li>
 		<li><p>
-			A stream may be statically stored as a source file.
+			Streams may support random position seeking.
 		</p></li>
 		<li><p>
-			The initialization stage must be completed before any other stage.
+			The contents of a stream are not required to be persistent beyond a single reading.
 		</p></li>
 		<li><p>
-			The initialization stage is not required to be completed at one time.
+			A stream may be derived from the contents of an ASCII or Unicode text formatted <u>source file</u> containing fiber syntax.
+		</p></li>
+		<li><p>
+			Only one stream may be derived a single source file and it must contain exactly the contents of that file.
+		</p></li>
+		<li><p>
+			The design of a stream that fulfills the required behavior is implementation dependent.
+		</p></li>
+	</ol>
+	<h3>Program inspection</h3>
+	<ol>
+		<li><p>
+			The inspection stage shall be responsible for reading source text from all streams provided to the implementation and for verifying that a program is well-formed.
+		</p></li>
+		<li><p>
+			A well-formed program shall conform to the syntactic and semantic constraints which are specified in this Standard.
+		</p></li>
+	</ol>
+	<h3>Program Translation</h3>
+	<ol>
+		<li><p>
+			The translation stage shall be responsible for translating the source text into an interpretable format.
+		</p></li>
+		<li><p>
+			Any number of translations to any interpretable format may take place at this stage.
+		</p></li>
+		<li><p>
+			The interpretable format produced by this stage is only required to preserve the information necessary to carry out all program behavior and effects specified by the source text.
+		</p></li>
+	</ol>
+	<h4>Cached Files</h4>
+	<ol>
+		<li><p>
+			The interpretable representation of a program or part of a program emitted by the translation stage may be stored and used at a later point. 
+			This stored representation is called a <u>cached file</u>.
+		</p></li>
+		<li><p>
+			Depending on which parts of a program are translated and stored together, a cached file may be reused in multiple programs.
+		</p></li>
+		<li><p>
+			The method with which a cached file is stored and reused program is implementation dependent.
+		</p></li>
+	</ol>
+	<h3>Program Interpretation</h3>
+	<ol>
+		<li><p>
+			The interpretation stage shall be responsible for allocating the computing resources required to carry out the program's behavior and effects and for initiating the execution of that program.
+		</p></li>
+		<li><p>
+			The interpretation stage must only produce the behavior and effects that are recorded in the interpretable representation of the program.
+		</p></li>
+		<li><p>
+			The means through which the behavior and effects of a program are carried out are implementation dependent.
 		</p></li>
 	</ol>
 	<h2>Data Objects</h2>
@@ -2017,7 +2077,7 @@
 			All kinds of data objects available for use in the fiber programming language shall be classified as either a variable or a definition.
 		</p></li>
 		<li>
-			<p>The kinds of data objects abailable in fiber are...</p>
+			<p>The kinds of data objects in fiber are...</p>
 			<ul>
 				<li>variables</li>
 				<li>constants</li>
@@ -2107,8 +2167,20 @@
 			Each module shall contain a unique namespace within the program namespace.
 		</p></li>
 	</ol>
-	<h2>Well-formedness</h2>
 	<h2>Errors</h2>
+	<ol>
+		<li><p>
+			If an error is encountered during the execution of a program, the implementation shall halt its current activity, produce a diagnostic message, and then exit.
+		</p></li>
+		<li><p>
+			If an error is encountered specifically during the program inspection stage, the implementation shall attempt to recover to an acceptable state from which it can continue.
+			If the recovery is successful, the diagnostic message produced from that error shall be stored and emitted before the interpretation stage.
+			If the recovery is unsuccessful, the implementation will halt its current activity, produce all diagnostic messages in the order that their associated errors were encountered, and then exit.
+		</p></li>
+		<li><p>
+			The contents and method of delivery of a diagnostic message is implementation dependent.
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
@@ -2118,170 +2190,7 @@
 
 
 <!----------------------------------------------------------------------------->
-	<h1>Program Execution</h1>
-	<ol>
-		<li><p>
-			The execution of a fiber program is facilitated by two processes, the <u>staging process</u> and the <u>interpretation process</u>.
-		</p></li>
-		<li><p>
-			Program execution is carried out within an abstract environment containing the program being executed and the data objects it defines.
-		</p></li>
-		<li><p>
-			The execution of a program is required to produce effects that conform to the semantics of the program as it is defined in the source files.
-		</p></li>
-	</ol>
-	<h3>Program Staging</h3>
-	<ol>
-		<li><p>
-			The staging proess begins when an implementation is provided program to execute.
-		</p></li>
-		<li><p>
-			The staging process must be completed before the interpretation process begins.
-		</p></li>
-		<li><p>
-			The staging process can be performed in any order and is not required to be completed at one time.
-			<rec>There is such a thing as a "reasonable ordering" between the individual parts of the staging process being fulfilled, where one part may require the completion of another.</rec>
-		</p></li>
-		<li>
-			<p>The staging process includes...</p>
-			<ul>
-				<li>the reading of source files and cached files representing a program</li>
-				<li>the verification of the program's well-formedness, or that the program fulfills all the semantic constraints specified in this Standard</li>
-				<li>the translation of source files to cached files or other formats</li>
-				<li>the allocation of computing resources necessary to facilitate the interpretation of that program</li>
-			</ul>
-		</li>
-		<li><p>
-			If a program is not well-formed, it shall result in a terminal error.
-		</p></li>
-		<li><p>
-			A program is required to be well-formed before any translation is performed.
-		</p></li>
-	</ol>
-	<h3>Program Translation</h3>
-	<ol>
-		<li><p>
-			When a program is translated, the resulting output shall produce identical effects to the evaluation of the original program when interpreted.
-		</p></li>
-		<li><p>
-			Translation of an entire program is not required to be completed at one time.
-		</p></li>
-		<li><p>
-			All program components are not required to be translated before a program is interpreted.
-		</p></li>
-		<li><p>
-			The process of translating a program shall conform to the semantic constraints specified for the fiber programming language.
-		</p></li>
-		<li><p>
-			The method of translation is implementation dependent.
-		</p></li>
-	</ol>
-	<h3>Program Interpretation</h3>
-	<ol>
-		<li><p>
-			The interpretation process is performed by evaluating the expressions contained in the definition of that program.
-		</p></li>
-		<li><p>
-			The order in which the expressions are evaluated shall follow the lexical order in which those expressions were defined in the source files.
-		</p></li>
-		<li><p>
-			Expression evaluation shall result in some number of effects on the execution environment which may transform values held in program variables.
-		</p></li>
-		<li><p>
-			Expressions that do not have an effect on the execution environment are not required to be evaluated.
-		</p></li>
-		<li><p>
-			The means through which the evaluation is carried out is implementation dependent.
-		</p></li>
-		<li><p>
-			Programs may be interpreted in an implementation that supports multiple interpretation processes acting simultaneously for a single program.
-		</p></li>
-		<li><p>
-			All interpretation processes acting on a single program shall operate within a single exection environment for that program.
-		</p></li>
-		<li><p>
-			The resolution of conflicting or simultaneous transformations on a single program object by multiple interpretation processes is implementation dependent.
-		</p></li>
-	</ol>
-	<h2>Data Objects</h2>
-	<ol>
-		<li><p>
-			Data objects are divided into two classes, <u>variables</u> and <u>definitions</u>.
-		</p></li>
-		<li><p>
-			A program variable is a data object that exists during the execution of the program.
-			All transformations are performed on program variables.
-		</p></li>
-		<li><p>
-			All program variables have a single data type associated with them for the duration of their use.
-		</p></li>
-		<li><p>
-			A program definition is a data object that may not exist during the execution of a program.
-			The order and nature of the transformations performed on program variables are determined using program definitions.
-		</p></li>
-		<li><p>
-			Program definitions include data types, functions, modules, and models.
-		</p></li>
-	</ol>
-	<h1>Concepts</h1>
-	<h2>Environments</h2>
-	<ol>
-		<li><p>
-			An environment is a collection of data objects.
-		</p></li>
-	</ol>
-	<h1>Object Scope</h1>
-	<ol>
-		<li><p>
-			Program execution is performed within an abstract context comprised of all accessible program objects that have been bound to variable names.
-			This context is called <u>scope</u>.
-		</p></li>
-		<li><p>
-			New program objects are introduced to execution scope by declaring them, which binds the objects to variable names.
-		</p></li>
-		<li><p>
-			Objects may dynamically enter and leave scope throughout program execution.
-		</p></li>
-		<li><p>
-			A program is well-formed if all objects are in scope at every point where they are used in execution.
-		</p></li>
-	</ol>
-	<h2>Shadowing</h2>
-	<ol>
-		<li><p>
-			Shadowing is a phenomenon where two objects may be associated with the same name and one will be given access precedence when that variable name is used.
-		</p></li>
-		<li><p>
-			Shadowing occurs when a function call is evaluated and within modules.
-		</p></li>
-		<li><p>
-			When a function call is evaluated, its parameter names are introduced into scope.
-			These parameters may share the same variable names with objects that were previously accessible using those names.
-		</p></li>
-		<li><p>
-			A shadowed object will be inaccessible for the duration of the object that has taken access precedence.
-		</p></li>
-		<li><p>
-			Shadowing will take place when two modules declare an object using the same name and one module includes the other.
-			The object declared in the including module will be give access precedence over the object in the included module.
-		</p></li>
-	</ol>
-	<h1>Object Duration</h1>
-	<ol>
-		<li><p>
-			All program objects are affected by the discreet property of <u>duration</u>.
-			Duration is the period where an object persists during execution.
-		</p></li>
-		<li><p>
-			Objects are given a duration by <u>instantiating</u> them in the environment.
-		</p></li>
-		<li><p>
-			The length of an object's duration is bounded by the first and last use of that object in a program.
-		</p></li>
-		<li><p>
-			The resources required for persisting an object may be released after an object's duration has ended.
-		</p></li>
-	</ol>
+
 <!----------------------------------------------------------------------------->
 
 
