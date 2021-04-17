@@ -2092,6 +2092,13 @@
 				<li>model domains</li>
 			</ul>
 		</li>
+		<li><p>
+			All objects are <u>declared</u>.
+			Declaring an object assigns it a name and a data type.
+		</p></li>
+		<li><p>
+			In the case of declaring a definition object, the definition expression may contain additional information alongside the name and data type.
+		</p></li>
 	</ol>
 	<h3>Variables</h3>
 	<ol>
@@ -2190,7 +2197,42 @@
 
 
 <!----------------------------------------------------------------------------->
-
+	<h1>Modules</h1>
+	<ol>
+		<li><p>
+			A program may be organized into a set of modules.
+		</p></li>
+		<li>
+			<p>
+				The syntax for declaring a module is...
+			</p>
+			<table>
+				<tr><td><b>Module</b> &rarr; <i>ModuleStart</i> <b>Declarations</b> <i>ModuleEnd</i></td></tr>
+				<tr><td><i>ModuleStart</i> &rArr; &amp;%</td></tr>
+				<tr><td><i>ModuleEnd</i> &rArr; %&amp;</td></tr>
+				<tr><td><b>Declarations</b> &rarr;<br>
+				| <b>Include</b><br>
+				| ObjectDeclarations<br>
+				| ProgramModel<br>
+				| <i>PrivatePrefix</i> <b>Declarations</b></td></tr>
+				<tr><td><b>Include</b> &rarr;<br>
+				| <b>Include</b> <b>Include</b><br>
+				| <i>IncludePrefix</i> String<br>
+				| <i>IncludePrefix</i> ModuleName</td></tr>
+				<tr><td><i>IncludePrefix</i> &rArr; &amp;$</td></tr>
+				<tr><td><i>PrivatePrefix</i> &rArr; %$</td></tr>
+			</table>
+		</li>
+		<li><p>
+			A module will contain a number of object declarations.
+		</p></li>
+		<li><p>
+			The names used in those declarations shall reside in a program namespace unique to that module.
+		</p></li>
+		<li><p>
+			A module may include other modules
+		</p></li>
+	</ol>
 <!----------------------------------------------------------------------------->
 
 
