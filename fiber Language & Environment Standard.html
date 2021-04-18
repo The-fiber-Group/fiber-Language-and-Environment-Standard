@@ -18,10 +18,10 @@
 		dt{font-weight:bold;}
 		/*ol li{border-top:1px solid black;}*/
 		ul li{border:none;}
-		code{background-color:lightgrey;}
 		table{border:1px solid black; border-spacing:3ch 1ch; margin-top: 3ch;}
 		a{color:inherit;}
 		a:hover{background-color: lightgrey;}
+		code{background-color:lightgrey;}
 		table table{border-style:none;}
 		h3 {text-align:center;border-bottom:1px solid black; width:50%;margin-left:25%;margin-right:50%;}
 		h4, h5, h6 {text-align:center;width:50%;margin-left:25%;margin-right:50%;}
@@ -1754,13 +1754,9 @@
 				<dd>
 					Indicates that the Segment associated with the Symbol is readable and executable and contains BRISC encoded instructions.
 				</dd>
-				<dt>n</dt>
-				<dd>
-					Indicates that the Segment associated with the Symbol is readable and executable and contains encoded instructions using the format of the target architecture, or the <i>native</i> instruction format.
-				</dd>
 				<dt>f</dt>
 				<dd>
-					Indicates that the Segment associated with the Symbol is readable and executable and contains encoded instructions for a non-BRISC, non-native, <i>foreign</i> architecture.
+					Indicates that the Segment associated with the Symbol is readable and executable and contains encoded instructions for a non-BRISC, <i>foreign</i> architecture.
 					The means for determining the format of <b>f</b> Segments is not specified.
 				</dd>
 			</dl>
@@ -2000,7 +1996,7 @@
 			A <u>stream</u> is an abstract data buffer containing traversable ASCII or Unicode text.
 		</p></li>
 		<li><p>
-			Streams are required to be traversable in at least one direction so that source text may be read in the order it was written.
+			Streams are required to be traversable in a forward direction so that source text may be read in the order it was written.
 		</p></li>
 		<li><p>
 			Streams may support random position seeking.
@@ -2013,6 +2009,9 @@
 		</p></li>
 		<li><p>
 			Only one stream may be derived a single source file and it must contain exactly the contents of that file.
+		</p></li>
+		<li><p>
+			If a stream is derived from a source file, that stream will be assigned the same name as the file it was derived from.
 		</p></li>
 		<li><p>
 			The design of a stream that fulfills the required behavior is implementation dependent.
@@ -2197,6 +2196,82 @@
 
 
 <!----------------------------------------------------------------------------->
+	<h1>Basic Syntax</h1>
+	<ol>
+		<li><p>
+			fiber syntax is comprised of tokens which are juxtaposed to create program expressions and statements to be evaluated.
+		</p></li>
+		<li><p>
+			There are two separate classes of tokens, <u>symbol</u> tokens and <u>operator</u> tokens.
+		</p></li>
+		<li><p>
+			All tokens are comprised of a contiguous series of ASCII and Unicode characters.
+		</p></li>
+		<li><p>
+			All tokens are delimited by any blank or non-printable characters.
+		</p></li>
+		<li><p>
+			Multiple adjacent blank or non-printable characters in series are treated as a single delimiting character.
+		</p></li>
+	</ol>
+	<h2>Symbols</h2>
+	<ol>
+		<li><p>
+			Symbols shall consist of a contiguous series of alphanumeric and ASCII dash characters.
+		</p></li>
+		<li><p>
+			Alphanumeric characters are defined as the ASCII code points 48-57, 65-90, and 97-122, and any Unicode blocks representing language characters and scripts.
+		</p></li>
+		<li><p>
+			The ASCII dash character (ASCII 45) is allowed in a symbol at any point where it is not the first or last character in that symbol.
+		</p></li>
+		<li><p>
+			Symbols are case-insensitive, the code points 65-90 and 97-122 are considered lexically equivalent. 
+			The symbols <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are all considered the same symbol.
+		</p></li>
+		<li><p>
+			In the Unicode Latin-1 Supplement block, the code points U+00C0-U+00D6 and U+00E0-U+00F6, U+00D8-U+00DD and U+00F8-U+00FD are considered lexically equivalent.
+			For example, the characters <code>&#x00C6;</code> and <code>&#x00E6;</code>, and the characters <code>&#x00DD;</code> and <code>&#x00FD;</code> are each considered lexically equivalent.
+			In the Unicode Latin Extended-A block, in the code points U+0100-U+017E, each even-numbered code point is considered lexically equivalent with the immediately following odd-numbered code point.
+			For example, the characters <code>&#x0102;</code> and <code>&#x0103;</code> are equivalent.
+		</p></li>
+	</ol>
+	<h2>Operators</h2>
+	<ol>
+		<li><p>
+			Operators shall consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
+		</p></li>
+		<li><p>
+			Non-alphanumeric characters are defined as the ASCII code points 33-47, 58-64, 91-96, and 123-126, and any Unicode blocks representing non-linguistic, symbolic, or notational characters.
+		</p></li>
+		<li><p>
+			The ASCII dash character (ASCII 45) is accepted in an operator token at any position.
+		</p></li>
+	</ol>
+	<h2>Comments</h2>
+	<ol>
+		<li><p>
+			Comments are prefixed by the comment operator, <code>``</code>.
+		</p></li>
+		<li><p>
+			Comments are delimited by a <u>line break</u>, which consists of some combination of ASCII Line Feed and Carriage Return control characters.
+		</p></li>
+		<li><p>
+			Any series of characters will be accepted between a comment operator and a line break, excluding additional line break characters.
+		</p></li>
+		<li><p>
+			Comments in a source file may be discarded before the staging process begins.
+		</p></li>
+	</ol>
+<!----------------------------------------------------------------------------->
+
+
+
+
+
+
+
+<!----------------------------------------------------------------------------->
 	<h1>Modules</h1>
 	<ol>
 		<li><p>
@@ -2207,20 +2282,19 @@
 				The syntax for declaring a module is...
 			</p>
 			<table>
-				<tr><td><b>Module</b> &rarr; <i>ModuleStart</i> <b>Declarations</b> <i>ModuleEnd</i></td></tr>
+				<tr><td><b>Module</b> &rarr; <i>ModuleStart</i> <b>Declarations</b> <u><i>InternalPrefix</i> <b>Declarations</b></u> <i>ModuleEnd</i></td></tr>
 				<tr><td><i>ModuleStart</i> &rArr; &amp;%</td></tr>
 				<tr><td><i>ModuleEnd</i> &rArr; %&amp;</td></tr>
+				<tr><td><i>InternalPrefix</i> &rArr; %$</td></tr>
 				<tr><td><b>Declarations</b> &rarr;<br>
 				| <b>Include</b><br>
 				| ObjectDeclarations<br>
-				| ProgramModel<br>
-				| <i>PrivatePrefix</i> <b>Declarations</b></td></tr>
+				| ProgramModel</td></tr>
 				<tr><td><b>Include</b> &rarr;<br>
 				| <b>Include</b> <b>Include</b><br>
 				| <i>IncludePrefix</i> String<br>
 				| <i>IncludePrefix</i> ModuleName</td></tr>
 				<tr><td><i>IncludePrefix</i> &rArr; &amp;$</td></tr>
-				<tr><td><i>PrivatePrefix</i> &rArr; %$</td></tr>
 			</table>
 		</li>
 		<li><p>
@@ -2230,90 +2304,32 @@
 			The names used in those declarations shall reside in a program namespace unique to that module.
 		</p></li>
 		<li><p>
-			A module may include other modules
-		</p></li>
-	</ol>
-<!----------------------------------------------------------------------------->
-
-
-
-
-
-
-
-<!----------------------------------------------------------------------------->
-	<h1>Program Organization</h1>
-	<ol>
-		<li><p>
-			A program consists of one or more 
-		</p></li>
-	</ol>
-	<ol>
-		<li><p>
-			A fiber program is stored in a number of ASCII or Unicode encoded text files called <u>source files</u>.
-			A fiber program may also be stored in pre-translated source files called <u>cached files</u>.
+			A module may include other sources using an include statement specified by <b>Include</b>.
 		</p></li>
 		<li><p>
-			The programs contained within source files shall be organized into modules.
-		</p></li>
-		<li>
-			<p>The syntax for declaring a module is as follows...</p>
-			<table>
-				<tr><td><b>Module</b> &rarr; <i>ModBegin</i> ModuleName <b><u>Include</u></b> <b><u>Model</u></b> <u>Declarations</u> <u><i>Internal</i></u> <u>Declarations</u> <i>ModEnd</i></td></tr>
-				<tr><td><i>ModBegin</i> &rArr; &amp;%</td></tr>
-				<tr><td><i>ModEnd</i> &rArr; %&amp;</td></tr>
-				<tr><td><i>Internal</i> &rArr; &amp;~</td></tr>
-				<tr><td><b>Include</b> &rarr;<br>
-				| <b>Include</b> <b>Include</b><br>
-				| <i>FileStringPrefix</i> String <i>EndQuote</i><br>
-				| <i>ModulePrefix</i> Symbol</td></tr>
-				<tr><td><i>FileStringPrefix</i> &rArr; $"</td></tr>
-				<tr><td><i>ModulePrefix</i> &rArr; $&amp;</td></tr>
-				<tr><td><b>Model</b> &rarr; <i>ModelBegin</i> Logic <i>ModelEnd</i></td></tr>
-				<tr><td><i>ModelBegin</i> &rArr; %$</td></tr>
-				<tr><td><i>ModelEnd</i> &rArr; $%</td></tr>
-			</table>
-		</li>
-		<li><p>
-			A module description is delimited by a closed pair of operators. Within those operators are a number of declarations and definitions of program objects.
+			A module may include another module by prefixing the name of that module with the inclusion prefix.
 		</p></li>
 		<li><p>
-			The objects declared within a module are accessible to any objects outside the module.
+			A module may include the contents of a stream as part of its definition by prefixing a character string containing the stream name.
 		</p></li>
 		<li><p>
-			A number of declarations and definitions may optionally be written after a marker operator, <code>&amp;~</code>.
-			The objects declared after this marker will be visible only to other objects declared or defined within the same module.
-		</p></li>
-	</ol>
-	<h2>Including</h2>
-	<ol>
-		<li><p>
-			A module may contain a number of statements that specify the names of source files and modules that will be included in the module description.
+			A module may make some of its declarations <u>internal</u> by separating its definition into two subsections using the <i>InternalPrefix</i> operator.
+			The declarations before the operator will declare <u>external</u> objects and the definitions after the operator will declare internal objects.
 		</p></li>
 		<li><p>
-
-		</p></li>
-	</ol>
-	<h2></h2>
-		<li><p>
-			Modules will group program variables and definitions into cohesive units that may be re-used in multiple programs.
-			The description of a single module may be contained in multiple source files.
+			An internal object is only accessible to other objects within the same module.
 		</p></li>
 		<li><p>
-			A module description contains a number of program object declarations and definitions.
+			An external object is accessible both to objects within the same module and any objects outside the module.
 		</p></li>
 		<li><p>
-			A module description may contain a number of statements specifying the names of source files and modules that will be included in the module description.
+			When a module is included, only its external objects are accessible to the including module.
 		</p></li>
 		<li><p>
-			A module description may contain a number
+			The objects in modules and streams that are included after the <i>InternalPrefix</i> will be treated as internal objects.
 		</p></li>
 		<li><p>
-			Module descriptions may contain several distinct sections: An <u>include</u> section, a <u>model</u> section, a <u>declaration</u> section, and an <u>external declaration</u> section.
-			These sections must appear in a module description in the order that they were presented in the syntax diagram.
-		</p></li>
-		<li><p>
-			The include section 
+			A module may contain a number of program models alongside other declarations. Program models are specified in <a href="#">(<i>Program Models</i>)</a>.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -2326,10 +2342,216 @@
 
 <!----------------------------------------------------------------------------->
 	<h1>Declarations</h1>
+	<ol>
+		<li><p>
+			Declarations are expressions that instantiate objects.
+		</p></li>
+	</ol>
 	<h2>Constants</h2>
+	<ol>
+		<li><p>
+			A <u>constant</u> is a specific typed value that is expressed in writing and has the same type and value for every occurrence.
+		</p></li>
+		<li><p>
+			Constants are expressed using symbol tokens with specific compositions.
+		</p></li>
+	</ol>
+	<h3>Numbers</h3>
+	<ol>
+		<li><p>
+			A Symbol shall be interpreted as a decimal value if it contains only the decimal digits zero through nine.
+			</p>
+			<table><tr><td><i>Decimal</i> &rArr; [0-9]*</td></tr></table>
+		</li>
+		<li><p>
+			A Symbol shall be interpreted as a hexadecimal value if it contains only the hexadecimal digits zero through nine, the uppercase letters A-F, and is prefixed by the sequence <code>0x</code>.
+			</p>
+			<table><tr><td><i>Hex</i> &rArr; 0x[0-9A-F]*</td></tr></table>
+		</li>
+	</ol>
+	<h4>Number Operators</h4>
+	<ol>
+		<li><p>
+			The prefix minus operator <code>-</code> shall accept a decimal or hexadecimal constant declaration as an operand and will negate the value represented by that constant.
+		</p></li>
+		<li><p>
+			The binary radix operator <code>.</code> shall accept decimal constant declarations for both operands and shall produce a rational value using the left operand as the integer component of the resulting value and the right operand as the fractional component.
+		</p></li>
+		<li><p>
+			Neither the minus operator or the radix operator shall be associative.
+		</p></li>
+		<li><p>
+			It is possible for the minus operator to prefix the left operand of a radix operator.
+			The combination of the minus prefix and the radix shall result in a negative rational value.
+		</p></li>
+		<li><p>
+			Number constant operators shall not accept identifiers or non-number declarations.
+		</p></li>
+	</ol>
+	<h3>Character Literals</h3>
+	<ol>
+		<li><p>
+			A character literal is the numerical value associated with a code point in a character encoding scheme.
+			fiber supports character literal values for ASCII and Unicode encoding.
+		</p></li>
+		<li><p>
+			An ASCII character literal value shall be declared by writing a printable ASCII character surrounded by double quotations. <code>"A"</code>
+		</p></li>
+		<li><p>
+			If a double quotation or backward slash ASCII character is included in a string it must be prefixed with a backward slash character, such as <code>"\\"</code> or <code>"\""</code>.
+		</p></li>
+		<li id="character literals non-printable"><p>
+			Non-printable ASCII character literals shall be included in a string by a two-digit hexadecimal number prefixed with a backward slash that corresponds to the ASCII code point of the character, <code>"\20"</code>.
+		</p></li>
+		<li><p>
+			A Unicode character literal shall be declared by writing a Unicode character surrounded by double quotations in the same manner as an ASCII character.
+			This method shall require that the source text is UTF-8 encoded.
+		</p></li>
+		<li><p>
+			A Unicode character literal may be alternatively declared using a hexadecimal number declaration specifying the numerical value of the Unicode code point being declared.
+			The number shall be prefixed with the sequence <code>\U</code>, delimited by a period dot, and then surrounded by double quotations. <code>"\U2000."</code>
+			This representation does not require UTF-8 encoding.
+		</p></li>
+		<li><p>
+			The symbol and operator tokenization rules are disregarded concerning the syntax between quotations.
+			This is necessary to properly express character literal values.
+		</p></li>
+	</ol>
+	<h3>String Data</h3>
+	<ol>
+		<li><p>
+			String data consists of a contiguous series of character values.
+			Character values may be ASCII or Unicode values.
+		</p></li>
+		<li><p>
+			String data is declared using the same syntax as a character literal, but including more than one character inside the pair of quotations.
+		</p></li>
+		<li><p>
+			Each character in a string shall use one of the declaration methods provided above for character literal values.
+		</p></li>
+		<li><p>
+			An ASCII string shall contain only ASCII character encodings.
+		</p></li>
+		<li><p>
+			A Unicode string shall contain at least one Unicode character that is not included in the ASCII encoding scheme.
+		</p></li>
+		<li><p>
+			Control characters and other non-printable characters shall be declared in string data exclusively with the format specified in <a href="#character literals non-printable">(<i>Character Literals, 4</i>)</a>.
+		</p></li>
+		<li><p>
+			Control character values occurring normally in the source file inside a string data declaration shall be discarded.
+		</p></li>
+	</ol>
+	<h4>Byte Strings</h4>
+	<ol>
+		<li><p>
+			Byte strings are a special instance of string data that contain no format or other encoding.
+		</p></li>
+		<li><p>
+			A byte string shall be signified by prefixing the opening quotation with the number sign <code>#"</code>.
+		</p></li>
+		<li><p>
+			A byte string shall be declared by writing a series of two-digit hexadecimal numerical constants.
+		</p></li>
+		<li><p>
+			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
+		</p></li>
+	</ol>
+	<h3>Relation to Data Types</h3>
+	<ol>
+		<li>
+			<p>The data type for each kind of constant is as follows...</p>
+			<table>
+				<tr><th>Constant</th><th>Data Type</th></tr>
+				<tr><td>Decimal Number (no radix/sign)</td><td>Nat</td></tr>
+				<tr><td>Signed Decimal Number (no radix)</td><td>Int</td></tr>
+				<tr><td>Real Number (with radix, no sign)</td><td>Float</td></tr>
+				<tr><td>Signed Real Number (with radix/sign)</td><td>Float</td></tr>
+				<tr><td>Large Signed Real Number</td><td>Real</td></tr>
+				<tr><td>ASCII Character Literal</td><td>Char</td></tr>
+				<tr><td>Unicode Character Literal</td><td>Uncd</td></tr>
+				<tr><td>ASCII Character String</td><td>Bin [Char_Nat]</td></tr>
+				<tr><td>Unicode Character String</td><td>Bin [Uncd_Nat]</td></tr>
+				<tr><td>Byte String</td><td>Bin [Byte_Nat]</td></tr>
+			</table>
+		</li>
+		<li><p>
+			If a floating point constant is determined to be beyond the precision of the <i>Float</i> data type, the <i>Real</i> data type will be used for that constant instead.
+		</p></li>
+		<li><p>
+			The natural number used in the indexed fields for string data is equivalent to the number of bytes for ASCII and Byte strings or the number of characters for Unicode strings.
+		</p></li>
+	</ol>
 	<h2>Program Variables</h2>
 	<h2>Data Types</h2>
 	<h3>Primitive Types</h3>
+	<ol>
+		<li>
+			<p>The primitive data types are...</p>
+			<table>
+				<tr><th>Type Name</th><th>Size</th><th>Interface Description</th></tr>
+				<tr><td>Byte</td><td>1B</td><td>Unsigned binary number</td></tr>
+				<tr><td>Nat16</td><td>2B</td>...</tr>
+				<tr><td>Nat</td><td>4B</td><td>...</td></tr>
+				<tr><td>Nat64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Char</td><td>1B</td><td>Signed binary number</td></tr>
+				<tr><td>Int16</td><td>2B</td><td>...</td></tr>
+				<tr><td>Int</td><td>4B</td><td>...</td></tr>
+				<tr><td>Int64</td><td>8B</td><td>...</td></tr>
+				<tr><td>Uncd</td><td>4B</td><td>Unsigned binary number (Unicode value)</td></tr>
+				<tr><td>Float</td><td>4B</td><td>IEEE-754 32b binary floating point</td></tr>
+				<tr><td>Real</td><td>8B</td><td>IEEE-754 64b binary floating point</td></tr>
+				<tr><td>Mem</td><td>8B</td><td>Memory Address</td></tr>
+				<tr><td>True</td><td>1B</td><td>Boolean Value</td></tr>
+				<tr><td>False</td><td>1B</td><td>Boolean Value</td></tr>
+				<tr><td>N-bits</td><td>?</td><td>Unsigne binary number</td></tr>
+				<tr><td>I-bits</td><td>?</td><td>Signed binary number</td></tr>
+			</table>
+		</li>
+		<li>
+			<p>
+				The primitive types are organizd under a number of primitive supertypes.
+				The hierarchy is...
+			</p>
+			<ul>
+				<li>Number
+					<ul>
+						<li>Nat, Nat16, Nat64</li>
+						<li>Int, Int16, Int64</li>
+						<li>Float, Real</li>
+						<li>Mem</li>
+						<li>Byte, Char, Uncd</li>
+						<li>N-bits, I-bits</li>
+					</ul>
+				</li>
+				<li>Bool
+					<ul>
+						<li>True</li>
+						<li>False</li>
+					</ul>
+				</li>
+				<li>Graph
+					<ul>
+						<li>Char</li>
+						<li>Byte</li>
+						<li>Uncd</li>
+					</ul>
+				</li>
+				<li>Bin</li>
+				<li>Function</li>
+				<li>Type</li>
+				<li>Any
+					<ul>
+						<li>Number</li>
+						<li>Bool</li>
+						<li>Graph</li>
+						<li>Bin</li>
+						<li>Any</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ol>
 	<h3>Singular Types</h3>
 	<h3>Compound and Function Types</h3>
 	<h3>Constrained Types</h3>
@@ -2556,212 +2778,7 @@
 			Declarations do not produce a data object when evaluated.
 		</p></li>
 	</ol>
-	<h2>Constants</h2>
-	<ol>
-		<li><p>
-			A <u>constant</u> shall be a typed data object with a static value that is expressed syntactically in writing.
-		</p></li>
-		<li><p>
-			A constant shall have the same type and value for every occurrence of that constant.
-		</p></li>
-	</ol>
-	<h3>Numbers</h3>
-	<ol>
-		<li><p>
-			A Symbol shall be interpreted as a decimal value if it contains only the decimal digits zero through nine.
-			</p>
-			<table><tr><td><i>Decimal</i> &rArr; [0-9]*</td></tr></table>
-		</li>
-		<li><p>
-			A Symbol shall be interpreted as a hexadecimal value if it contains only the hexadecimal digits zero through nine, the uppercase letters <b>A</b> through <b>F</b>, and is prefixed by the sequence <code>0x</code>.
-			</p>
-			<table><tr><td><i>Hex</i> &rArr; 0x[0-9A-F]*</td></tr></table>
-		</li>
-	</ol>
-	<h4>Number Operators</h4>
-	<ol>
-		<li><p>
-			The prefix minus operator <code>-</code> shall accept a decimal or hexadecimal constant declaration as an operand and will negate the value represented by that constant.
-		</p></li>
-		<li><p>
-			The binary radix operator <code>.</code> shall accept decimal constant declarations for both operands and shall produce a rational value using the left operand as the integer component of the resulting value and the right operand as the fractional component.
-		</p></li>
-		<li><p>
-			Neither the minus operator or the radix operator shall be associative.
-		</p></li>
-		<li><p>
-			It is possible for the minus operator to prefix the left operand of a radix operator.
-			The combination of the minus prefix and the radix shall result in a negative rational value.
-		</p></li>
-		<li><p>
-			Number constant operators shall not accept identifiers or non-number declarations.
-		</p></li>
-	</ol>
-	<h3>Character Literals</h3>
-	<ol>
-		<li><p>
-			A character literal is the numerical value associated with a code point in a character encoding scheme.
-			fiber supports character literal values for ASCII and Unicode encoding.
-		</p></li>
-		<li><p>
-			An ASCII character literal value shall be declared by writing a printable ASCII character surrounded by double quotations. <code>"A"</code>
-		</p></li>
-		<li><p>
-			The double quotation character and the backward slash character shall be prefixed by a backward slash character before they are surrounded by double quotations. <code>"\\"</code> <code>"\""</code>
-		</p></li>
-		<li id="character literals non-printable"><p>
-			Non-printable ASCII character literals shall be represented by a two-digit hexadecimal number declaration specifying the numerical value of the character literal.
-			The number shall be prefixed with a forward slash and then surrounded by double quotations. <code>"\20"</code>
-		</p></li>
-		<li><p>
-			A Unicode character literal shall be declared by writing a Unicode character surrounded by double quotations in the same manner as an ASCII character.
-			This method shall require that the source file support UTF-8 encoding.
-		</p></li>
-		<li><p>
-			A Unicode character literal may be alternatively declared using a hexadecimal number declaration specifying the numerical value of the Unicode code point being declared.
-			The number shall be prefixed with the sequence <code>\U</code>, delimited by a period dot, and then surrounded by double quotations. <code>"\U2000."</code>
-			This method does not require UTF-8 encoding.
-		</p></li>
-		<li><p>
-			The symbol and operator tokenization rules are disregarded concerning the syntax between quotations.
-			This is necessary to properly express character literal values.
-		</p></li>
-	</ol>
-	<h3>String Data</h3>
-	<ol>
-		<li><p>
-			String data consists of a contiguous series of character values.
-			Character values may be ASCII or Unicode values.
-		</p></li>
-		<li><p>
-			String data is declared using the same syntax as a character literal, but including more than one character inside the pair of quotations.
-		</p></li>
-		<li><p>
-			Each character in a string shall use one of the declaration methods provided above for character literal values.
-		</p></li>
-		<li><p>
-			An ASCII string shall contain only ASCII character encodings.
-		</p></li>
-		<li><p>
-			A Unicode string shall contain at least one Unicode character that is not included in the ASCII encoding scheme.
-		</p></li>
-		<li><p>
-			Control characters and other non-printable characters shall be declared in string data exclusively with the format specified in <a href="#character literals non-printable">(<i>Character Literals, 4</i>)</a>.
-		</p></li>
-		<li><p>
-			Control character values occurring normally in the source file inside a string data declaration shall be discarded.
-		</p></li>
-	</ol>
-	<h4>Byte Strings</h4>
-	<ol>
-		<li><p>
-			Byte strings are a special instance of string data that contain no format or other encoding.
-		</p></li>
-		<li><p>
-			A byte string shall be signified by prefixing the opening quotation with the number sign <code>#"</code>.
-		</p></li>
-		<li><p>
-			A byte string shall be declared by writing a series of two-digit hexadecimal numerical constants.
-		</p></li>
-		<li><p>
-			Blank space is allowed, but not required. This declaration <code>#"01 FF"</code> is identical to <code>#"01FF"</code>.
-		</p></li>
-	</ol>
-	<h3>Relation to Data Types</h3>
-	<ol>
-		<li><p>
-			All constants have a related data type.
-			These relationships are constant.
-		</p></li>
-		<li>
-			<table>
-				<tr><th>Constant</th><th>Data Type</th></tr>
-				<tr><td>Decimal Number (no radix/sign)</td><td>Nat</td></tr>
-				<tr><td>Signed Decimal Number (no radix)</td><td>Int</td></tr>
-				<tr><td>Real Number (with radix, no sign)</td><td>Float</td></tr>
-				<tr><td>Signed Real Number (with radix/sign)</td><td>Float</td></tr>
-				<tr><td>Large Signed Real Number</td><td>Real</td></tr>
-				<tr><td>ASCII Character Literal</td><td>Char</td></tr>
-				<tr><td>Unicode Character Literal</td><td>Uncd</td></tr>
-				<tr><td>ASCII Character String</td><td>Bin [Char_Nat]</td></tr>
-				<tr><td>Unicode Character String</td><td>Bin [Uncd_Nat]</td></tr>
-				<tr><td>Byte String</td><td>Bin [Byte_Nat]</td></tr>
-			</table>
-		</li>
-		<li><p>
-			If a floating point constant is determined to be beyond the precision of the <i>Float</i> data type, the <i>Real</i> data type will be used for that constant instead.
-		</p></li>
-		<li><p>
-			The natural number used in the the indexed fields for string data is equivalent to the number of characters or bytes in the string data declaration.
-		</p></li>
-	</ol>
-	<h2>Identifiers</h2>
-	<ol>
-		<li><p>
-			An identifier is used to locate and possibly reuse a data object.
-		</p></li>
-		<li><p>
-			An identifier will be associated with only one data object at any time.
-		</p></li>
-		<li><p>
-			An identifier is any well-formed Symbol as defined in <a href="#syntax symbol">(<i>Symbols</i>)</a>.
-		</p></li>
-		<li><p>
-			An identifier shall be declared as either a program variable or the name of a data type, label, function, module, or proof.
-		</p></li>
-		<li><p>
-			Identifiers of program variables, data types, and functions shall share the same namespace such that an identifier may be used only once within a given scope to identify one of a program variable, data type, or function.
-		</p></li>
-		<li><p>
-			Labels, modules, and proofs shall each have separate namespaces.
-		</p></li>
-	</ol>
-	<h3 id="identifiers variables">Identifiers as Program Variables</h3>
-	<ol>
-		<li>
-			<p>
-				The syntax for an identifier declared as a program variable is as follows...
-			</p>
-			<table>
-				<tr><td><b>Variable</b> &rarr;<br>
-				| Symbol<br>
-				| Symbol <i>Annotate</i></td></tr>
-				<tr><td><i>Annotate</i> &rArr; :</td></tr>
-			</table>
-		</li>
-		<li><p>
-			A program variable declaration consists of an identifier and a type name or type declaration.
-		</p></li>
-		<li><p>
-			The binary annotation operator shall associate a type with a program variable.
-			The annotation operator will accept a program variable name as the left operand and a type name or declaration as the right operand.
-		</p></li>
-		<li><p>
-			A variable may be declared without a type annotation.
-		</p></li>
-		<li><p>
-			The data type associated with a program variable not declared with a data type annotation shall be as the type of the object provided in the first assignment to that program variable.
-		</p></li>
-		<li><p>
-			The association between a program variable and a data type is permanent for that individual variable's lifetime for a given region of scope.
-		</p></li>
-		<li>
-			<p>Some examples of program variable declarations are...</p>
-			<code>var:Nat</code>
-			<p>The declaration of a variable with a <i>Nat</i> data type.</p>
-			<code>x</code>
-			<p>A program variable declared without a data type.</p>
-		</li>
-	</ol>
-	<h3>Identifiers as Names</h3>
-	<ol>
-		<li><p>
-			Identifiers are used as names for program definition objects.
-		</p></li>
-		<li><p>
-			The syntax for declaring the name of a definition is dependent on the definition being declared.
-		</p></li>
-	</ol>
+	
 	<h2>Data Types</h2>
 	<ol>
 		<li><p>
