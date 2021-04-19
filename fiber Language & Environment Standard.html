@@ -2464,6 +2464,7 @@
 			<table>
 				<tr><th>Constant</th><th>Data Type</th></tr>
 				<tr><td>Decimal Number (no radix/sign)</td><td>Nat</td></tr>
+				<tr><td>Hexadecimal Number</td><td>Nat</td></tr>
 				<tr><td>Signed Decimal Number (no radix)</td><td>Int</td></tr>
 				<tr><td>Real Number (with radix, no sign)</td><td>Float</td></tr>
 				<tr><td>Signed Real Number (with radix/sign)</td><td>Float</td></tr>
@@ -2476,6 +2477,9 @@
 			</table>
 		</li>
 		<li><p>
+			If a decimal or hexadecimal number is determined to be beyond the precision of the Int or Nat data types, Int64 or Nat64 will be used instead of Int or Nat.
+		</p></li>
+		<li><p>
 			If a floating point constant is determined to be beyond the precision of the <i>Float</i> data type, the <i>Real</i> data type will be used for that constant instead.
 		</p></li>
 		<li><p>
@@ -2483,7 +2487,48 @@
 		</p></li>
 	</ol>
 	<h2>Program Variables</h2>
+	<ol>
+		<li><p>
+			Program variables are introduced by the declaration of a previously unused name and a data type.
+		</p></li>
+		<li><p>
+			The variable name and data type are written as the left and right operands to the type-assertion operator, <code>:</code>.
+		</p></li>
+		<li><p>
+			Variable names are represented by single symbol tokens.
+		</p></li>
+		<li><p>
+			If a program variable is first used as the destination of an assignment expression, the data type of that variable is not required to be written.
+			The data type of the new variable will be inferred from the data type of the value being assigned to the variable.
+		</p></li>
+		<li><p>
+			If a program variable is first used as the destination of an assignment expression, but a data type is also explicitly provided using the type-assertion operator, the explicit data type will take precedence over the type of the assignment value as the data type of that variable.
+		</p></li>
+		<li><p>
+			When a variable is instantiated in the environment, it will contain the default value for its data type.
+			If the variable is first used as the destination of an assignment expression, the value being assigned will take precedence as the initial value contained in the variable when it is instantiated.
+		</p></li>
+		<li>
+			<p>
+				Some examples of program variable declarations are...
+			</p>
+			<code>x:Nat</code>
+			<p>The program variable <i>x</i> with a <i>Nat</i> data type.</p>
+			<code>y = 1.4 / 3.5</code>
+			<p>The program variable <i>y</i> with a <i>Float</i> data type inferred from the value resulting from the expression.</p>
+			<code>z:Char = 1.4 / 3.5</code>
+			<p>
+				The program variable <i>z</i> with a <i>Char</i> data type. 
+				The data type of the value resulting from the expression is not inferred.
+			</p>
+		</li>
+	</ol>
 	<h2>Data Types</h2>
+	<ol>
+		<li><p>
+			Data types are used in fiber to constrain the sets of values that can be held by a variable and the set of operations that can be performed on those values.
+		</p></li>
+	</ol>
 	<h3>Primitive Types</h3>
 	<ol>
 		<li>
