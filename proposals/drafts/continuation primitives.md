@@ -94,9 +94,11 @@ Each expression enclosed in a pair of parens will have an implicit continuation 
 		X:Int = 4
 		``defer first statement
 		\^ (* (x = 0) . )
+
 		y:Bool = true
 		``defer second statement
 		\^ (* (y = false) . )
+		
 		``defer third statement
 		z = "hello"
 		\^ (* (z = "nil") . )
