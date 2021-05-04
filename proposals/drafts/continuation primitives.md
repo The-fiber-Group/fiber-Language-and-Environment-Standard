@@ -18,14 +18,14 @@ Two contexts are equal if they refer to the same location within a program.
 * Continuation assignment:\
  [Symbol] `=` [Continuation]
 
-* Continuation call delimiters:\
+* Continuation call syntax:\
 `(` [Continuation Name] [Values]* `)`
 
 * Continuation "Hole" declaration:\
  `(/` [Type] [Value]? `)`
 
 # Concepts
-A continuation represents "the rest of the program". A delimited continuation allows a portion of the program to be re-used or reordered.
+A continuation represents "the rest of the program". A delimited continuation allows a select portion of the "rest" of the program to be re-used or reordered.
 
 For example, there are two continuations in the mathematical expression `1 + 2 + 3`. They can be separated by parentheses as(`1 + `(`2 + 3`).
 
