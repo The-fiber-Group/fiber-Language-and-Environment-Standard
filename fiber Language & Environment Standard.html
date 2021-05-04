@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-	<title>The fiber Language and Environment Standard</title>
+	<title>The Fiber Language and Environment Standard</title>
 	<meta charset="UTF-8">
 	<style>
 		body{padding:3ch; background-color:rgb(241, 234, 221); color:rgb(41, 9, 33); font-size:large; font-family: serif;}
@@ -50,7 +50,7 @@
 	</style>
 </head>
 <body>
-	<h1 style="page-break-before:avoid">The fiber Language and Environment Standard</h1>
+	<h1 style="page-break-before:avoid">The Fiber Language and Environment Standard</h1>
 	<h2>Revision 0.0</h2>
 	<div id="contents">
 		<h1>Contents</h1>
@@ -88,7 +88,7 @@
 	<ol>
 		<li>
 			<p>
-				The fiber Language and Environment Specification (stylized as "fiber") is considered an "open standard", meaning that...
+				The Fiber Language and Environment Specification (stylized as "Fiber") is considered an "open standard", meaning that...
 			</p>
 			<ul>
 				<li>This document shall be made freely available, within reason, at all times, so long as availability incurs no cost to the owner of a copy of this document.</li>
@@ -101,24 +101,24 @@
 	<h2>Authoring</h2>
 	<ol>
 		<li><p>
-			The "fiber Group" is the designated central body of authors that shall and maintain this Standard and its documentation.
-			Any individual who's work is incorporated into this Standard shall be included in the fiber Group.
+			The "Fiber Group" is the designated central body of authors that shall and maintain this Standard and its documentation.
+			Any individual who's work is incorporated into this Standard shall be included in the Fiber Group.
 		</p></li>
 		<li><p>
-			All rights concerning this Standard, its documentation, and the concepts described therein are reserved by the fiber Group as a collective whole.
+			All rights concerning this Standard, its documentation, and the concepts described therein are reserved by the Fiber Group as a collective whole.
 		</p></li>
 		<li><p>
-			The fiber Group is responsible for the development of this Standard and any concepts it describes.
+			The Fiber Group is responsible for the development of this Standard and any concepts it describes.
 		</p></li>
 		<li><p>
-			The fiber Group shall include a "central" authorship role for a single author that grants them the exclusive right to overrule any and all decisions made by the fiber Group.
-			The central author shall not have the ability to proactively make independent decisions for the fiber Group.
+			The Fiber Group shall include a "central" authorship role for a single author that grants them the exclusive right to overrule any and all decisions made by the Fiber Group.
+			The central author shall not have the ability to proactively make independent decisions for the Fiber Group.
 			This position shall be passed to another author at the central author's discretion.
-			If the previous central author is not available to appoint a new central author, the new central author shall be chosen from the fiber Group by a majority vote of the fiber Group members.
+			If the previous central author is not available to appoint a new central author, the new central author shall be chosen from the Fiber Group by a majority vote of the Fiber Group members.
 		</p></li>
 		<li id="authoring changes">
 			<p>
-				Changes or additions to this Standard may be proposed from outside the fiber Group.
+				Changes or additions to this Standard may be proposed from outside the Fiber Group.
 				These changes should be communicated in a well documented proposal.
 			</p>
 			<p>
@@ -277,17 +277,17 @@
 	<h1 id="scope">Scope</h1>
 	<ol>
 		<li><p>
-			This standard specifies the form and interpretation of computer programs written in the fiber language.
+			This standard specifies the form and interpretation of computer programs written in the Fiber language.
 		</p></li>
 		<li>
 			<p>This Standard specifies...</p>
 			<ul>
-				<li>the representation of fiber programs</li>
-				<li>the syntax of the fiber language</li>
-				<li>the interpretation of fiber programs</li>
-				<li>the representation fo data manipulated by fiber programs</li>
+				<li>the representation of Fiber programs</li>
+				<li>the syntax of the Fiber language</li>
+				<li>the interpretation of Fiber programs</li>
+				<li>the representation fo data manipulated by Fiber programs</li>
 				<li>the restrictions and limits set to a "confoming implementation" of this standard</li>
-				<li>the emulated computer architecture with which fiber programs may be executed with</li>
+				<li>the emulated computer architecture with which Fiber programs may be executed with</li>
 				<li>the instruction set that is interpreted by the emulated computer architecture</li>
 				<li>the format for storing programs to be executed by the emulated computer architecture</li>
 			</ul>
@@ -295,13 +295,13 @@
 		<li>
 			<p>This standard does not specify...</p>
 			<ul>
-				<li>the methods by which a fiber program is transformed for use in the emulated computer architecture</li>
-				<li>the methods by which a fiber program is executed by the emulated computer architecture</li>
-				<li>the methods that may be used to invoke a fiber program</li>
+				<li>the methods by which a Fiber program is transformed for use in the emulated computer architecture</li>
+				<li>the methods by which a Fiber program is executed by the emulated computer architecture</li>
+				<li>the methods that may be used to invoke a Fiber program</li>
 				<li>the resolution of the capabilities of the emulated computer architecture with the underlying computer hardware</li>
-				<li>the architecture-specific capacity limits that may affect a fiber program or the emulated computer architecture</li>
-				<li>the methods by which output data is transformed after it leaves a fiber program</li>
-				<li>the minimum requirements a computer architecture needs to support a conforming implementation of fiber.</li>
+				<li>the architecture-specific capacity limits that may affect a Fiber program or the emulated computer architecture</li>
+				<li>the methods by which output data is transformed after it leaves a Fiber program</li>
+				<li>the minimum requirements a computer architecture needs to support a conforming implementation of Fiber.</li>
 			</ul>
 		</p></li>
 	</ol>
@@ -318,7 +318,7 @@
 			The programming language can be translated to any arbitrary format for interpretation by any environment.
 		</p></li>
 		<li><p>
-			The fiber Programming Language and its Environment are designed to be optimally compatible with each other, without constraining applications beyond those specified in this Standard.
+			The Fiber Programming Language and its Environment are designed to be optimally compatible with each other, without constraining applications beyond those specified in this Standard.
 		</p></li>
 	</ol>
 <!----------------------------------------------------------------------------->
@@ -390,7 +390,7 @@
 		<dd>A specialized kind of subroutine that performs transformations on an immediate set of data that is volatile and often not reachable outside the execution of that subroutine.</dd>
 
 		<dt>host system, host architecture, target architecture</dt>
-		<dd>The computer system where execution of a fiber program is expected to take place.</dd>
+		<dd>The computer system where execution of a Fiber program is expected to take place.</dd>
 
 		<dt id="term: system call">system call</dt>
 		<dd>An operation performed by the CPU which activates a subroutine. This subroutine is normally performed by an operating system kernel.</dd>
@@ -571,17 +571,17 @@
 			A conforming implementation with any properties that are not within the scope of this Standard shall not allow these other properties to affect any requirements or behavior described in this Standard.
 		</p></li>
 		<li><p>
-			A <b>partial implementation</b> shall fully realize either the transformation of the fiber language to instructions to be interpreted by the fiber environment or other execution environment.
-			A <b>partial implementation</b> may also fully realize the fiber environment for executing fiber programs without implementing the fiber programming language.
+			A <b>partial implementation</b> shall fully realize either the transformation of the Fiber language to instructions to be interpreted by the Fiber environment or other execution environment.
+			A <b>partial implementation</b> may also fully realize the Fiber environment for executing Fiber programs without implementing the Fiber programming language.
 		</p></li>
 		<li><p>
-			A <b>partial implementation</b> is not required to implement any of the standard libraries for the fiber language.
+			A <b>partial implementation</b> is not required to implement any of the standard libraries for the Fiber language.
 		</p></li>
 	</ol>
 	<h2>Conformance Statement</h2>
 	<ol>
 		<li><p>
-			Implementations of the fiber Language and Environment Standard shall include a conformance statement.
+			Implementations of the Fiber Language and Environment Standard shall include a conformance statement.
 		</p></li>
 		<li><p>
 			The conformance statement should be accessible to users of the implementation with reasonable ease.
@@ -589,19 +589,19 @@
 		</p></li>
 		<li><p>
 			A <u>strictly conforming implementation</u> shall include the statement:<br> 
-			"<i>This is a complete implementation of the fiber 0.0 Language and Environment.</i>"
+			"<i>This is a complete implementation of the Fiber 0.0 Language and Environment.</i>"
 		</p></li>
 		<li><p>
 			A <u>conforming implementation</u> shall include the statement:<br> 
-			"<i>This is a complete implementation of the fiber 0.0 Language and Environment with extensions.</i>"
+			"<i>This is a complete implementation of the Fiber 0.0 Language and Environment with extensions.</i>"
 		</p></li>
 		<li><p>
 			A <u>partial implementation</u> shall include the statement:<br> 
-			"<i>This is an incomplete implementation of the fiber 0.0 Language and Environment.</i>"
+			"<i>This is an incomplete implementation of the Fiber 0.0 Language and Environment.</i>"
 		</p></li>
 		<li><p>
-			An implementation that provides a complete fiber environment shall include the statement:<br>
-			"<i>This is an implementation of the fiber 0.0 Environment.</i>"
+			An implementation that provides a complete Fiber environment shall include the statement:<br>
+			"<i>This is an implementation of the Fiber 0.0 Environment.</i>"
 		</p></li>
 	</ol>
 	<h1 style="color:red;"><b><i>The sections below this marker are not finalized and are subject to rapid change.</i></b></h1>
@@ -617,8 +617,8 @@
 	<h1 id="environment">Environment</h1>
 	<ol>
 		<li><p>
-			The fiber Language is designed for a specific, abstract environment.
-			This environment is hereon referred to as "bran". (This is a pun in reference to the name of the programming language because the food bran is said to have "lots of fiber".)
+			The Fiber Language is designed for a specific, abstract environment.
+			This environment is hereon referred to as "bran". (This is a pun in reference to the name of the programming language because the food bran is said to have "lots of Fiber".)
 		</p></li>
 		<li>
 			<p>
@@ -639,10 +639,10 @@
 			<rec>It is discouraged to extend an implementation with support for these functionalities.</rec>
 		</p></li>
 		<li><p>
-			Bran allows for fiber program components to be stored in either a system-native or fiber environment-native format.
+			Bran allows for Fiber program components to be stored in either a system-native or Fiber environment-native format.
 		</p></li>
 		<li><p>
-			Bran allows for fiber program components of any system-native or fiber environment-native format to be combined and executed as one cohesive program.
+			Bran allows for Fiber program components of any system-native or Fiber environment-native format to be combined and executed as one cohesive program.
 		</p></li>
 		<li><p>
 			Bran is designed to function transparently in the underlying system.
@@ -1814,7 +1814,7 @@
 		<li><p>
 			There are three logical stages required to prepare a BOF object for execution, Linking, Translation, and Loading.
 			These three stages shall be automated by one or more programs.
-			These programs are referred to as "Broccoli". (This is another play on the programming language name as the food broccoli, like bran, is said to be rich in fiber.)
+			These programs are referred to as "Broccoli". (This is another play on the programming language name as the food broccoli, like bran, is said to be rich in Fiber.)
 		</p></li>
 		<li><p>
 			Broccoli shall be callable or invokable by a user of the target operating system.
@@ -1952,16 +1952,16 @@
 
 
 <!----------------------------------------------------------------------------->
-	<h1>The fiber Programming Language</h1>
+	<h1>The Fiber Programming Language</h1>
 	<ol>
 		<li><p>
-			fiber is a computer programming language designed for general purpose application.
+			Fiber is a computer programming language designed for general purpose application.
 		</p></li>
 		<li><p>
-			fiber provides the programmer with the basic utilities for organizing data into compound data structures, performing arithmetic on numbers, and creating functions and variables.
+			Fiber provides the programmer with the basic utilities for organizing data into compound data structures, performing arithmetic on numbers, and creating functions and variables.
 		</p></li>
 		<li><p>
-			fiber also provides the programmer with advanced capabilities for defining custom data types, creating program modules, metaprogramming, higher order functions, type checking, and abstract modelling of program behavior.
+			Fiber also provides the programmer with advanced capabilities for defining custom data types, creating program modules, metaprogramming, higher order functions, type checking, and abstract modelling of program behavior.
 		</p></li>
 	</ol>
 	<h1>Concepts</h1>
@@ -2005,7 +2005,7 @@
 			The contents of a stream are not required to be persistent beyond a single reading.
 		</p></li>
 		<li><p>
-			A stream may be derived from the contents of an ASCII or Unicode text formatted <u>source file</u> containing fiber syntax.
+			A stream may be derived from the contents of an ASCII or Unicode text formatted <u>source file</u> containing Fiber syntax.
 		</p></li>
 		<li><p>
 			Only one stream may be derived a single source file and it must contain exactly the contents of that file.
@@ -2066,17 +2066,17 @@
 	<h2>Data Objects</h2>
 	<ol>
 		<li><p>
-			A fiber program is executed through the manipulation of <u>data objects</u>.
+			A Fiber program is executed through the manipulation of <u>data objects</u>.
 		</p></li>
 		<li><p>
 			All data objects shall be associated with a single name and a single data type for the duration of their existence.
 		</p></li>
 		<li><p>
 			There are two classes of objects, <u>variables</u> and <u>definitions</u>.
-			All kinds of data objects available for use in the fiber programming language shall be classified as either a variable or a definition.
+			All kinds of data objects available for use in the Fiber programming language shall be classified as either a variable or a definition.
 		</p></li>
 		<li>
-			<p>The kinds of data objects in fiber are...</p>
+			<p>The kinds of data objects in Fiber are...</p>
 			<ul>
 				<li>variables</li>
 				<li>constants</li>
@@ -2199,7 +2199,7 @@
 	<h1>Basic Syntax</h1>
 	<ol>
 		<li><p>
-			fiber syntax is comprised of tokens which are juxtaposed to create program expressions and statements to be evaluated.
+			Fiber syntax is comprised of tokens which are juxtaposed to create program expressions and statements to be evaluated.
 		</p></li>
 		<li><p>
 			There are two separate classes of tokens, <u>symbol</u> tokens and <u>operator</u> tokens.
@@ -2392,7 +2392,7 @@
 	<ol>
 		<li><p>
 			A character literal is the numerical value associated with a code point in a character encoding scheme.
-			fiber supports character literal values for ASCII and Unicode encoding.
+			Fiber supports character literal values for ASCII and Unicode encoding.
 		</p></li>
 		<li><p>
 			An ASCII character literal value shall be declared by writing a printable ASCII character surrounded by double quotations. <code>"A"</code>
@@ -2526,7 +2526,7 @@
 	<h2>Data Types</h2>
 	<ol>
 		<li><p>
-			Data types are used in fiber to constrain the sets of values that can be held by a variable and the set of operations that can be performed on those values.
+			Data types are used in Fiber to constrain the sets of values that can be held by a variable and the set of operations that can be performed on those values.
 		</p></li>
 	</ol>
 	<h3>Primitive Types</h3>
@@ -2642,7 +2642,7 @@
 			"Document" refers to this HTML formatted text document.
 		</p></li>
 		<li><p>
-			All rights to this document are reserved by the fiber Group.
+			All rights to this document are reserved by the Fiber Group.
 		</p></li>
 		<li><p>
 			Permission to distribute, copy, display, transmit, and otherwise use this document is granted provided that each use includes and preserves the entire document.
@@ -2666,7 +2666,7 @@
 </body>
 
 <footer>
-	<h1>The fiber Group</h1>
+	<h1>The Fiber Group</h1>
 	<ul>
 		<h2>Central Author</h2>
 		<li>

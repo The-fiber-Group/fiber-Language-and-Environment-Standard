@@ -64,17 +64,3 @@ A function with no parameters that returns two values
 The function body is a series of expressions which are evaluated in the order they are written. The expressions are written after the Function Body Separator.
 
 	{f x y = z | z = x + y}
-
-# Function Shorthand Notation
-
-A function may be declared using a shorthand notation with some limitations.
-Shorthand notation does not include parameter declarations and the body can only
-include a single expression. The function name is followed immediately by the Return Parameter Prefix operator which is followed by a single expression. The variables used in that expression are treated as parameters.
-
-the shorthand version of 
-	
-	{f x y = z | z = x + y} 
-
-would be
-
-	{f = x + y}
