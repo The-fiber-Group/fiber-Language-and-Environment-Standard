@@ -12,27 +12,41 @@ Two contexts are equal if they refer to the same location within a program.
 
 # Operators
 
-* Continuation delimiters: `:{` ... `}`
+* Continuation delimiters: \
+`{` [Expressions]* `}`
 
-* Continuation call delimiters: `(>>` ... `)`
+* Continuation assignment:\
+ [Symbol] `=` [Continuation]
 
-* Continuation "Hole" declaration: `()`
+* Continuation call delimiters:\
+`(` [Continuation Name] [Values]* `)`
 
----
+* Continuation "Hole" declaration:\
+ `(/` [Type] [Value]? `)`
 
-Continuation looks like this:
+# Concepts
+A continuation represents "the rest of the program". A delimited continuation allows a portion of the program to be re-used or reordered.
 
-	cont : { ... }
-it's surrounded by parentheses and
-it has a number of expressions inside
+For example, there are two continuations in the mathematical expression `1 + 2 + 3`. They can be separated by parentheses as(`1 + `(`2 + 3`).
 
-it can take a number of "holes" with default values. Holes always require a data type
+These can be separated into the following individual continuations where `[]` represents a "hole" or a dependency on the result of a previous computation...
 
-	cont: {cont 1 + Int() = 1 - Int() = 5 }
+`1 + []`\
+`2 + 3`
 
-when you call it, you supply values to the holes in order of lexical occurance
+Delimited continuations allow you to use these two continuations as objects where they may be repeated or reordered.
 
-	(>>cont -1 3)
+Let the continuation `1 + []` be called "A", the continuation `2 + 3` be called "B", and the new continuation, `2 * []` be called "C".
 
-a continuation that is a single expression will return a value.
-a continuation that is not a single expression will not return a value.
+A continuation "hole" can be filled by performing a "call" to it and providing the hole with a value such as, 
+
+
+`A (1)` => `1 + 1` => 2
+
+Continuations can be functionally composed in a new order that's different from the lexical order in which the continuation bodies were written.
+
+`A (C (B ()))` => `(1 + (2 * (2 + 3) ) )` => 11
+
+or 
+
+`C (C (C (2)))` => `2 * 2 * 2 * 2` => 16
