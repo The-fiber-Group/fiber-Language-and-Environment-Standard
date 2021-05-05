@@ -1,7 +1,7 @@
 Proposal to Implement all Control Flow Using Delimited Continuations
 ===
 
-This proposal putlines a control flow primitive system based around the concept of continuations which can be used to compose more complex control flow structures.
+This proposal outlines a control flow primitive system based around the concept of continuations which can be used to compose more complex control flow structures.
 ---
 
 # Data Types
