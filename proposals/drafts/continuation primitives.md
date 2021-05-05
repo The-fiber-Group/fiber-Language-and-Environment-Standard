@@ -24,7 +24,7 @@ Two contexts are equal if they refer to the same location within a program.
 # Concepts
 A continuation represents "the rest of the program". A delimited continuation allows a select portion of the "rest" of the program to be re-used or reordered.
 
-For example, there are two continuations in the mathematical expression `1 + 2 + 1 + 2`. They can be separated by parentheses as `(1 + (2 + (1 + 2)))`.
+For example, there are two continuations in the mathematical expression `1 + 2 + 1 + 2`. They can be separated by parentheses as `(1 + (2 + (1 + 2)))`. (This is following the lexical order of evaluation so as to make the dependency of each continuation visually explicit.)
 
 These can be separated into the following individual continuations where `[]` represents a "hole" or a dependency on the result of a previous computation...
 
