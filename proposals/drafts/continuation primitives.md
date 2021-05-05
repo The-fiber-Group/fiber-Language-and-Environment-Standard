@@ -12,17 +12,14 @@ Two contexts are equal if they refer to the same location within a program.
 
 # Operators
 
-* Continuation delimiters: \
-`{:` [Expressions]* `}`
-
-* Continuation assignment:\
- [Symbol] `=` [Continuation]
+* Continuation declaration \
+`(` `=` [continuation name] [expressions]* `)`
 
 * Continuation call syntax:\
-`(` [Continuation Name] [Values]* `)`
+`(` [continuation Name] [values]* `)`
 
 * Continuation "Hole" declaration:\
- `(/` [Type] [Value]? `)`
+ `(?` [Type] `)`
 
 # Concepts
 A continuation represents "the rest of the program". A delimited continuation allows a select portion of the "rest" of the program to be re-used or reordered.
@@ -51,16 +48,51 @@ or
 
 `C (C (C (2)))` => `2 * 2 * 2 * 2` => 16
 
+# Using Delimited Continuations
+
+Normally parentheses are used to specify the order of evaluation in an expression.
+
+	( 2 + 10 ) / 2
+
+This proposal extends the "precedence" action of parentheses with labelling delimited continuations.
+
+If the first token following an opening parenthese is the equals sign, `=`, then the expressions inside the closed set of parentheses are established in the environment as a delimited continuation object bound to the symbol following the equals sign.
+
+	( = x 2 + 10 ) / 2
+
+The direction of assignment is backwards from normal syntax. It flows inward and to the right. This does two things, it emphasizes that the expression outside the parentheses still depends on the evaluation of what's in the parentheses. It also emphasizes that the object being named is the body of the parentheses, rather than its result.
+
+A continuation can contain a number of "holes" where values are provided when the continuation is entered. The values that can be given to holes are constrained by what values are accepted by the operations that depend on the value provided by a hole. A "hole" can optionally be given a data type annotation which will limit aceptable values to those of the data type.
+
+	( = x 2 + (?) )
+	( = y (array-append (?Type-Array) 5 ) )
+
+Continuations are entered using the same syntax as calling a function, but instead of the name of a function, the name of a continuation is given. Instead of function parameters, values for the continuation holes can be given. 
+
+	( = x 2 + (?) (x 5) )
+
+If a continuation body contains multiple expressions, the result of the last expression is used.
+
+	1 + ( = x 2 + (?) , 2 + 2 (x 1) ) => 1 + (4) => 5
+
 # Example
 
-	{fib n:nat -> r:nat = 
-		a = 0, r = 1,
-		c = {:
+## The example from the wikipedia page on delimite continuations
+
+	2 * ( = r 1 + (?Nat) (r 5) )
+
+## The Fibonacci Sequence
+	{fib n : Nat -> r : Nat =
+		a = 0, 
+		r = 1,
+		( = c, ``capture (reset)
 			? n > 0
 			{
 				n = n - 1,
 				t = a + r,
 				a = r,
 				r = t,
-				(c)
-			}}}
+				(c) ``call (shift)
+			}
+		)
+	}
