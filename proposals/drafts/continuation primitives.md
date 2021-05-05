@@ -13,7 +13,7 @@ Two contexts are equal if they refer to the same location within a program.
 # Operators
 
 * Continuation delimiters: \
-`{` [Expressions]* `}`
+`{:` [Expressions]* `}`
 
 * Continuation assignment:\
  [Symbol] `=` [Continuation]
@@ -50,3 +50,17 @@ Continuations can be functionally composed in a new order that's different from 
 or 
 
 `C (C (C (2)))` => `2 * 2 * 2 * 2` => 16
+
+# Example
+
+	{fib n:nat -> r:nat = 
+		a = 0, r = 1,
+		c = {:
+			? n > 0
+			{
+				n = n - 1,
+				t = a + r,
+				a = r,
+				r = t,
+				(c)
+			}}}

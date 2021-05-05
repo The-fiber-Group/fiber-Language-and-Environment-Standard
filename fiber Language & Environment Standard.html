@@ -2202,7 +2202,7 @@
 			Fiber syntax is comprised of tokens which are juxtaposed to create program expressions and statements to be evaluated.
 		</p></li>
 		<li><p>
-			There are two separate classes of tokens, <u>symbol</u> tokens and <u>operator</u> tokens.
+			There are two separate classes of tokens, <u>symbol</u> tokens and <u>terminal</u> tokens.
 		</p></li>
 		<li><p>
 			All tokens are comprised of a contiguous series of ASCII and Unicode characters.
@@ -2236,28 +2236,28 @@
 			For example, the characters <code>&#x0102;</code> and <code>&#x0103;</code> are equivalent.
 		</p></li>
 	</ol>
-	<h2>Operators</h2>
+	<h2>Terminals</h2>
 	<ol>
 		<li><p>
-			Operators shall consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
+			Terminals shall consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
 		</p></li>
 		<li><p>
 			Non-alphanumeric characters are defined as the ASCII code points 33-47, 58-64, 91-96, and 123-126, and any Unicode blocks representing non-linguistic, symbolic, or notational characters.
 		</p></li>
 		<li><p>
-			The ASCII dash character (ASCII 45) is accepted in an operator token at any position.
+			The ASCII dash character (ASCII 45) is accepted in a terminal token at any position.
 		</p></li>
 	</ol>
 	<h2>Comments</h2>
 	<ol>
 		<li><p>
-			Comments are prefixed by the comment operator, <code>``</code>.
+			Comments are prefixed by the comment terminal, <code>``</code>.
 		</p></li>
 		<li><p>
 			Comments are delimited by a <u>line break</u>, which consists of some combination of ASCII Line Feed and Carriage Return control characters.
 		</p></li>
 		<li><p>
-			Any series of characters will be accepted between a comment operator and a line break, excluding additional line break characters.
+			Any series of characters will be accepted between a comment terminal and a line break, excluding additional line break characters.
 		</p></li>
 		<li><p>
 			Comments in a source file may be discarded before the staging process begins.
@@ -2313,8 +2313,8 @@
 			A module may include the contents of a stream as part of its definition by prefixing a character string containing the stream name.
 		</p></li>
 		<li><p>
-			A module may make some of its declarations <u>internal</u> by separating its definition into two subsections using the <i>InternalPrefix</i> operator.
-			The declarations before the operator will declare <u>external</u> objects and the definitions after the operator will declare internal objects.
+			A module may make some of its declarations <u>internal</u> by separating its definition into two subsections using the <i>InternalPrefix</i> terminal.
+			The declarations before the terminal will declare <u>external</u> objects and the definitions after the terminal will declare internal objects.
 		</p></li>
 		<li><p>
 			An internal object is only accessible to other objects within the same module.
@@ -2369,23 +2369,23 @@
 			<table><tr><td><i>Hex</i> &rArr; 0x[0-9A-F]*</td></tr></table>
 		</li>
 	</ol>
-	<h4>Number Operators</h4>
+	<h4>Number Terminals</h4>
 	<ol>
 		<li><p>
-			The prefix minus operator <code>-</code> shall accept a decimal or hexadecimal constant declaration as an operand and will negate the value represented by that constant.
+			The prefix minus terminal <code>-</code> shall accept a decimal or hexadecimal constant declaration as an operand and will negate the value represented by that constant.
 		</p></li>
 		<li><p>
-			The binary radix operator <code>.</code> shall accept decimal constant declarations for both operands and shall produce a rational value using the left operand as the integer component of the resulting value and the right operand as the fractional component.
+			The binary radix terminal <code>.</code> shall accept decimal constant declarations for both operands and shall produce a rational value using the left operand as the integer component of the resulting value and the right operand as the fractional component.
 		</p></li>
 		<li><p>
-			Neither the minus operator or the radix operator shall be associative.
+			Neither the minus terminal or the radix terminal shall be associative.
 		</p></li>
 		<li><p>
-			It is possible for the minus operator to prefix the left operand of a radix operator.
+			It is possible for the minus terminal to prefix the left operand of a radix terminal.
 			The combination of the minus prefix and the radix shall result in a negative rational value.
 		</p></li>
 		<li><p>
-			Number constant operators shall not accept identifiers or non-number declarations.
+			Number constant terminals shall not accept identifiers or non-number declarations.
 		</p></li>
 	</ol>
 	<h3>Character Literals</h3>
@@ -2413,7 +2413,7 @@
 			This representation does not require UTF-8 encoding.
 		</p></li>
 		<li><p>
-			The symbol and operator tokenization rules are disregarded concerning the syntax between quotations.
+			The symbol and terminal tokenization rules are disregarded concerning the syntax between quotations.
 			This is necessary to properly express character literal values.
 		</p></li>
 	</ol>
@@ -2492,7 +2492,7 @@
 			Program variables are introduced by the declaration of a previously unused name and a data type.
 		</p></li>
 		<li><p>
-			The variable name and data type are written as the left and right operands to the type-assertion operator, <code>:</code>.
+			The variable name and data type are written as the left and right operands to the type-assertion terminal, <code>:</code>.
 		</p></li>
 		<li><p>
 			Variable names are represented by single symbol tokens.
@@ -2502,7 +2502,7 @@
 			The data type of the new variable will be inferred from the data type of the value being assigned to the variable.
 		</p></li>
 		<li><p>
-			If a program variable is first used as the destination of an assignment expression, but a data type is also explicitly provided using the type-assertion operator, the explicit data type will take precedence over the type of the assignment value as the data type of that variable.
+			If a program variable is first used as the destination of an assignment expression, but a data type is also explicitly provided using the type-assertion terminal, the explicit data type will take precedence over the type of the assignment value as the data type of that variable.
 		</p></li>
 		<li><p>
 			When a variable is instantiated in the environment, it will contain the default value for its data type.
