@@ -140,6 +140,10 @@ reader macro which is triggered by quotes
 
 # digraph unicode equivalents
 
+unicode symbols can be used optionally in place of normal plain-text digraphs via some built in macros.
+
+	{ . '≣ -> | '=:= }
+
 `-` is equivalent to &minus;
 
 `/` is equivalent to &#x2215;
@@ -170,7 +174,7 @@ dereference operator `_\` is equivalent to &sim;
 
 return operator `->` is equivalent to &rarr;
 
-comments <code>``</code> are equivalent to &#x220e;
+comment delimiters <code>``</code> are equivalent to &#x220e;
 
 the Any type is equivalent to &#x25a3;
 
@@ -189,4 +193,11 @@ Type type `[]` is equivalent to &#x25a9;
 `Int` is equivalent to &#x2124;
 
 `Float` is equivalent to &#x211a;
+
+
+---
+
+functions are all pass by reference. rather than parameters defining new local
+variables, they only define what state is shared between the calling context 
+and the evaluation context
 
