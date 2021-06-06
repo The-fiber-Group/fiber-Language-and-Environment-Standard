@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<head>
+	<title>ASC Standard: </title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="bottom">
+		<h2><a href="scope.html">Previous</a>
+		<a href="toc.html">Table of Contents</a>
+		<a href="">Next</a></h2>
+	</div>
+	<h1 id="terms">Terms</h1>
+	<dl>
+		<dt>bit</dt>
+		<dd>The smallest unit of binary information; a one or zero value.</dd>
+
+		<dt>byte</dt>
+		<dd>The smallest adressable space in memory; a binary value eight bits long.</dd>
+
+		<dt>word</dt>
+		<dd>The maximum number of bits that can be held in a processor register; the number of bits in the largets possible memory address.</dd>
+
+		<dt>data</dt>
+		<dd>Information that is encoded in a machine-readable manner; information encoded using binary values.</dd>
+
+		<dt>datum</dt>
+		<dd>A single, finite unit of information.</dd>
+		
+		<dt>computer, computing device, computing machine</dt>
+		<dd>A device used to perform transformations on data.</dd>
+		
+		<dt>computer program</dt>
+		<dd>A set of stored instructions that a computing device may interpret to perform data transformations according to the program.</dd>
+
+		<dt>computer system</dt>
+		<dd>A computing device that includes software to facilitate the execution of programs; the combination of an operating system and computing machine.</dd>
+
+		<dt>execution</dt>
+		<dd>The act of interpreting a program and performing transformations on data accordingly.</dd>
+
+		<dt>architecture, computer architecture</dt>
+		<dd>A specific configuration of a computing device with methods of program storage and interpretation that may not be shared by other architectures or computing machinery.</dd>
+
+		<dt>computer memory, memory</dt>
+		<dd>Volatile data storage space that is usually addressable and mostly contiguous which is used to dynamically store information during the execution of a computer program.</dd>
+		
+		<dt>word, memory-word</dt>
+		<dd>The unit of address resolution that memory access operations are aligned to.</dd>
+
+		<dt>memory alignment</dt>
+		<dd>The process of storing data in memory with respect to boundaries determined by the memory-word size.</dd>
+
+		<dt>memory-aligned data</dt>
+		<dd>Memory-aligned data is data that has been stored in computer memory in locations that align with memory-word boundaries.</dd>
+
+		<dt>padding</dt>
+		<dd>Portions of memory that do not contain data, which occupies unused memory addresses adjacent to memory-aligned data.</dd>
+
+		<dt>instruction set</dt>
+		<dd>A set of values that are interpreted by a computer </dd>
+		
+		<dt>program stack</dt>
+		<dd>A portion of memory organized according to a stack data structure where data is dynamically stored during execution of a program.</dd>
+
+		<dt>subroutine</dt>
+		<dd>A unit or module of a whole program that can be executed and performs a specific task.</dd>
+
+		<dt>function</dt>
+		<dd>A specialized kind of subroutine that performs transformations on an immediate set of data that is volatile and often not reachable outside the execution of that subroutine.</dd>
+
+		<dt>host system, host architecture, target architecture</dt>
+		<dd>The computer system where execution of a Fiber program is expected to take place.</dd>
+
+		<dt id="term: system call">system call</dt>
+		<dd>An operation performed by the CPU which activates a subroutine. This subroutine is normally performed by an operating system kernel.</dd>
+	</dl>
+	<h2>ASCII</h2>
+	<ol>
+		<li>
+			<p>
+				ASCII is a standardized encoding for the English alphabet, decimal numbers, and various punctuation and symbols.
+				Below is a table showing the encoding for ASCII characters.
+			</p>
+			<table>
+				<tr><th>Binary</th><th>Decimal</th><th>Hexadecimal</th><th>Glyph/Name</th></tr>
+				<tr><td>0000 0000</td><td>0</td><td>00</td><td>Null</td></tr>
+				<tr><td>0000 0001</td><td>1</td><td>01</td><td>Start of Heading</td></tr>
+				<tr><td>0000 0010</td><td>2</td><td>02</td><td>Start of Text</td></tr>
+				<tr><td>0000 0011</td><td>3</td><td>03</td><td>End of Text</td></tr>
+				<tr><td>0000 0100</td><td>4</td><td>04</td><td>End of Transmission</td></tr>
+				<tr><td>0000 0101</td><td>5</td><td>05</td><td>Enquiry</td></tr>
+				<tr><td>0000 0110</td><td>6</td><td>06</td><td>Acknowledgement</td></tr>
+				<tr><td>0000 0111</td><td>7</td><td>07</td><td>Bell</td></tr>
+				<tr><td>0000 1000</td><td>8</td><td>08</td><td>Backspace</td></tr>
+				<tr><td>0000 1001</td><td>9</td><td>09</td><td>Horizontal Tab</td></tr>
+				<tr><td>0000 1010</td><td>10</td><td>0a</td><td>Line Feed</td></tr>
+				<tr><td>0000 1011</td><td>11</td><td>0b</td><td>Vertical Tab</td></tr>
+				<tr><td>0000 1100</td><td>12</td><td>0c</td><td>Form Feed</td></tr>
+				<tr><td>0000 1101</td><td>13</td><td>0d</td><td>Carriage Return</td></tr>
+				<tr><td>0000 1110</td><td>14</td><td>0e</td><td>Shift Out</td></tr>
+				<tr><td>0000 1111</td><td>15</td><td>0f</td><td>Shift In</td></tr>
+				<tr><td>0001 0000</td><td>16</td><td>10</td><td>Data Link Escape</td></tr>
+				<tr><td>0001 0001</td><td>17</td><td>11</td><td>Device Control 1</td></tr>
+				<tr><td>0001 0010</td><td>18</td><td>12</td><td>Device Control 2</td></tr>
+				<tr><td>0001 0011</td><td>19</td><td>13</td><td>Device Control 3</td></tr>
+				<tr><td>0001 0100</td><td>20</td><td>14</td><td>Device Control 4</td></tr>
+				<tr><td>0001 0101</td><td>21</td><td>15</td><td>Negative Acknowledgement</td></tr>
+				<tr><td>0001 0110</td><td>22</td><td>16</td><td>Synchronous Idle</td></tr>
+				<tr><td>0001 0111</td><td>23</td><td>17</td><td>End of Transmission Block</td></tr>
+				<tr><td>0001 1000</td><td>24</td><td>18</td><td>Cancel</td></tr>
+				<tr><td>0001 1001</td><td>25</td><td>19</td><td>End of Medium</td></tr>
+				<tr><td>0001 1010</td><td>26</td><td>1a</td><td>Substitute</td></tr>
+				<tr><td>0001 1011</td><td>27</td><td>1b</td><td>Escape</td></tr>
+				<tr><td>0001 1100</td><td>28</td><td>1c</td><td>File Separator</td></tr>
+				<tr><td>0001 1101</td><td>29</td><td>1d</td><td>Group Separator</td></tr>
+				<tr><td>0001 1110</td><td>30</td><td>1e</td><td>Record Separator</td></tr>
+				<tr><td>0001 1111</td><td>31</td><td>1f</td><td>Unit Separator</td></tr>
+				<tr><td>0010 0000</td><td>32</td><td>20</td><td>Space</td></tr>
+				<tr><td>00100001</td><td>33</td><td>21</td><td>!</td></tr>
+				<tr><td>00100010</td><td>34</td><td>22</td><td>"</td></tr>
+				<tr><td>00100011</td><td>35</td><td>23</td><td>#</td></tr>
+				<tr><td>00100100</td><td>36</td><td>24</td><td>$</td></tr>
+				<tr><td>00100101</td><td>37</td><td>25</td><td>%</td></tr>
+				<tr><td>00100110</td><td>38</td><td>26</td><td>&</td></tr>
+				<tr><td>00100111</td><td>39</td><td>27</td><td>'</td></tr>
+				<tr><td>00101000</td><td>40</td><td>28</td><td>(</td></tr>
+				<tr><td>00101001</td><td>41</td><td>29</td><td>)</td></tr>
+				<tr><td>00101010</td><td>42</td><td>2a</td><td>*</td></tr>
+				<tr><td>00101011</td><td>43</td><td>2b</td><td>+</td></tr>
+				<tr><td>00101100</td><td>44</td><td>2c</td><td>,</td></tr>
+				<tr><td>00101101</td><td>45</td><td>2d</td><td>-</td></tr>
+				<tr><td>00101110</td><td>46</td><td>2e</td><td>.</td></tr>
+				<tr><td>00101111</td><td>47</td><td>2f</td><td>/</td></tr>
+				<tr><td>00110000</td><td>48</td><td>30</td><td>0</td></tr>
+				<tr><td>00110001</td><td>49</td><td>31</td><td>1</td></tr>
+				<tr><td>00110010</td><td>50</td><td>32</td><td>2</td></tr>
+				<tr><td>00110011</td><td>51</td><td>33</td><td>3</td></tr>
+				<tr><td>00110100</td><td>52</td><td>34</td><td>4</td></tr>
+				<tr><td>00110101</td><td>53</td><td>35</td><td>5</td></tr>
+				<tr><td>00110110</td><td>54</td><td>36</td><td>6</td></tr>
+				<tr><td>00110111</td><td>55</td><td>37</td><td>7</td></tr>
+				<tr><td>00111000</td><td>56</td><td>38</td><td>8</td></tr>
+				<tr><td>00111001</td><td>57</td><td>39</td><td>9</td></tr>
+				<tr><td>00111010</td><td>58</td><td>3a</td><td>:</td></tr>
+				<tr><td>00111011</td><td>59</td><td>3b</td><td>;</td></tr>
+				<tr><td>00111100</td><td>60</td><td>3c</td><td><</td></tr>
+				<tr><td>00111101</td><td>61</td><td>3d</td><td>=</td></tr>
+				<tr><td>00111110</td><td>62</td><td>3e</td><td>></td></tr>
+				<tr><td>00111111</td><td>63</td><td>3f</td><td>?</td></tr>
+				<tr><td>01000000</td><td>64</td><td>40</td><td>@</td></tr>
+				<tr><td>01000001</td><td>65</td><td>41</td><td>A</td></tr>
+				<tr><td>01000010</td><td>66</td><td>42</td><td>B</td></tr>
+				<tr><td>01000011</td><td>67</td><td>43</td><td>C</td></tr>
+				<tr><td>01000100</td><td>68</td><td>44</td><td>D</td></tr>
+				<tr><td>01000101</td><td>69</td><td>45</td><td>E</td></tr>
+				<tr><td>01000110</td><td>70</td><td>46</td><td>F</td></tr>
+				<tr><td>01000111</td><td>71</td><td>47</td><td>G</td></tr>
+				<tr><td>01001000</td><td>72</td><td>48</td><td>H</td></tr>
+				<tr><td>01001001</td><td>73</td><td>49</td><td>I</td></tr>
+				<tr><td>01001010</td><td>74</td><td>4a</td><td>J</td></tr>
+				<tr><td>01001011</td><td>75</td><td>4b</td><td>K</td></tr>
+				<tr><td>01001100</td><td>76</td><td>4c</td><td>L</td></tr>
+				<tr><td>01001101</td><td>77</td><td>4d</td><td>M</td></tr>
+				<tr><td>01001110</td><td>78</td><td>4e</td><td>N</td></tr>
+				<tr><td>01001111</td><td>79</td><td>4f</td><td>O</td></tr>
+				<tr><td>01010000</td><td>80</td><td>50</td><td>P</td></tr>
+				<tr><td>01010001</td><td>81</td><td>51</td><td>Q</td></tr>
+				<tr><td>01010010</td><td>82</td><td>52</td><td>R</td></tr>
+				<tr><td>01010011</td><td>83</td><td>53</td><td>S</td></tr>
+				<tr><td>01010100</td><td>84</td><td>54</td><td>T</td></tr>
+				<tr><td>01010101</td><td>85</td><td>55</td><td>U</td></tr>
+				<tr><td>01010110</td><td>86</td><td>56</td><td>V</td></tr>
+				<tr><td>01010111</td><td>87</td><td>57</td><td>W</td></tr>
+				<tr><td>01011000</td><td>88</td><td>58</td><td>X</td></tr>
+				<tr><td>01011001</td><td>89</td><td>59</td><td>Y</td></tr>
+				<tr><td>01011010</td><td>90</td><td>5a</td><td>Z</td></tr>
+				<tr><td>01011011</td><td>91</td><td>5b</td><td>[</td></tr>
+				<tr><td>01011100</td><td>92</td><td>5c</td><td>\</td></tr>
+				<tr><td>01011101</td><td>93</td><td>5d</td><td>]</td></tr>
+				<tr><td>01011110</td><td>94</td><td>5e</td><td>^</td></tr>
+				<tr><td>01011111</td><td>95</td><td>5f</td><td>_</td></tr>
+				<tr><td>01100000</td><td>96</td><td>60</td><td>`</td></tr>
+				<tr><td>01100001</td><td>97</td><td>61</td><td>a</td></tr>
+				<tr><td>01100010</td><td>98</td><td>62</td><td>b</td></tr>
+				<tr><td>01100011</td><td>99</td><td>63</td><td>c</td></tr>
+				<tr><td>01100100</td><td>100</td><td>64</td><td>d</td></tr>
+				<tr><td>01100101</td><td>101</td><td>65</td><td>e</td></tr>
+				<tr><td>01100110</td><td>102</td><td>66</td><td>f</td></tr>
+				<tr><td>01100111</td><td>103</td><td>67</td><td>g</td></tr>
+				<tr><td>01101000</td><td>104</td><td>68</td><td>h</td></tr>
+				<tr><td>01101001</td><td>105</td><td>69</td><td>i</td></tr>
+				<tr><td>01101010</td><td>106</td><td>6a</td><td>j</td></tr>
+				<tr><td>01101011</td><td>107</td><td>6b</td><td>k</td></tr>
+				<tr><td>01101100</td><td>108</td><td>6c</td><td>l</td></tr>
+				<tr><td>01101101</td><td>109</td><td>6d</td><td>m</td></tr>
+				<tr><td>01101110</td><td>110</td><td>6e</td><td>n</td></tr>
+				<tr><td>01101111</td><td>111</td><td>6f</td><td>o</td></tr>
+				<tr><td>01110000</td><td>112</td><td>70</td><td>p</td></tr>
+				<tr><td>01110001</td><td>113</td><td>71</td><td>q</td></tr>
+				<tr><td>01110010</td><td>114</td><td>72</td><td>r</td></tr>
+				<tr><td>01110011</td><td>115</td><td>73</td><td>s</td></tr>
+				<tr><td>01110100</td><td>116</td><td>74</td><td>t</td></tr>
+				<tr><td>01110101</td><td>117</td><td>75</td><td>u</td></tr>
+				<tr><td>01110110</td><td>118</td><td>76</td><td>v</td></tr>
+				<tr><td>01110111</td><td>119</td><td>77</td><td>w</td></tr>
+				<tr><td>01111000</td><td>120</td><td>78</td><td>x</td></tr>
+				<tr><td>01111001</td><td>121</td><td>79</td><td>y</td></tr>
+				<tr><td>01111010</td><td>122</td><td>7a</td><td>z</td></tr>
+				<tr><td>01111011</td><td>123</td><td>7b</td><td>{</td></tr>
+				<tr><td>01111100</td><td>124</td><td>7c</td><td>|</td></tr>
+				<tr><td>01111101</td><td>125</td><td>7d</td><td>}</td></tr>
+				<tr><td>01111110</td><td>126</td><td>7e</td><td>~</td></tr>
+				<tr><td>0111 1111</td><td>127</td><td>7F</td><td>Delete</td></tr>
+			</table>
+		</li>
+	</ol>
+	<h2>Unicode</h2>
+	<p>
+		Unicode refers to the <a href="http://www.unicode.org/versions/Unicode13.0.0/">Unicode Standard</a>, a standard for encoding text.
+	</p>
+	<p>
+		Unicode includes the ASCII encoding table as a subset of the characters it supports.
+	</p>
+</body>
