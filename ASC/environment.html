@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<title>ASC Standard: </title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="bottom">
+		<h2><a href="conformance.html">Previous</a>
+		<a href="toc.html">Table of Contents</a>
+		<a href="Architecture">Next</a></h2>
+	</div>
+	<h1 id="environment">Environment</h1>
+	<ol>
+		<li><p>
+			The ASC programming language is designed for a specific abstract computer architecture.
+			This architecture is refered to as IISC (<u>I</u>ntermediary <u>I</u>nstruction <u>S</u>et <u>C</u>omputer).
+		</p></li>
+		<li>
+			<p>IISC includes...</p>
+			<ul>
+				<li>an abstract CPU architecture</li>
+				<li>an instruction set for the emulated CPU</li>
+				<li>a limited memory model scheme for facilitating structured program execution</li>
+				<li>a binary object format used for storing and distributing programs</li>
+				<li>a linking and loading system for executing programs stored as binary objects</li>
+			</ul>
+		</li>
+		<li><p>
+			IISC does not abstract interactions with the operating system.
+			The abstract CPU architecture does not include many architecture specific behaviors that are common in real hardware.
+			Functionality for, among other things, privilege levels, memory security, and ports are not considered.
+			<rec>It is discouraged to extend an implementation of IISC with support for these functionalities.</rec>
+		</p></li>
+		<li><p>
+			IISC allows for ASC program components to be stored in either a system-native or IISC-native encoding.
+		</p></li>
+		<li><p>
+			IISC allows for ASC program components of any system-native or IISC-native format to be combined and executed as one cohesive program.
+			<rec>IISC is designed to function transparently as part of the underlying operating system. 
+				It should be implemented to behave similarly to the native operating system when executing programs.
+			</rec>
+		</p></li>
+	</ol>
+</body>

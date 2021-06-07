@@ -197,7 +197,6 @@ Type type `[]` is equivalent to &#x25a9;
 
 ---
 
-functions are all pass by reference. rather than parameters defining new local
-variables, they only define what state is shared between the calling context 
-and the evaluation context
+functions are all pass-by-value. if you want to pass by reference you have to 
+make it explicit that you're dealing with a pointer.
 
