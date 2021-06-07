@@ -10,4 +10,29 @@
 		<a href="toc.html">Table of Contents</a>
 		<a href="">Next</a></h2>
 	</div>
+	<h1>Architecture</h1>
+	<ol>
+		<li><p>
+			The instruction set for the IISC architecture is a RISC instruction set.
+			<rec>The purpose of the IISC instruction set is to provide a portable meium to store programs that will be eventually translated into some hardware instruction set for execution. 
+				As such, the IISC instruction set includes some abstractions in order to account for possible discrepancies between architectures.</rec>
+		</p></li>
+		<li><p>
+			IISC instructions are encoded using values from the ASCII table.
+		</p></li>
+	</ol>
+	<h2 id="memory_model">Memory Model</h2>
+	<ol>
+		<li><p>
+			IISC does not enforce a specific memory model.
+			The position and memory addressing strategy is dependent on the target architecture.
+			Memory addresses are described using terms relative to the beginning of the segment of memory in question.
+		</p></li>
+		<li><p>
+			Any non-address values stored in a IISC program that are used as memory addresses are not guaranteed to be compatable with the target architecture or produce predictable results.
+		</p></li>
+		<li><p>
+
+		</p></li>
+	</ol>
 </body>
