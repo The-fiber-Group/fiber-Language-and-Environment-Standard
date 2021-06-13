@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-	<title>ASC Standard: IISC Instruction Set Encoding</title>
+	<title>ASC Standard: IISC Instruction Encoding</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -10,11 +10,207 @@
 		<a href="toc.html">Table of Contents</a>
 		<a href="iisc_instruction_set.html">Next</a></h2>
 	</div>
-	<h1>IISC Instruction Set Encoding</h1>
+	<h1>IISC Instruction Encoding</h1>
 	<ol>
 		<li><p>
-			IISC instructions are encoded using only printable ascii values.
+			IISC instructions are encoded using the ASCII encoding table, including non-printable control characters.
 		</p></li>
 	</ol>
-	<h2 id="iisc_data_types">IISC Data Types</h2>
+	<h2 id="temporary_registers">Temporary Registers</h2>
+	<ol>
+		<li>
+			<p>
+				IISC temporary register names are comprised of a series of alphanumeric ASCII characters and the Space character and are delimited by the Data Link Escape code.
+			</p>
+			<table>
+				<tr><td><i>register</i>&rArr;[a-zA-Z0-9 ]+\x1f</td></tr>
+			</table>
+		</li>
+		<li><p>
+			Temporary register names that contain characters other than the set described above shall be rejected.
+		</p></li>
+	</ol>
+	<h2 id="special_registers">Special Registers</h2>
+	<ol>
+		<li>
+			<p>
+				IISC special purpose registers have static names...
+			</p>
+			<table>
+				<tr><th>Register</th><th>Encoding</th></tr>
+				<tr><td>Stack</td><td>/s</td></tr>
+				<tr><td>Base</td><td>/b</td></tr>
+				<tr><td>Zero</td><td>/z</td></tr>
+				<tr><td>Instruction</td><td>/i</td></tr>
+			</table>
+		</li>
+		<li><p>
+			Special purpose register encodings are all prefixed with the forward slash character and delimited with the Data Link Escape code.
+		</p></li>
+	</ol>
+	<h2 id="word_data_types">Word Data Types</h2>
+	<ol>
+		<li>
+			<p>
+				Word data types are encoded using single ASCII characters.
+			</p>
+			<table>
+				<tr><th>Data Type</th><th>Encoding</th></tr>
+				<tr><td>Signed Word</td><td>w</td></tr>
+				<tr><td>Unsigned Word</td><td>W</td></tr>
+				<tr><td>Large Floating Point</td><td>F</td></tr>
+				<tr><td>Signed Half-Word</td><td>h</td></tr>
+				<tr><td>Unsigned Half-word</td><td>H</td></tr>
+				<tr><td>Small Floating Point</td><td>f</td></tr>
+				<tr><td>Signed Quarter-word</td><td>q</td></tr>
+				<tr><td>Unsigned Quarter-word</td><td>Q</td></tr>
+				<tr><td>Signed Byte</td><td>B</td></tr>
+				<tr><td>Unsigned Byte</td><td>b</td></tr>
+				<tr><td>Memory Address</td><td>@</td></tr>
+			</table>
+		</li>
+	</ol>
+	<h2 id="shelf_composite_data_type">The Shelf Composite Data Type</h2>
+	<ol>
+		<li><p>
+			IISC provides one composite data type, the <b>Shelf</b>.
+			This data type is not word-oriented, but is instead comprised of combinations of word-data types as a <b>composite data type</b>.
+		</p></li>
+		<li><p>
+			The structure of a Shelf must be declared and included with the IISC programs that use it.
+			Each Shelf declared must be identified with a unique <a href="binary_object_format.html#symbols">symbol</a>.
+		</p></li>
+		<li><p>
+			The Shelf allows the positioning of data to be described acccording to where it lies before or after a base address.
+		</p></li>
+		<li><p>
+			The Shelf is comprised of a number of zero-indexed fields which are grouped into layouts.
+			Each field corresponds to one word data type.
+		</p></li>
+		<li><p>
+			If a field is prefixed with a Space character, that field will be aligned within memory word boundaries.
+		</p></li>
+		<li><p>
+			The indexing of fields is global and is not affected by layout grouping.
+			Each field will recieve an index number corresponding to its position within the entire composite data type declaration.
+		</p></li>
+		<li><p>
+			Each composite data type may have any number of alternative field layouts.
+			Each layout declared corresponds to the same position around the base address.
+		</p></li>
+	</ol>
+	<h3 id="shelf_declaration_syntax">Shelf Declaration Syntax</h3>
+	<ol>
+		<li>
+			<p>
+				The syntax for declaring a Shelf data type is...
+			</p>
+			<table>
+				<tr><td><b>Shelf</b> &rarr; <code>[</code> <b>Fields</b> <code>.</code> <i>Name</i> <b>Fields</b> <code>]</code></td></tr>
+				<tr><td><i>Name</i> &rArr; [\x20-\x7e]\x00</td></tr>
+				<tr><td><b>Fields</b> &rarr;<br>
+					&emsp;| <b>Fields</b> <b>Fields</b><br>
+					&emsp;| <code>{</code> <b>Layout</b> <code>}</code>
+				</td></tr>
+				<tr><td><b>Layout</b> &rarr; <br>
+					&emsp;| <b>Layout</b> <b>Layout</b><br>
+					&emsp;| <i>Type</i><br>
+					&emsp;| <i>Align</i> <i>Type</i>
+				</td></tr>
+				<tr><td><i>Type</i> &rArr; [wWhHqQBb@]</td></tr>
+				<tr><td><i>Align</i> &rArr; \x32</td></tr>
+			</table>
+		</li>
+		<li><p>
+			There are two areas in which field layouts may be declared in a Shelf data type, before and after the name for the Shelf declaration.
+			These two areas correspond to the positioning of fields before and after the base address.
+		</p></li>
+		<li><p>
+			Fields declared before the Shelf name are located in memory positions approaching the base address.
+			Fields declared after the Shelf name are located in memory positions leaving the base address.
+			Thus the last field of every layout declared before the Shelf name resides in the last position before the base address, and the first field of every layout declared after the Shelf name begins at the base address.
+		</p></li>
+	</ol>
+	<h3 id="accessing_fields">Accessing Fields</h3>
+	<ol>
+		<li><p>
+			Accessing a field from a base address will calculate an offset from the base address and produce the new offset address.
+		</p></li>
+		<li>
+			<p>The syntax for accessing a field is as follows...</p>
+			<table>
+				<tr><td><code>\x1a</code> <i>Address</i> <i>Name</i> <i>Index</i></td></tr>
+				<tr><td><i>Address</i> &rArr;<br>
+					&emsp;| Register<br>
+					&emsp;| <i>Number</i>
+				</td></tr>
+				<tr><td><i>Name</i> &rArr; [\x20-\x7E]+\x00</td></tr>
+				<tr><td><i>Index</i>&rArr;<br>
+					&emsp;| Register<br>
+					&emsp;| <i>Number</i>
+				</td></tr>
+				<tr><td><i>Number</i> &rArr; \x05[0-9a-f][0-9a-f]{1,16}</td></tr>
+			</table>
+		</li>
+		<li><p>
+			Field accesses are prefixed with the Substitute code.
+			Then a base address is provided either by some register's contents or a numerical constant.
+			Next, the name of the Shelf declaration being used is given.
+			Finally, the index of the Shelf field being accessed is provided either by some register's contents or a numerical constant.
+		</p></li>
+		<li><p>
+			Field accesses produce a memory address value.
+		</p></li>
+		<li><p>
+			If a register is used to provide an address or index, that register's contents are assumed to be stored using the Unsigned Word data type format.
+		</p></li>
+	</ol>
+	<h2 id="data_type_sizes">Data Type Sizes</h2>
+	<ol>
+		<li><p>
+			The size in bytes of any word or composite data type can be used as a numerical constant by prefixing the name of the type with the Device Control 1 code.
+		</p></li>
+		<li><p>
+			If the data type being queried is a word data type, the single-character encoding must be used and prefixed with the Null character.
+			For example, the size of a Signed Half-word can be used by the string, <code>&#x11;&#x2591;h</code>.
+		</p></li>
+		<li><p>
+			The size of a composite data type is determined by first finding the field layout on each side of the name that occupies the most space. 
+			Layouts occupy a number of bytes determined by the sum of the byte-size of each fields' associated word data type and the sum of all additional bytes of padding used for memory aligned fields.
+			The size of a composite data type is then the sum, in bytes, of the largest field layouts from before and after the name.
+		</p></li>
+	</ol>
+	<h2 id="instruction_format">Instruction Format</h2>
+	<ol>
+		<li>
+			<p>
+				The format for IISC instructions is as follows...
+			</p>
+			<ol>
+				<li>Primary Operand</li>
+				<li>Instruction</li>
+				<li>Word Data Type Specifier</li>
+				<li>Secondary Operand</li>
+				<li>Tertiary Operand</li>
+				<li>Further Operands</li>
+			</ol>
+		</li>
+		<li>
+			<p>Operands may be one of...</p>
+			<ul>
+				<li>a compound data type access</li>
+				<li>a number constant</li>
+				<li>a symbol</li>
+				<li>the size of a data type</li>
+			</ul>
+			<p>
+				Where compound data type accesses and symbols provide memory addresses,
+				and numbers and data type sizes provide numerical constants.
+			</p>
+		</li>
+		<li><p>
+			The primary operand will always be used in every instruction that requires at least one operand. 
+			Secondary, tertiary, and other operands will be used when further operands are required by the instruction.
+		</p></li>
+	</ol>
 </body>

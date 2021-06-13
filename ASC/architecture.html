@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-	<title>ASC Standard: </title>
+	<title>ASC Standard: Architecture</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,7 @@
 	<h1>Architecture</h1>
 	<ol>
 		<li><p>
-			The IISC architecture consists of an unlimited number of 64 bit temporary registers, four 64 bit special purpose registers, and a linear address space consisting of 2^64 (or 1.84467440737e+19) individually addressable bytes.
+			The IISC architecture consists of an unlimited number of 64 bit temporary registers, four 64 bit special purpose registers, and a linear address space consisting of 2<sup>64</sup> (or 1.84467440737e+19) individually addressable bytes.
 		</p></li>
 		<li><p>
 			The IISC architecture is intended to be translated to instructions for an existing hardware instruction set before execution.
@@ -57,7 +57,7 @@
 			An implementation may support a smaller address space than 2^64 addresses.
 		</p></li>
 		<li><p>
-			IISC explicitly has no endianness and programs are created without specifying an endianness for data held in memory.
+			IISC explicitly has no endianness.
 			Endianness is only introduced when IISC is translated to a hardware architecture that requires endianness.
 			<rec>Individual bytes of a single-register value stored in memory may still be read and oriented into a register according to a certain endianness pattern, but the resulting value held in the register is not guaranteed to be the same as the value stored in memory.</rec>
 		</p></li>
@@ -65,7 +65,7 @@
 	<h2 id="register_data_types">Register Data Types</h2>
 	<ol>
 		<li><p>
-			IISC has a number of single-register data types called <b>word-oriented</b> data types.
+			IISC has a number of single-register data types called <b>word data types</b>.
 			Each of these data types is represented by 64 bits or less of precision.
 		</p></li>
 		<li>
@@ -77,7 +77,7 @@
 				<tr><td>Signed Word</td><td>64b</td><td>-2<sup>63</sup> ... 2<sup>63</sup></td></tr>
 				<tr><td>Unsigned Word</td><td>&#x22ee;</td><td>0 ... 2<sup>64</sup></td></tr>
 				<tr><td>Large Floating Point</td><td>&#x22ee;</td></tr>
-				<tr><td>Memory Address</td><td>&#x22ee;</td><td>...</td></tr>
+				<tr><td>Memory Address</td><td>&#x22ee;</td><td>0 ... 2<sup>64</sup></td></tr>
 				<tr><td>Signed Half-word</td><td>32b</td>-2147483648 ... 2147483647</tr>
 				<tr><td>Unsigned Half-word</td><td>&#x22ee;</td><td>0 ... 4294967295</td></tr>
 				<tr><td>Small Floating Point</td><td>&#x22ee;</td></tr>
@@ -87,5 +87,21 @@
 				<tr><td>Unsigned Byte</td><td>&#x22ee;</td><td>0 ... 255</td></tr>
 			</table>
 		</li>
+		<li><p>
+			The binary format of word-oriented data types is implementation dependent.
+		</p></li>
+		<li><p>
+			Unsigned word data types (Unsigned Word, Unsigned Half-word, Unsigned Quarter-word, Unsigned Byte) represent whole positive numbers starting with zero and continuing until a certain precision of maximum value.
+		</p></li>
+		<li><p>
+			Signed word data types (Signed Word, Signed Half-word, Signed Quarter-word, Signed Byte) represent whole positive or negative numbers with the range of values being determined by the precision of the type.
+		</p></li>
+		<li><p>
+			The Large and Small Floating Point data types correspond to the Single (32b) and Double (64b) precision binary floating point representations specified in the <a href="_A_S_C_.html#references">IEEE 754 standard</a> for floating point representations.
+		</p></li>
+		<li><p>
+			As all data types are binary, the contents of registers may be treated as any type.
+			<rec>It is not recommended to ignore binary representation formats as this will have negative effects on the reliability of a program.</rec>
+		</p></li>
 	</ol>
 </body>
