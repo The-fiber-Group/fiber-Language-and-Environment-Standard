@@ -8,56 +8,557 @@
 	<div id="bottom">
 		<h2><a href="iisc_encoding.html">Previous</a>
 		<a href="toc.html">Table of Contents</a>
-		<a href="">Next</a></h2>
+		<a href="binary_object_format.html">Next</a></h2>
 	</div>
 	<h1>IISC Instruction Listing</h1>
 	<h2 id="memory_access_instructions">Memory Access Instructions</h2>
+	<ol>
+		<li><p>
+			Memory access instructions are concerned with loading data to registers and storing data in memory.
+		</p></li>
+		<li>
+			<p>The Memory Access Instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr><td>Load</td><td><code>L</code><td>Register</td><td>Register</td></tr>
+				<tr>
+					<td>Load Immediate</td><td><code>I</code><td>Register</td><td>Number</td>
+				</tr>
+				<tr>
+					<td>Store</td><td><code>S</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Copy</td><td><code>C</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Push</td><td><code>P</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Pop</td><td><code>p</code></td><td>Register</td><td>-</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
 	<h3 id="load">Load</h3>
+	<ol>
+		<li><p>
+			The Load instruction will copy a number of bytes to the primary operand starting at the address specified by contents of the secondary operand.
+		</p></li>
+		<li><p>
+			The number of bytes copied to the primary operand will be determined by the size of the data type specifier given with the instruction.
+		</p></li>
+		<li><p>
+			The secondary operand register is expected to contain a memory address value of the <code>@</code> data type format.
+		</p></li>
+		<li><p>
+			The contents of the primary operand register are overwritten with this instruction.
+		</p></li>
+	</ol>
 	<h3 id="load_immediate">Load Immediate</h3>
+	<ol>
+		<li><p>
+			The Load Immediate instruction will set the contents of the primary operand register to that of a constant value encoded in the instruction.
+		</p></li>
+		<li>
+			<p>
+				This constant value can be one of...
+			</p>
+			<ul>
+				<li>a <a href="iisc_encoding.html#accessing_fields">compound data type access</a></li>
+				<li>a <a href="binary_object_format.html#numbers">numerical constant</a></li>
+				<li>a <a href="binary_object_format.html#symbols">symbol</a></li>
+				<li>the <a href="iisc_encoding.html#data_type_sizes">size of a data type</a></li>
+			</ul>
+		</li>
+		<li><p>
+			The contents of the primary operand register are overwritten with this instruction.
+		</p></li>
+	</ol>
 	<h3 id="store">Store</h3>
+	<ol>
+		<li><p>
+			The Store instruction will copy a number of bytes from the secondary operand register to a series of bytes in memory beginning at the address specified by the contents of the primary operand register.
+		</p></li>
+		<li><p>
+			The number of bytes copied from the secondary operand register will be determined by the size of the data type specifier given with the instruction.
+		</p></li>
+		<li><p>
+			The primary operand register is expected to contain a memory address value of the <code>@</code> data type format.
+		</p></li>
+	</ol>
 	<h3 id="copy">Copy</h3>
-	<h3 id="push">Push</h3>
-	<h3 id="pop">Pop</h3>
+	<ol>
+		<li><p>
+			The Copy instruction will copy the contents of the secondary operand register to the primary operand register.
+		</p></li>
+		<li><p>
+			The contents of the primary operand register are overwritten with this instruction.
+		</p></li>
+	</ol>
+
 	<h2 id="arithmetic_instructions">Arithmetic Instructions</h2>
+	<ol>
+		<li><p>
+			Arithmetic instructions performed using signed word data types expect the format of those types to be two's complement.
+		</p></li>
+		<li>
+			<p>The Arithmetic Instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr>
+					<td>Adddition</td><td><code>+</code></td><td>Register (Addend)</td><td>Register (Addend)</td>
+				</tr>
+				<tr>
+					<td>Subtraction</td><td><ode>-</ode></td><td>Register (Minuend)</td><td>Register (Subtrahend)</td>
+				</tr>
+				<tr>
+					<td>Multiplication</td><td><code>*</code></td><td>Register (Multiplier)</td><td>Register (Multiplicand)</td>
+				</tr>
+				<tr>
+					<td>Quotient</td><td><code>/</code></td><td>Register (Dividend)</td><td>Register (Divisor)</td>
+				</tr>
+				<tr>
+					<td>Remainder</td><td><code>%</code></td><td>Register (Dividend)</td><td>Register (Divisor)</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
 	<h3 id="addition">Addition</h3>
+	<ol>
+		<li><p>
+			The Addition instruction performs binary addition on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of the addition.
+		</p></li>
+	</ol>
 	<h3 id="subtraction">Subtraction</h3>
+	<ol>
+		<li><p>
+			The Subtraction instruction performs binary subtraction on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The contents of the secondary operand register are subtracted from the contents of the primary operand register.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of the subtraction.
+		</p></li>
+	</ol>
 	<h3 id="multiplication">Multiplication</h3>
-	<h3 id="division">Division</h3>
-	<h3 id="modulus">Modulus</h3>
+	<ol>
+		<li><p>
+			The Multiplication instruction performs binary multiplication on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The contents of the primary operand register are multiplied by the contents of the secondary operand register.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of the multiplication.
+		</p></li>
+	</ol>
+	<h3 id="division">Quotient</h3>
+	<ol>
+		<li><p>
+			The Quotient instruction performs binary division on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The contents of the primary operand register are divided by the contents of the secondary register.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the quotient result of the division.
+		</p></li>
+	</ol>
+	<h3 id="modulus">Remainder</h3>
+	<ol>
+		<li><p>
+			The Remainder instruction performs binary division on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The contents of the primary operand register are divided by the contents of the secondary register.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the remainder result of the division.
+		</p></li>
+		<li><p>
+			The Remainder instruction is not supported for any floating point data types.
+			If the Remainder instruction is provided a floating point data type, it shall be interpreted as the No Operation instruction.
+		</p></li>
+	</ol>
+
 	<h2 id="binary_logic_instructions">Binary Logic Instructions</h2>
+	<ol>
+		<li>
+			<p>The Binary Logic instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr>
+					<td>AND</td><td><code>&</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>OR</td><td><code>|</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>XOR</td><td><code>^</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>NOT</td><td><code>!</code></td><td>Register</td><td>-</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
 	<h3 id="and">AND</h3>
+	<ol>
+		<li><p>
+			The AND instruction performs a binary logical AND on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of this instruction.
+		</p></li>
+	</ol>
 	<h3 id="or">OR</h3>
+	<ol>
+		<li><p>
+			The OR instruction performs a binary logical OR on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of this instruction.
+		</p></li>
+	</ol>
 	<h3 id="xor">XOR</h3>
+	<ol>
+		<li><p>
+			The XOR instruction performs a binary logical XOR on the contents of the primary and secondary operand registers.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of this instruction.
+		</p></li>
+	</ol>
 	<h3 id="not">NOT</h3>
-	<h3 id="negate">Negate</h3>
+	<ol>
+		<li><p>
+			The NOT instruction performs a binary logical NOT on the contents of the primary register.
+		</p></li>
+		<li><p>
+			The primary operand register is overwritten with the result of this instruction.
+		</p></li>
+	</ol>
+
 	<h2 id="contitional_execution_instructions">Conditional Execution Instructions</h2>
 	<ol>
+		<li>
+			<p>The Conditional Execution instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr>
+					<td>If Greater or Equal</td><td><code>g</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>If Greater</td><td><code>&gt;</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>If Less or Equal</td><td><code>l</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>If Less</td><td><code>&lt;</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>If Equal</td><td><code>=</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>If Not Equal</td><td><code>_</code></td><td>Register</td><td>Register</td>
+				</tr>
+			</table>
+		</li>
 		<li><p>
 			Conditional execution instructions will perform a comparison on two register values, and execute the next instruction if the comparison is true.
 			If the comparison is false, the next instruction will be skipped.
 		</p></li>
+		<li><p>
+			Conditional Execution instructions do not change the contents of their register operands.
+		</p></li>
 	</ol>
 	<h3 id="if_ge">If Greater or Equal</h3>
+	<ol>
+		<li><p>
+			The If Greater or Equal instruction will execute the next instruction if the contents of the primary operand register are greater or equal to the contents of the secondary operand register.
+		</p></li>
+	</ol>
 	<h3 id="if_g">If Greater</h3>
+	<ol>
+		<li><p>
+			The If Greater instruction will execute the next instruction if the contents of the primary operand register are greater than the contents of the secondary operand register.
+		</p></li>
+	</ol>
 	<h3 id="if_le">If Less or Equal</h3>
+	<ol>
+		<li><p>
+			The If Less or Equal instruction will execute the next instruction if the contents of the primary operand register are less than or equal to the contents of the secondar operand register.
+		</p></li>
+	</ol>
 	<h3 id="if_l">If Less</h3>
+	<ol>
+		<li><p>
+			The If Less instruction will execute the next instruction if the contents of the primary operand register are less than the contents of the secondary operand register.
+		</p></li>
+	</ol>
 	<h3 id="if_e">If Equal</h3>
+	<ol>
+		<li><p>
+			The If Equal instruction will execute the next instruction if the contents of the primary operand register are equal to the contents of the secondary operand register.
+		</p></li>
+	</ol>
 	<h3 id="if_ne">If Not Equal</h3>
+	<ol>
+		<li><p>
+			The If Not Equal instruction will execute the next instruction if the contents of the primary operand register are not equal to the contents of the secondary operand register.
+		</p></li>
+	</ol>
+
 	<h2 id="bit_manipulation_instructions">Bit Manipulation Instructions</h2>
+	<ol>
+		<li>
+			<p>The Bit Manipulation Instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr>
+					<td>Logical Shift Left</td><td><code>O</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Logical Shift Right</td><td><code>o</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Arithmetic Shift Right</td><td><code>A</code></td><td>Register</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Rotate Bits Left</td><td><code>R</code></td><td>Regiseter</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>Rotate Bits Right</td><td><code>r</code></td><td>Register</td><td>Register</td>
+				</tr>
+			</table>
+		</li>
+		<li><p>
+			All bit manipulation instructions will move a number of bits in a register determined by the word data type specifier.
+		</p></li>
+		<li><p>
+			The number of places that bits are moved is determined by the number represented by the least significant byte in the secondary operand register.
+			The contents of the secondary operator register are always assumed to be an Unsigned Byte word data type.
+		</p></li>
+		<li><p>
+			The word data type specifier establishes a boundary with a width of a number of bits equal to the bit size of the specified data type.
+			Bits are then moved in and out of this boundary.
+		</p></li>
+		<li><p>
+			For every bit moved out of a boundary, a new bit must be moved into the boundary on the opposite side from the bit which was moved out.
+			The value of bits being moved into the boundary are determined by the individual instruction being used.
+		</p></li>
+	</ol>
 	<h3 id="lshl">Logical Shift Left</h3>
+	<ol>
+		<li><p>
+			The Logical Shift Left instruction will shift bits towards higher significant place values.
+		</p></li>
+		<li><p>
+			If a bit is already at the highest place value, it is moved out of the boundary.
+		</p></li>
+		<li><p>
+			As bits are shifted out of the highest place value, new zero bits are moved into the lowest place value.
+		</p></li>
+	</ol>
 	<h3 id="lshr">Logical Shift Right</h3>
+	<ol>
+		<li><p>
+			The Logical Shift Right instruction will shift bits towards lower significant place values.
+		</p></li>
+		<li><p>
+			If a bit is already at the lowest place value, it is moved out of the boundary.
+		</p></li>
+		<li><p>
+			As bits are shifted out of the lowest place value, new zero-bits are moved into the highest place value.
+		</p></li>
+	</ol>
 	<h3 id="ashr">Arithmetic Shift Right</h3>
+	<ol>
+		<li><p>
+			The Arithmetic Shift Right instruction will shift bits towards lower significant place values.
+		</p></li>
+		<li><p>
+			If a bit is already at the lowest place value, it is moved out of the boundary.
+		</p></li>
+		<li><p>
+			As bits are shifted out of the lowest place value, new one-bits are moved into the highest place value.
+		</p></li>
+	</ol>
 	<h3 id="rtl">Rotate Left</h3>
+	<ol>
+		<li><p>
+			The Rotate Left instruction will shift bits towards higher significant place values.
+		</p></li>
+		<li><p>
+			If a bit is already at the highest place value, it is moved to the lowest place value when shifted.
+		</p></li>
+	</ol>
 	<h3 id="rtr">Rotate Right</h3>
+	<ol>
+		<li><p>
+			The Rotate Right instruction will shift bits towards lower significant place values.
+		</p></li>
+		<li><p>
+			If a bit is already at the lowest place value, it is moved to the highest place value when shifted.
+		</p></li>
+	</ol>
+
 	<h2 id="conversion_instructions">Conversion Instructions</h2>
+	<ol>
+		<li>
+			<p>The Conversion Instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th><th>Secondary Operand</th></tr>
+				<tr>
+					<td>Sign Extend</td><td><code>x</code></td><td>Register</td><td>Word Data Type</td>
+				</tr>
+				<tr>
+					<td>Zero Extend</td><td><code>z</code></td><td>Register</td><td>Word Data Type</td>
+				</tr>
+				<tr>
+					<td>Absolute Value</td><td><code>a</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Negate</td><td><code>n</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Convert to Large Floating Point</td><td><code>F</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Convert to Small Floating Point</td><td><code>f</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Convert from Large Floating Point</td><td><code>U</code></td><td>Register</td><td>-</td>
+				</tr>
+				<tr>
+					<td>Convert from Small Floating Point</td><td><code>u</code></td><td>Register</td><td>-</td>
+				</tr>
+			</table>
+		</li>
+		<li><p>
+			All Conversion instructions will overwrite the contents of the primary operand register.
+		</p></li>
+		<li><p>
+			The Word Data Type required for the secondary operand in the Sign Extend and Zero Extend instructions is an <a href="iisc_encoding.html#word_data_types">encoded word data type</a>.
+		</p></li>
+	</ol>
 	<h3 id="sign_extend">Sign Extend</h3>
+	<ol>
+		<li><p>
+			The Sign Extend instruction will onvert a signed vinary value of a size given by the word data type specifier to a signed binary value of a size corresponding to the size of the data type specified by the secondary operand.
+		</p></li>
+		<li><p>
+			The Sign Extend instruction expects the contents of the primary operand register to be a two's complement binary format.
+		</p></li>
+	</ol>
 	<h3 id="zero_extend">Zero Extend</h3>
+	<ol>
+		<li><p>
+			The Zero Extend instruction will convert an unsigned binary value of a size given by the word data type specifier to an unsigned binary value of a size corresponding to the size of the data type specified by the secondary operand.
+		</p></li>
+		<li><p>
+			The Zero Extend instruction expects the contents of the primary operand register to be an unsigned binary format.
+		</p></li>
+	</ol>
+	<h3 id="absolute_value">Absolute Value</h3>
+	<ol>
+		<li><p>
+			The Absolute Value instruction will convert a signed integer representation to a unsigned integer.
+		</p></li>
+		<li><p>
+			This instruction expects the contents of the primary operand register to be a two's complement binary format.
+		</p></li>
+	</ol>
+	<h3 id="negate">Sign</h3>
+	<ol>
+		<li><p>
+			The Sign instruction will convert an unsigned integer value to its corresponding two's complement representation.
+		</p></li>
+		<li><p>
+			Due to the precision limitations of two's complement binary representation, the value of the most significant bit will not be included in the value conversion.
+			For any unsigned data type with <i>n</i> bits of precision, the Sign instruction is only capable of converting values represented with 2<sup><i>n</i>-1</sup> bits.
+		</p></li>
+	</ol>
 	<h3 id="ctlfp">Convert to Large Floating Point</h3>
+	<ol>
+		<li><p>
+			This instruction will convert a value of a type specified by the word data type specifier to a Large Floating Point data type.
+		</p></li>
+		<li><p>
+			This instruction expects that the primary operand register does not already contain a Large Floating Point value.
+		</p></li>
+	</ol>
 	<h3 id="ctsfp">Convert to Small Floating Point</h3>
+	<ol>
+		<li><p>
+			This instruction will convert a value of a type specified by the word data type specifier to a Small Floating Point data type.
+		</p></li>
+		<li><p>
+			This instruction expects that the primary operand register does not already contain a Small Floating Point value.
+		</p></li>
+	</ol>
 	<h3 id="cflfp">Convert from Large Floating Point</h3>
+	<ol>
+		<li><p>
+			This instruction will convert a Large Floating Point value to another data type determined by the word data type specifier.
+		</p></li>
+		<li><p>
+			This instruction expects that the primary operand register contains a Large Floating Point value.
+		</p></li>
+		<li><p>
+			The floating point value is truncated such that the resulting data type contains the value originally held in the significand of the floating point.
+		</p></li>
+	</ol>
 	<h3 id="cfsfp">Convert from Small Floating Point</h3>
+	<ol>
+		<li><p>
+			This instruction will convert a Small Floating Point value to another data type determined by the word data type specifier.
+		</p></li>
+		<li><p>
+			This instruction expects that the primary operand register contains a Small Floating Point value.
+		</p></li>
+		<li><p>
+			The floating point value is truncated such that the resulting data type contains the value originally held in the significand of the floating point.
+		</p></li>
+	</ol>
+	
 	<h2 id="special_instructions">Special Instructions</h2>
+	<ol>
+		<li>
+			<p>The Special instructions are...</p>
+			<table>
+				<tr><th>Instruction</th><th>Encoding</th><th>Primary Operand</th></tr>
+				<tr>
+					<td>Unconditional Jump</td><td>@</td><td>Register</td>
+				</tr>
+				<tr>
+					<td>System Call</td><td>y</td><td>Multiple Registers</td>
+				</tr>
+			</table>
+		</li>
+	</ol>
 	<h3 id="unconditional_jump">Unconditional Jump</h3>
-	<h3 id="no_operation">No Operation</h3>
+	<ol>
+		<li><p>
+			The Unconditional Jump instruction will set the address held in the Instruction special purpose register to the address held in the primary operand register.
+		</p></li>
+		<li><p>
+			The primary operand register is assumed to contain a memory address.
+		</p></li>
+	</ol>
 	<h3 id="system_call">System Call</h3>
+	<ol>
+		<li><p>
+			The System Call instruction is provided with a number of registers.
+		</p></li>
+		<li><p>
+			The number, ordering, and contents of the registers are dependent on the underlying system's system call implementation.
+			<rec>It is recommended to provide a system-agnostic interface library which other IISC programs may link to in order to access system resources. This will improve the portability of IISC programs.</rec>
+		</p></li>
+	</ol>
 </body>

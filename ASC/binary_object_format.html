@@ -11,6 +11,21 @@
 		<a href="">Next</a></h2>
 	</div>
 	<h1>Binary Object Format</h1>
+	<ol>
+		<li>
+			<p>
+				A binary object format is provided with the IISC architecture for storing IISC programs.
+				It includes...
+			</p>
+			<ul>
+				<li>a composite type declaration list</li>
+				<li>a table of linkable symbols</li>
+				<li>a table of internal symbols</li>
+				<li>an object dependency list</li>
+				<li></li>
+			</ul>
+		</li>
+	</ol>
 	<h2 id="symbols">Symbols</h2>
 	<ol>
 		<li><p>
@@ -25,5 +40,37 @@
 			</table>
 		</li>
 
+	</ol>
+	<h2 id="numbers">Numbers</h2>
+	<ol>
+		<li><p>
+			Numbers are used to represent a single binary numerical constant.
+		</p></li>
+		<li>
+			<p>
+				Numbers consist of a variable-width hexadecimal or binary notation.
+			</p>
+			<table>
+				<tr><td><i>Number</i> &rArr; <br>
+					&emsp;| \x05[0248f]-?([0-9a-f][0-9a-f]){1,16}
+					&emsp;| \x05B[01]{1,128}B
+				</td></tr>
+			</table>
+		</li>
+		<li><p>
+			Numbers are prefixed with the Enquiry code.
+		</p></li>
+		<li><p>
+			The hexadecimal numerical representation consists of a number of pairs of hexadecimal digits corresponding to the integer word data types available in IISC.
+			A hexadecimal notation may contain one, two, four, eight, or sixteen hexadecimal digit pairs.
+			The number of pairs is specified by the first hexadecimal digit, one of <code>0</code>, <code>2</code>, <code>4</code>, <code>8</code>, or <code>f</code>.
+			The first hexadecimal digit may optionally be followed by a sign which specified that the value represented must be a signed word type.
+		</p></li>
+		<li><p>
+			The binary numerial representation consists of a number of bits specified by <code>0</code> and <code>1</code> which are delimited by <code>B</code>.
+		</p></li>
+		<li><p>
+			In both the hexadecimal and binary representations, the leftmost value corresponds to the most significant bit or byte of the register and the rightmost, the least significant.
+		</p></li>
 	</ol>
 </body>

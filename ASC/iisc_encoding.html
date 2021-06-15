@@ -56,6 +56,8 @@
 			</p>
 			<table>
 				<tr><th>Data Type</th><th>Encoding</th></tr>
+				<tr><td>Signed Double-word</td><td>d</td></tr>
+				<tr><td>Unsigned Double-word</td><td>D</td></tr>
 				<tr><td>Signed Word</td><td>w</td></tr>
 				<tr><td>Unsigned Word</td><td>W</td></tr>
 				<tr><td>Large Floating Point</td><td>F</td></tr>
@@ -114,13 +116,20 @@
 				</td></tr>
 				<tr><td><b>Layout</b> &rarr; <br>
 					&emsp;| <b>Layout</b> <b>Layout</b><br>
-					&emsp;| <i>Type</i><br>
-					&emsp;| <i>Align</i> <i>Type</i>
+					&emsp;| <b>Type</b><br>
+					&emsp;| <i>Align</i> <b>Type</b>
 				</td></tr>
-				<tr><td><i>Type</i> &rArr; [wWhHqQBb@]</td></tr>
+				<tr><td><b>Type</b> &rarr; <br>
+					&emsp;| <i>Word</i><br>
+					&emsp;| <code>\x00</code> <i>Name</i>
+				</td></tr>
+				<tr><td><i>Word</i> &rArr; [wWhHqQBb@]</td></tr>
 				<tr><td><i>Align</i> &rArr; \x32</td></tr>
 			</table>
 		</li>
+		<li><p>
+			Fields may be either a word data type or the name of another composite data type prefixed by a Null character.
+		</p></li>
 		<li><p>
 			There are two areas in which field layouts may be declared in a Shelf data type, before and after the name for the Shelf declaration.
 			These two areas correspond to the positioning of fields before and after the base address.
@@ -139,10 +148,11 @@
 		<li>
 			<p>The syntax for accessing a field is as follows...</p>
 			<table>
-				<tr><td><code>\x1a</code> <i>Address</i> <i>Name</i> <i>Index</i></td></tr>
+				<tr><td><b>Access</b> &rarr; <code>\x1a</code> <i>Address</i> <i>Name</i> <i>Index</i></td></tr>
 				<tr><td><i>Address</i> &rArr;<br>
 					&emsp;| Register<br>
-					&emsp;| <i>Number</i>
+					&emsp;| <i>Number</i><br>
+					&emsp;| <b>Access</b>
 				</td></tr>
 				<tr><td><i>Name</i> &rArr; [\x20-\x7E]+\x00</td></tr>
 				<tr><td><i>Index</i>&rArr;<br>

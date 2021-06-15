@@ -13,7 +13,7 @@
 	<h1>Architecture</h1>
 	<ol>
 		<li><p>
-			The IISC architecture consists of an unlimited number of 64 bit temporary registers, four 64 bit special purpose registers, and a linear address space consisting of 2<sup>64</sup> (or 1.84467440737e+19) individually addressable bytes.
+			The IISC architecture consists of an unlimited number of 128 bit temporary registers, four 64 bit special purpose registers, and a linear address space consisting of 2<sup>64</sup> (or 1.84467440737e+19) individually addressable bytes.
 		</p></li>
 		<li><p>
 			The IISC architecture is intended to be translated to instructions for an existing hardware instruction set before execution.
@@ -41,27 +41,16 @@
 			</ul>
 		</li>
 		<li><p>
-			Both the temporary registers and the special purpose registers are capable of holding all single-register data types available in the IISC instruction set.
+			All temporary registers are capable of holding all single-register data types available in the IISC instruction set.
+		</p></li>
+		<li><p>
+			All special purpose registers are capable of holding all data types that are 64 bits or less in size.
 		</p></li>
 		<li><p>
 			Data written directly to a special purpose register is not guaranteed to be preserved for future reading after it has been written as further instruction execution may automatically change the value in some registers.
 		</p></li>
 	</ol>
-	<h2 id="memory_model">Memory Model</h2>
-	<ol>
-		<li><p>
-			IISC does not enforce a specific memory model.
-			Various memory addressing modes may be used by the underlying hardware.
-		</p></li>
-		<li><p>
-			An implementation may support a smaller address space than 2^64 addresses.
-		</p></li>
-		<li><p>
-			IISC explicitly has no endianness.
-			Endianness is only introduced when IISC is translated to a hardware architecture that requires endianness.
-			<rec>Individual bytes of a single-register value stored in memory may still be read and oriented into a register according to a certain endianness pattern, but the resulting value held in the register is not guaranteed to be the same as the value stored in memory.</rec>
-		</p></li>
-	</ol>
+	
 	<h2 id="register_data_types">Register Data Types</h2>
 	<ol>
 		<li><p>
@@ -74,6 +63,8 @@
 			</p>
 			<table>
 				<tr><th>Type</th><th>Size</th><th>Precision</th></tr>
+				<tr><td>Signed Double Word</td><td>128b</td><td>-2<sup>127</sup> ... 2<sup>127</sup></td></tr>
+				<tr><td>Unsigned Double Word</td><td>&#x22ee;</td><td>0 ... 2<sup>128</sup></td></tr>
 				<tr><td>Signed Word</td><td>64b</td><td>-2<sup>63</sup> ... 2<sup>63</sup></td></tr>
 				<tr><td>Unsigned Word</td><td>&#x22ee;</td><td>0 ... 2<sup>64</sup></td></tr>
 				<tr><td>Large Floating Point</td><td>&#x22ee;</td></tr>
@@ -102,6 +93,21 @@
 		<li><p>
 			As all data types are binary, the contents of registers may be treated as any type.
 			<rec>It is not recommended to ignore binary representation formats as this will have negative effects on the reliability of a program.</rec>
+		</p></li>
+	</ol>
+	<h2 id="memory_model">Memory Model</h2>
+	<ol>
+		<li><p>
+			IISC does not enforce a specific memory model.
+			Various memory addressing modes may be used by the underlying hardware.
+		</p></li>
+		<li><p>
+			An implementation may support a smaller address space than 2^64 addresses.
+		</p></li>
+		<li><p>
+			IISC explicitly has no endianness.
+			Endianness is only introduced when IISC is translated to a hardware architecture that requires endianness.
+			<rec>Individual bytes of a single-register value stored in memory may still be read and oriented into a register according to a certain endianness pattern, but the resulting value held in the register is not guaranteed to be the same as the value stored in memory.</rec>
 		</p></li>
 	</ol>
 </body>
