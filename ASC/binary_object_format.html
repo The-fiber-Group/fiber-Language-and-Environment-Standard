@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div id="bottom">
-		<h2><a href="">Previous</a>
+		<h2><a href="iisc_instruction_set.html">Previous</a>
 		<a href="toc.html">Table of Contents</a>
 		<a href="">Next</a></h2>
 	</div>
@@ -14,17 +14,35 @@
 	<ol>
 		<li>
 			<p>
-				A binary object format is provided with the IISC architecture for storing IISC programs.
+				A binary object format is provided with the IISC architecture for storing IISC programs called ALOF (<u>A</u>SC <u>L</u>inkable <u>O</u>bject <u>F</u>ormat).
 				It includes...
 			</p>
 			<ul>
 				<li>a composite type declaration list</li>
-				<li>a table of linkable symbols</li>
-				<li>a table of internal symbols</li>
+				<li>the Surface Table, containing linkable symbols</li>
+				<li>the Structure Table, containing internal symbols</li>
 				<li>an object dependency list</li>
-				<li></li>
+				<li>Segments</li>
 			</ul>
 		</li>
+		<li><p>
+			An ALOF object that begins with the ASCII Bell control character can be executed.
+		</p></li>
+	</ol>
+	<h2 id="object_organization">Object Organization</h2>
+	<ol>
+		<li>
+			<p>The ordering of the sections in a ALOF object is as follows.</p>
+			<ol>
+				<li><i>Required:</i> ALOF ASCII Sequence (<code>ALOF</code>)</li>
+				<li><i>Optional:</i> Executable Specifier (ASCII Bell)</li>
+				<li><i>Optional:</i> Import List (ASCII Acknowlegment prefix)</li>
+				<li><i>Required:</i> Composite Type Declarations (ASCII File Separator prefix)</li>
+				<li><i>Optional:</i> Surface Table (ASCII Group Separator prefix)</li>
+				<li><i>Required:</i> Structure Table (ASCII Record Separator prefix)</li>
+				<li><i>Required:</i> Segment Section Prefix (ASCII End of Medium)</li>
+				<li><i>Required:</i> Zero or more Segments</li>
+			</ol>
 	</ol>
 	<h2 id="symbols">Symbols</h2>
 	<ol>
@@ -41,6 +59,18 @@
 		</li>
 
 	</ol>
+	<h2 id="sizes">Sizes</h2>
+	<ol>
+		<li><p>
+			Sizes are used to specify the size in bytes of an object component.
+		</p></li>
+		<li><p>
+			Sizes are a sixteen-digit hexadecimal number.
+			<table>
+				<tr><td>[0-9a-f]{16,16}</td></tr>
+			</table>
+		</p></li>
+	</ol>
 	<h2 id="numbers">Numbers</h2>
 	<ol>
 		<li><p>
@@ -52,7 +82,7 @@
 			</p>
 			<table>
 				<tr><td><i>Number</i> &rArr; <br>
-					&emsp;| \x05[0248f]-?([0-9a-f][0-9a-f]){1,16}
+					&emsp;| \x05[0248f]-?([0-9a-f][0-9a-f]){1,16}<br>
 					&emsp;| \x05B[01]{1,128}B
 				</td></tr>
 			</table>
@@ -73,4 +103,143 @@
 			In both the hexadecimal and binary representations, the leftmost value corresponds to the most significant bit or byte of the register and the rightmost, the least significant.
 		</p></li>
 	</ol>
+	<h2 id="binary_data">Binary Data</h2>
+	<ol>
+		<li><p>
+			Binary data does not have a specific format. 
+			It consists of a continguous series of unsigned byte values.
+		</p></li>
+		<li><p>
+			Binary data shall be signified by the use of a Sizeas the type declaration for a Symbol entry.
+		</p></li>
+	</ol>
+	<h2 id="import_list">Import List</h2>
+	<ol>
+		<li><p>
+			The Import List contains a series of ALOF object pathnames that shall be loaded with the local ALOF object.
+		</p></li>
+		<li><p>
+			Each entry in the list contains the name of a single ALOF object.
+		</p></li>
+		<li><p>
+			Each object pathname is followed by the ASCII tilde character.
+		</p></li>
+		<li>
+			<p>The pathname structure is</p>
+			<table>
+				<tr><td><b>Path</b> &rarr; <b>Dir</b> <i>Name</i> <code>~</code></td></tr>
+				<tr><td><b>Dir</b> &rarr; <br>
+					&emsp;| <b>Dir</b> <b>Dir</b><br>
+					&emsp;| <i>Directory</i> <i>Separator</i>
+				</td></tr>
+				<tr><td><i>Directory</i> &rArr; <i>Name</i></td></tr>
+				<tr><td><i>Separator</i> &rArr; <code>/</code></td></tr>
+				<tr><td><i>Name</i> &rArr; [a-zA-Z0-9\.\-\_ ]</td></tr>
+			</table>
+		</li>
+		<li><p>
+			The pathname consists of a series of names separated by the forward slash, <code>/</code>.
+		</p></li>
+		<li><p>
+			The last name in the series is the name of the imported object as it is in the filesystem.
+		</p></li>
+		<li><p>
+			Any names preceding the object name are directory names such that the pathname, <code>a/b/c~</code>, specifies an object named "c" contained in the directory "b", which is then contained in the directory "a".
+		</p></li>
+		<li><p>
+			If a path contains no directory names before the name of the imported object, the directory of that object is assumed to be the same directory as the object containing the import list.
+		</p></li>
+		<li><p>
+			If an operating system uses a different directory separator character than the forward slash (<code>/</code>), the forward slashes in the import list shall be interpreted as the directory separator character used for that operating system.
+		</p></li>
+	</ol>
+	<h2 id="composite_type_list">Composite Type List</h2>
+	<ol>
+		<li><p>
+			Any composite data types used by IISC instructions contained in the ALOF file must be declared in the Composite Type List.
+		</p></li>
+		<li><p>
+			The composite type list consists of a number of composite type declarations as specified in <a href="iisc_encoding.html#shelf_declaration_syntax">Shelf Declaration Syntax</a>
+		</p></li>
+		<li><p>
+			Each composite type declaration is followed by an ASCII Line Feed character.
+		</p></li>
+	</ol>
+	<h2 id="tables">Tables</h2>
+	<ol>
+		<li><p>
+			Tables are used to declare the segments that will be inclued in the loading and linking proess for an ALOF object.
+		</p></li>
+		<li><p>
+			Tables contain entries that correspond to segments in the ALOF object.
+		</p></li>
+	</ol>
+	<h3 id="symbol_entries">Symbol Entries</h3>
+	<ol>
+		<li>
+			<p>
+				Symbol entries for tables contain a symbol, followed by a flag, followed by a type descriptor.
+			</p>
+		</li>
+		<li>	<p>
+			Flags are single ASCII characters following the symbol delimiter. 
+			Flags signify the availability of a segment for reading, writing, and interpretation.
+			The flags for symbol entries are...
+			</p>
+			<dl>
+				<dt><code>e</code></dt>
+				<dd>
+					Signifies an external symbol that will be foun in one of the objects listed in the Link Table. 
+					No type descriptors shall follow this flag.
+				</dd>
+				<dt><code>r</code></dt>
+				<dd>
+					Indicates that the segment associated with this symbol is <i>readable</i> but not writeable.
+				</dd>
+				<dt><code>w</code></dt>
+				<dd>
+					Indiates that the segment associated with this symbol is <i>writeable</i> and <i>readable</i>, but not <i>interpretable</i>.
+				</dd>
+				<dt><code>u</code></dt>
+				<dd>
+					Indicates that the segment associated with the symbol is the same as a <code>w</code> segment, but contains no data.
+					That is to say, the segment is <i>uninitialized</i>, or empty.
+				</dd>
+				<dt><code>i</code></dt>
+				<dd>
+					Indicates that the segment associated with the symbol is <i>readable</i> and <i>interpretable</i> but not <i>writeable</i>, and contains IISC encoded instructions.
+				</dd>
+				<dt><code>f</code></dt>
+				<dd>
+					Indicates that the segment associated with the symbol is the same as a <code>i</code> segment, but contains instructions which use a different, or <i>foreign</i> encoding, rather than IISC encoding.
+					The means for determining the format and encoding of <code>f</code> segments is not specified.
+				</dd>
+				<dt><code>n</code></dt>
+				<dd>
+					Indicates that the segment associated with the symbol will not be loaded as part of the program stored in the ALOF object.
+				</dd>
+			</dl>
+		</li>
+		<li>
+			<p>
+				A type descriptor is one of...
+			</p>
+			<ul>
+				<li>an encoded word data type (<a href="iisc_encoding.html#word_data_types"><i>Word Data Types</i></a>)</li>
+				<li>a symbol naming a composite data type (<a href="iisc_encoding.html#shelf_declaration_syntax"><i>Shelf Declaration Syntax</i></a>)</li>
+				<li>a size (<a href="#sizes"><i>Sizes</i></a>)</li>
+			</ul>
+		</li>
+		<li><p>
+			If an encoded word data type specifier is used as a type descriptor, then it is prefixed with the ASCII Null character.
+		</p></li>
+	</ol>
+	<h3 id="surface_table">Surface Table</h3>
+	<h3 id="structure_table">Structure Table</h3>
+	<ol>
+		<li><p>
+			If an ALOF object is executable, program execution will begin at the segment associated with the first symbol entry in the structure table.
+		</p></li>
+	</ol>
+	<h2 id="segments">Segments</h2>
 </body>
