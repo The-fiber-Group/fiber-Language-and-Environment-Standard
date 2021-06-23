@@ -8,7 +8,7 @@
 	<div id="bottom">
 		<h2><a href="iisc_instruction_set.html">Previous</a>
 		<a href="toc.html">Table of Contents</a>
-		<a href="">Next</a></h2>
+		<a href="execution.html">Next</a></h2>
 	</div>
 	<h1>Binary Object Format</h1>
 	<ol>
@@ -171,7 +171,7 @@
 			Tables are used to declare the segments that will be inclued in the loading and linking proess for an ALOF object.
 		</p></li>
 		<li><p>
-			Tables contain entries that correspond to segments in the ALOF object.
+			Tables contain symbol entries that correspond to segments in the ALOF object.
 		</p></li>
 	</ol>
 	<h3 id="symbol_entries">Symbol Entries</h3>
@@ -235,11 +235,42 @@
 		</p></li>
 	</ol>
 	<h3 id="surface_table">Surface Table</h3>
+	<ol>
+		<li><p>
+			The surface table contains symbol entries that can be used internally within the loal ALOF object and also externally when the local ALOF object is linked to an external object.
+		</p></li>
+	</ol>
 	<h3 id="structure_table">Structure Table</h3>
 	<ol>
+		<li><p>
+			The structure table ccontains symbol entries that can only be used internally within the local ALOF object.
+		</p></li>
 		<li><p>
 			If an ALOF object is executable, program execution will begin at the segment associated with the first symbol entry in the structure table.
 		</p></li>
 	</ol>
 	<h2 id="segments">Segments</h2>
+	<ol>
+		<li><p>
+			Segments are used to contain the encoded instructions, data, and other binary information required to load and execute an IISC program.
+		</p></li>
+		<li><p>
+			The size of a segment is determined by the size in bytes of the type descriptor associated with that segment.
+		</p></li>
+		<li>
+			<p>
+				Data in a segment shall be formatted according to the type desriptor associated with that segment.
+			</p>
+			<ul>
+				<li>For a word data type, data shall be formatted as a Number.</li>
+				<li>For a composite data type, data shall be formatted as a series of Numbers.</li>
+				<li>For a Size, the data shall be an unformatted series of bytes, or encoded instructions if either the <code>i</code> or <code>f</code> flags are used in conjunction with the Size type descriptor.</li>
+			</ul>
+		</li>
+		<li><p>
+			The order in which segments are appended after the Segment Section Prefix must match the order in which those sections are entered into the surface and structure tables.
+			The segment ordering must match the global order of their entries.
+			Segments with entries in the surface table are appended before segments entered in the structure table because the surface table always occurs before the structure table.
+		</p></li>
+	</ol>
 </body>

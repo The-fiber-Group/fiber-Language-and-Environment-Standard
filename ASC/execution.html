@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+	<title>ASC Standard: Execution</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="bottom">
+		<h2><a href="binary_object_format.html">Previous</a>
+		<a href="toc.html">Table of Contents</a>
+		<a href="language_concepts.html">Next</a></h2>
+	</div>
+	<h1>Execution</h1>
+	<ol>
+		<li><p>
+			Execution of an IISC program stored in an ALOF object is performed in three discrete stages: Linking, Translation, and Loading.
+		</p></li>
+		<li><p>
+			An IISC program shall be invoked using the name of the ALOF object it is stored in.
+			The method with which the program is invoked is not specified.
+		</p></li>
+		<li><p>
+			The ALOF object named by the program invokation must be marked as executable.
+			If the object is not executable, the process of execution must immediately terminate.
+		</p></li>
+		<li><p>
+			The format of all ALOF objects must be verified before they are used to execute a program.
+			A well-formed ALOF object conforms to the object format specified in (<a href="binary_object_format.html"><i>Binary Object Format</i></a>).
+			If any ALOF object is not well-formed, the process of execution must immediately terminate.
+		</p></li>
+	</ol>
+	<h2 id="linking">Linking</h2>
+	<ol>
+		<li><p>
+			The Linking stage is responsible for gathering all segments required by a single program in order for its execution.
+		</p></li>
+		<li><p>
+			The segments required by a program are not required to be contained within a single ALOF object. 
+			A single IISC program may be contained within multiple ALOF objects.
+		</p></li>
+		<li><p>
+			The ALOF objects required for execution are determined by the Import List entries in the initial object named by the program invokation.
+		</p></li>
+		<li><p>
+			If an external (<code>e</code> flagged) segment is use by an ALOF object, but the segment is not included in any of the ALOF objects loaded for the program, the process of execution must immediately terminate.
+		</p></li>
+		<li><p>
+			Some segments which are not flagged as <code>n</code> may still not be used if their names are not used in any segments required by the program.
+			These segments may be treated as if they were flagged as <code>n</code> and are not required to be present in the following two stages of execution.
+		</p></li>
+	</ol>
+	<h2 id="translation">Translation</h2>
+	<ol>
+		<li><p>
+			The Translation stage is responsible for converting the segments provided by the Linking stage into a program image that is interpretable by the underlying system.
+			The resulting translated program image is explicitly required to have identical effects and behavior as the untranslated IISC program.
+		</p></li>
+		<li><p>
+			The exact organization of a program image is dependent on the program image format used by the underlying system.
+		</p></li>
+		<li><p>
+			Any segments containing IISC instructions must be translated to instructions that are interpretable by the underlying system.
+		</p></li>
+		<li><p>
+			The format of an data used by the IISC program shall be translated to a format that is interpretable by the underlying system in such a way that the literal information represented by the IISC-formatted data is preserved.
+		</p></li>
+	</ol>
+	<h2 id="loading">Loading</h2>
+	<ol>
+		<li><p>
+			The Loading stage shall claim a portion of resources from the underlying system which will be used to hold the program image produced by the Translation stage.
+		</p></li>
+		<li><p>
+			Once the program image has been loaded, the execution process shall initiate the execution of that program image by the underlying system.
+		</p></li>
+		<li><p>
+			It is not specified if the execution process is required to terminate after the program image has completed its execution.
+		</p></li>
+	</ol>
+	<h2 id="verification">Verification</h2>
+	<ol>
+		<li><p>
+			At any point where the execution process is required to terminate, a failure message should be communicated.
+		</p></li>
+		<li><p>
+			If the execution process encounters some error where it cannot complete the program execution, it shall communicate a failure and terminate.
+		</p></li>
+		<li><p>
+			The format of and information included in a failure message is not specified.
+		</p></li>
+	</ol>
+</body>

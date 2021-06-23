@@ -30,54 +30,40 @@
 			If the architecture in question is not generally used in most computing applications, this standard is not required to be adapted to suit that architecture.
 		</p></li>
 	</ol>
-	<h2>Notation Conventions</h2>
+	<h2 id="rationale">Rationale</h2>
 	<ol>
-		<li><p>
-			Examples are provided to show a selection of possible forms a construct can take in actual use.
-			Examples will be given in a <code>monospaced font.</code>
-		</p></li>
-		<li><p id="Reference">
-			References are used in this document to refer to material in other sections.
-			References are given by the section title and clause number in italics in parentheses <a href="#Reference">(<i>Notation Conventions, 2</i>)</a>.
-		</p></li>
-		<li><p>
-			Terms defined within this document will be cited using a numbered, hypertext link<sup><a href="#terms">0</a></sup>.
-			All appearances of terms are not required to be cited, but the first appearance of a term should be cited.
-		</p></li>
-		<li><p>
-			Recommendations are provided to suggest helpful approaches for implementors.
-			Recommendations are not requirements.
-			<rec>Recommendations are written with a slightly smaller, and lighter colored font.</rec>
-		</p></li>
-		<li><p>
-			Without sacrificing clarity, preference should always be given to plain language, rather than technical language, when describing ideas in this Standard.
-		</p></li>
-	</ol>
-	<h2>Grammar Notation</h2>
-	<ol>
-		<li><p>
-			Syntax is described using terminal and non-terminal entities in a modified Backus-Naur form.
-		</p></li>
-		<li><p>
-			The names of non-terminal entities are written in <b>bold font</b>, followed by an arrow(&rarr;).
-		</p></li>
-		<li><p>
-			Each non-terminal is followed by a series of other terminal or non-terminal entities separated by vertical bars.
-		</p></li>
-		<li><p>
-			The names of terminal entities are written in <i>italicized font</i> followed by an arrow (&rArr;).
-		</p></li>
-		<li><p>
-			Each terminal entity is followed by a single POSIX Extended Regular Syntax expression.
-		</p></li>
-		<li><p>
-			An entity that is neither bold nor italicized refers to the top non-terminal entity from an external syntax diagram.
-		</p></li>
-		<li><p>
-			A terminal entity may optionally be written in-place using a <code>monospaced font</code>.
-		</p></li>
-		<li><p>
-			An entity that is optional shall be <u>underlined</u>.
-		</p></li>
+		<li>
+			<p><rec>The following is not a part of the standard documentation of ASC, but rather a summary of the reasons for its inception...</rec></p>
+			<p>
+				Computing is a relatively new field of study compared to mathematics and science.
+				Algebra and the classical sciences have existed for more than a thousand years.
+				What sets computing apart as a new field, rather than an another area of study, is that classical fields are concerned with the result of a calculation, whereas computing is concerned with the means.
+				The broad field of computing can then be generalized as the study of how something might be calculated.
+			</p>
+			<p>
+				The means of calculation spans many mathematical and scientific fields depending on what part of calculation is studied.
+				Scientific theory applies to how computation may be realized physically.
+				Mathematical theory applies to how computation may be carried out.
+				This is demonstrated by the famous Turing machine and Lambda Calculus.
+				Both systems are able to generally describe any algorithm performed over some numbers, however their realization of the algorithm is radically different.
+				The Turing machine is a metaphysical design for a device which will interpret symbols to read and write other symbols using a physical medium.
+				Lambda Calculus is a mathematial logic for composing and applying functions.
+				These two systems demonstrate clearly the tendency for computation to be represented as an extension of some other scientific or mathematical system.
+				This makes it difficult for computation itself to be reasoned about as it is always expressed using the terms of another field.
+			</p>
+			<p>
+				If computation is its own field, and other systems are not suitable for expressing it, a novel system is required to express computation in terms of what it is.
+				But what then are the concepts that are unique to computation?
+				The first is <i>state</i>.
+				When carrying out an algorithm, any amount of temporary information and intermediate products may be used in the calculation of the final result.
+				State is also more generally the concern for how any information may be represented and handled for carrying out an algorithm.
+				The second is <i>temporality</i>.
+				All computation happens over time.
+				Some parts of an algorithm may happen at different points in time, others may occur at the same time.
+				The third is <i>granularity</i>.
+				Parts of a computation may be separated into smaller components which are themselves individual computations.
+				These smaller computations may be observed in larger, separate systems of computation.
+			</p>
+		</li>
 	</ol>
 </body>
