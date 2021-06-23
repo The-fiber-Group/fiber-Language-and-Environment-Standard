@@ -11,4 +11,63 @@
 		<a href="">Next</a></h2>
 	</div>
 	<h1>Language Concepts</h1>
+	<h2 id="data_objects">Data Objects</h2>
+	<ol>
+		<li><p>
+			An ASC program is executed through the manipulation of data objects.
+			A data object is a construct which stores values and has both a representational structure and a precision.
+			The representational structure affects how values are stored.
+			The precision affects the range of values that are possible to store.
+		</p></li>
+		<li><p>
+			All data objects shall be associated with a single name and data type for the duration of their existence.
+		</p></li>
+		<li><p>
+			There are two classes of objects, <b>variable objects</b> and <b>descriptive objects</b>, which describe how the objects are used in the program.
+		</p></li>
+		<li><p>
+			All data objects are declared. 
+			Declaring an object associates it with a name and a data type.
+		</p></li>
+		<li><p>
+			In the case of descriptive object, the definition expression may contain additional information alongside the name and data type.
+		</p></li>
+	</ol>
+	<h3 id="variable_objects">Variable Objects</h3>
+	<ol>
+		<li>
+			<p>
+				Variable objects are used as...
+			</p>
+			<ul>
+				<li>program variables</li>
+				<li>program constants</li>
+				<li>continuations</li>
+			</ul>
+		</li>
+		<li><p>
+			Variable objects are mutable and contain data that may be transformed by the program being executed.
+		</p></li>
+		<li><p>
+			Variable objects have an implicit property of duration where the data they contain is accessible for a static duration.
+		</p></li>
+	</ol>
+	<h3 id="descriptive_objects">Descriptive Objects</h3>
+	<ol>
+		<li>
+			<p>
+				Descriptive objects are used to define the effects of a program.
+				The contents of descriptive object may only be read.
+				Descriptive objects are used as...
+			</p>
+			<ul>
+				<li>primitive data types</li>
+				<li>compound data types</li>
+				<li>functions</li>
+				<li>modules</li>
+				<li>syntax extensions</li>
+			</ul>
+		</li>
+		
+	</ol>
 </body>
