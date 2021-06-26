@@ -1,4 +1,4 @@
-body{padding:3ch;padding-left:13ch;padding-right:13ch;margin-bottom:13ch;background-color:rgb(241, 234, 221); color:rgb(41, 9, 33); font-size:larger; font-family: serif;}
+body{padding:3ch;padding-left:13ch;padding-right:13ch;margin-bottom:13ch;background-color:rgb(241, 236, 224); color:#330033ff;font-size:larger; font-family: serif;}
 p, dl, table, ul, ol, dl{margin:0;margin-left:7ch;margin-right:7ch;padding-left:7ch;margin-bottom:1ch;font-family:serif;}
 h1{border-bottom:1px solid rgb(41, 9, 33);}
 dt{font-style:italic;}
@@ -15,7 +15,7 @@ h4, h5, h6 {text-align:center;width:50%;margin-left:25%;margin-right:50%;}
 h2 {font-size:xx-large;} 
 h3, h4, h5, h6 {font-size:x-large;}
 rec{font-size:smaller;color:#83817a;}
-#bottom{background-color:rgb(241, 234, 221);position:fixed;bottom:0;width:90%;text-align:center;border-top:1px solid rgb(41, 9, 33);}
+#bottom{background-color:inherit;position:fixed;bottom:0;width:90%;text-align:center;border-top:1px solid rgb(41, 9, 33);}
 #bottom a{margin-right:3ch;}
 @media print {
 	h1{page-break-before:always;}
