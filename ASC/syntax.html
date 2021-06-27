@@ -144,7 +144,7 @@
 			String data consists of a contiguous series of character values surrounded by ASCII double quotation characters.
 		</p></li>
 		<li><p>
-			String data is declared using the same declarative syntax for character values, but including more than one value declaration within a pair of double quotations.
+			String data is declared using the same declarative syntax for character values, but including more than one value declaration within a surrounding pair of double quotations.
 		</p></li>
 		<li><p>
 			Each character in the string data declaration may use one of the declarative syntaxes described in (<a href="#character_values"><i>Character Values</i></a>).
@@ -156,10 +156,19 @@
 			Comments are delimited by a pair of comment terminals, <code>``</code>.
 		</p></li>
 		<li><p>
+			The Unicode character <code>&#x220e;</code> may be used in place of a comment terminal where a Unicode text encoding is supported.
+		</p></li>
+		<li><p>
 			Comments may include any series of characters excluding the comment terminal.
 		</p></li>
 		<li><p>
 			Comments may be discarded.
+		</p></li>
+	</ol>
+	<h2 id="creating_syntax">Creating Syntax</h2>
+	<ol>
+		<li><p>
+			New syntax may be created by defining a syntax pattern and some expressions which are evaluated when that pattern occurrs.
 		</p></li>
 	</ol>
 </body>
