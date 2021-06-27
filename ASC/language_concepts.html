@@ -13,32 +13,118 @@
 	<h1>Language Concepts</h1>
 	<ol>
 		<li><p>
-			An ASC program consists of named entities which contain some information and are associated with a type entity.
+			An ASC program consists of a number of <b>entities</b> which contain data.
+			<rec>An entity here is not described as an object because entities in ASC programs are not required to hide any internal information they may contain.</rec>
 		</p></li>
 		<li><p>
-			The name of an entity determines the contexts within the program where that entity will be accessible.
+			Each entity has a <b>representation</b>, a <b>type</b>, and a <b>name</b>.
 		</p></li>
 		<li><p>
-			The type of an entity determines the range of information or values that can be held by an entity and what operations are available for that entity.
+			Representations determine the precision, physical size, and mutability of the data contained by an entity.
+			<b>Constant</b> (non-mutable) entities are used to define the behavior of a program.
+			Mutable entities are used to hold data as operations are performed on it by the program.
 		</p></li>
 		<li><p>
-			Each entity can be classified as either variable or constant which determines if the information contained by the entity can be changed by the program.
+			Types determine the set of possible data values that can be held by an entity and the operations that are available for that set.
+			Types are used to verify that the behavior of the program is correct, or rejected as incorrect according to requirements established by type definitions.
+		</p></li>
+		<li><p>
+			Names determine the contexts within which an entity is accessible.
+			Names are used during a program's execution to locate both the constant entities containing transformations that the program will perform, 
+			and the mutable entities which hold the data being transformed.
 		</p></li>
 		<li>
-			<p>The ASC language provides primitive entities which can be used to build a larger program. 
-				They are...</p>
+			<p>A number of primitive entities are provided by the ASC language for creating programs. They are...</p>
 			<ul>
+				<li>syntax</li>
+				<li>symbols</li>
+				<li>numbers</li>
+				<li>types</li>
 				<li>variables</li>
-				<li>primitive data types</li>
-				<li>compound data types</li>
-				<li>abstract data types</li>
+				<li>operators</li>
 				<li>continuations</li>
 				<li>functions</li>
 				<li>modules</li>
-				<li>syntax extensions</li>
-				<li>symbols</li>
-				<li>expressions</li>
 			</ul>
 		</li>
+	</ol>
+	<h2 id="syntax">Syntax</h2>
+	<ol>
+		<li><p>
+			ASC syntax is composed of individual tokens which consist of contiguous series of characters.
+		</p></li>
+		<li>
+			<p>
+				Tokens are delimited by any blank or non-printable characters including...
+			</p>
+			<ul>
+				<li>ASCII Control Characters (in a range from Null to Unit Separator)</li>
+				<li>Space</li>
+				<li>Unicode point 0081</li>
+				<li>Unicode point 008D</li>
+				<li>Unicode point 008F</li>
+				<li>Unicode point 0090</li>
+				<li>Unicode point 009D</li>
+				<li>Unicode point 00A0</li>
+				<li>Unicode point 00AD</li>
+				<li>Unicode range from 2000 to 200F)</li>
+				<li>Unicode point 2028</li>
+				<li>Unicode point 2029</li>
+				<li>Unicode range from 205F to 206F</li>
+			</ul>
+		</li>
+		<li><p>
+			Tokens are divided into two classes, <b>symbols</b> and <b>ternimals</b>.
+			Symbols are used to name entities.
+			Ternimals are used to compose and delimit expressions.
+		</p></li>
+	</ol>
+	<h3 id="symbols">Symbols</h3>
+	<ol>
+		<li><p>
+			Symbols consist of a contiguous series of alphanumeric characters and the ASCII dash character.
+		</p></li>
+		<li><p>
+			Alphanumeric characters are defined as the ASCII code point ranges 30-39, 41-5A, 61-7A, and any Unicode points that fall under the Unicode standard definition of <i>Writing Systems</i>.
+		</p></li>
+		<li><p>
+			The ASCII dash character is allowed in a symbol at any point where it is not the first or last character in that symbol.
+		</p></li>
+		<li><p>
+			Symbols are case insensitive.
+			The ASCII code points 41-5A and 61-7A are considered lexically equivalent for the purposes of the ASC language.
+			The equivalence is not general across all points, rather each individual point from the first range is equivalent to the point from the corresponding position in the second range.
+			For example, the symbols <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are considered the same symbol.
+		</p></li>
+		<li>
+			<p>
+				In the Unicode Latin-1 Supplement block, the code point pairs are considered lexically equivalent in the following ranges... 
+			</p>
+			<table>
+				<tr><td>00C0-00D6</td><td>00E0-00F6</td></tr>
+				<tr><td style="border-bottom-style:solid;border-bottom-color:inherit;border-bottom-width:1px;" colspan="2"></td></tr>
+				<tr><td>00D8-00DD</td><td>00F8-00FD</td></tr>
+			</table>
+			<p>
+				For example, the characters <code>&#x00C6;</code> and <code>&#x00E6;</code>, and the characters <code>&#x00DD;</code> and <code>&#x00FD;</code> are each considered lexically equivalent.
+				
+			</p>
+		</li>
+		<li><p>
+			In the Unicode Latin Extended-A block, in the code point range U+0100-U+017E, each even-numbered code point is considered lexically equivalent with the immediately following odd-numbered code point.
+			For example, the characters <code>&#x0102;</code> and <code>&#x0103;</code> are equivalent.
+		</p></li>
+	</ol>
+	<h3 id="operators">Terminals</h3>
+	<ol>
+		<li><p>
+			Terminals consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
+		</p></li>
+		<li><p>
+			Non-alphanumeric characters are defined as the ASCII code points 21-2F, 3A-40, 5B-60, 7B-7E, and any Unicode points which fall under the Unicode standard definition of <i>General Punctuation</i>.
+		</p></li>
+		<li><p>
+			Unlike symbols, the ASCII dash character is accepted at any point within a terminal.
+		</p></li>
 	</ol>
 </body>
