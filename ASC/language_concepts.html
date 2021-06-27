@@ -8,7 +8,7 @@
 	<div id="bottom">
 		<h2><a href="execution.html">Previous</a>
 		<a href="toc.html">Table of Contents</a>
-		<a href="">Next</a></h2>
+		<a href="syntax.html">Next</a></h2>
 	</div>
 	<h1>Language Concepts</h1>
 	<ol>
@@ -48,83 +48,5 @@
 			</ul>
 		</li>
 	</ol>
-	<h2 id="syntax">Syntax</h2>
-	<ol>
-		<li><p>
-			ASC syntax is composed of individual tokens which consist of contiguous series of characters.
-		</p></li>
-		<li>
-			<p>
-				Tokens are delimited by any blank or non-printable characters including...
-			</p>
-			<ul>
-				<li>ASCII Control Characters (in a range from Null to Unit Separator)</li>
-				<li>Space</li>
-				<li>Unicode point 0081</li>
-				<li>Unicode point 008D</li>
-				<li>Unicode point 008F</li>
-				<li>Unicode point 0090</li>
-				<li>Unicode point 009D</li>
-				<li>Unicode point 00A0</li>
-				<li>Unicode point 00AD</li>
-				<li>Unicode range from 2000 to 200F)</li>
-				<li>Unicode point 2028</li>
-				<li>Unicode point 2029</li>
-				<li>Unicode range from 205F to 206F</li>
-			</ul>
-		</li>
-		<li><p>
-			Tokens are divided into two classes, <b>symbols</b> and <b>ternimals</b>.
-			Symbols are used to name entities.
-			Ternimals are used to compose and delimit expressions.
-		</p></li>
-	</ol>
-	<h3 id="symbols">Symbols</h3>
-	<ol>
-		<li><p>
-			Symbols consist of a contiguous series of alphanumeric characters and the ASCII dash character.
-		</p></li>
-		<li><p>
-			Alphanumeric characters are defined as the ASCII code point ranges 30-39, 41-5A, 61-7A, and any Unicode points that fall under the Unicode standard definition of <i>Writing Systems</i>.
-		</p></li>
-		<li><p>
-			The ASCII dash character is allowed in a symbol at any point where it is not the first or last character in that symbol.
-		</p></li>
-		<li><p>
-			Symbols are case insensitive.
-			The ASCII code points 41-5A and 61-7A are considered lexically equivalent for the purposes of the ASC language.
-			The equivalence is not general across all points, rather each individual point from the first range is equivalent to the point from the corresponding position in the second range.
-			For example, the symbols <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are considered the same symbol.
-		</p></li>
-		<li>
-			<p>
-				In the Unicode Latin-1 Supplement block, the code point pairs are considered lexically equivalent in the following ranges... 
-			</p>
-			<table>
-				<tr><td>00C0-00D6</td><td>00E0-00F6</td></tr>
-				<tr><td style="border-bottom-style:solid;border-bottom-color:inherit;border-bottom-width:1px;" colspan="2"></td></tr>
-				<tr><td>00D8-00DD</td><td>00F8-00FD</td></tr>
-			</table>
-			<p>
-				For example, the characters <code>&#x00C6;</code> and <code>&#x00E6;</code>, and the characters <code>&#x00DD;</code> and <code>&#x00FD;</code> are each considered lexically equivalent.
-				
-			</p>
-		</li>
-		<li><p>
-			In the Unicode Latin Extended-A block, in the code point range U+0100-U+017E, each even-numbered code point is considered lexically equivalent with the immediately following odd-numbered code point.
-			For example, the characters <code>&#x0102;</code> and <code>&#x0103;</code> are equivalent.
-		</p></li>
-	</ol>
-	<h3 id="operators">Terminals</h3>
-	<ol>
-		<li><p>
-			Terminals consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
-		</p></li>
-		<li><p>
-			Non-alphanumeric characters are defined as the ASCII code points 21-2F, 3A-40, 5B-60, 7B-7E, and any Unicode points which fall under the Unicode standard definition of <i>General Punctuation</i>.
-		</p></li>
-		<li><p>
-			Unlike symbols, the ASCII dash character is accepted at any point within a terminal.
-		</p></li>
-	</ol>
+	
 </body>

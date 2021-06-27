@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<head>
+	<title>ASC Standard: Syntax</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="bottom">
+		<h2><a href="language_concepts.html">Previous</a>
+		<a href="toc.html">Table of Contents</a>
+		<a href="types.html">Next</a></h2>
+	</div>
+	<h1>Syntax</h1>
+	<h2 id="tokens">Tokens</h2>
+	<ol>
+		<li><p>
+			ASC syntax is composed of individual tokens which consist of contiguous series of characters.
+		</p></li>
+		<li>
+			<p>
+				Tokens are delimited by any blank or non-printable characters including...
+			</p>
+			<ul>
+				<li>ASCII Control Characters (in a range from Null to Unit Separator)</li>
+				<li>Space</li>
+				<li>Unicode point 0081</li>
+				<li>Unicode point 008D</li>
+				<li>Unicode point 008F</li>
+				<li>Unicode point 0090</li>
+				<li>Unicode point 009D</li>
+				<li>Unicode point 00A0</li>
+				<li>Unicode point 00AD</li>
+				<li>Unicode range from 2000 to 200F)</li>
+				<li>Unicode point 2028</li>
+				<li>Unicode point 2029</li>
+				<li>Unicode range from 205F to 206F</li>
+			</ul>
+		</li>
+		<li><p>
+			Tokens are divided into two classes, <b>symbols</b> and <b>terminals</b>.
+			Symbols are used to name entities.
+			Terminals are used to compose and delimit expressions.
+		</p></li>
+	</ol>
+	<h3 id="symbols">Symbols</h3>
+	<ol>
+		<li><p>
+			Symbols consist of a contiguous series of alphanumeric characters and the ASCII dash character.
+		</p></li>
+		<li><p>
+			Alphanumeric characters are defined as the ASCII code point ranges 30-39, 41-5A, 61-7A, and any Unicode points that fall under the Unicode standard definition of <i>Writing Systems</i>.
+		</p></li>
+		<li><p>
+			The ASCII dash character is allowed in a symbol at any point where it is not the first or last character in that symbol.
+		</p></li>
+		<li><p>
+			Symbols are case insensitive.
+			The ASCII code points 41-5A and 61-7A are considered lexically equivalent for the purposes of the ASC language.
+			The equivalence is not general across all points, rather each individual point from the first range is equivalent to the point from the corresponding position in the second range.
+			For example, the symbols <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are considered the same symbol.
+		</p></li>
+		<li>
+			<p>
+				In the Unicode Latin-1 Supplement block, the code point pairs are considered lexically equivalent in the following ranges... 
+			</p>
+			<table>
+				<tr><td>00C0-00D6</td><td>00E0-00F6</td></tr>
+				<tr><td style="border-bottom-style:solid;border-bottom-color:inherit;border-bottom-width:1px;" colspan="2"></td></tr>
+				<tr><td>00D8-00DD</td><td>00F8-00FD</td></tr>
+			</table>
+			<p>
+				For example, the characters <code>&#x00C6;</code> and <code>&#x00E6;</code>, and the characters <code>&#x00DD;</code> and <code>&#x00FD;</code> are each considered lexically equivalent.
+				
+			</p>
+		</li>
+		<li><p>
+			In the Unicode Latin Extended-A block, in the code point range U+0100-U+017E, each even-numbered code point is considered lexically equivalent with the immediately following odd-numbered code point.
+			For example, the characters <code>&#x0102;</code> and <code>&#x0103;</code> are equivalent.
+		</p></li>
+	</ol>
+	<h3 id="operators">Terminals</h3>
+	<ol>
+		<li><p>
+			Terminals consist of a contiguous series of non-alphanumeric characters including the ASCII dash character.
+		</p></li>
+		<li><p>
+			Non-alphanumeric characters are defined as the ASCII code points 21-2F, 3A-40, 5B-60, 7B-7E, and any Unicode points which fall under the Unicode standard definition of <i>General Punctuation</i>.
+		</p></li>
+		<li><p>
+			Unlike symbols, the ASCII dash character is accepted at any point within a terminal.
+		</p></li>
+	</ol>
+	<h2 id="numbers">Numbers</h2>
+	<ol>
+		<li><p>
+			Symbols which consist of all numeric characters (in the range 30-39) are interpreted as decimal numeric constants.
+		</p></li>
+		<li><p>
+			Symbols which consist of all numeric characters and the uppercase letters A-F, and are prefixed with the character sequence <code>0x</code> are interpreted as hexadecimal numeric constants.
+		</p></li>
+		<li><p>
+			In both decimal and hexadecimal constants, the leftmost digit is always the most significant digit, followed by digits of decreasing significance.
+		</p></li>
+	</ol>
+	<h3 id="number_terminals">Number Terminals</h3>
+	<ol>
+		<li><p>
+			The negation terminal <code>-</code> may prefix a decimal or hexadecimal constant which will cause that constant to be interpreted as the corresponding negative value of the constant.
+		</p></li>
+		<li><p>
+			The radix terminal <code>.</code> may infix two decimal constants and shall produce a rational value using the left constant as the integer component and the right constant as the fractional component of the resulting rational value.
+			The left and right decimal constants and the radix terminal cannot be separated by any token delimiting characters.
+		</p></li>
+		<li><p>
+			It is possible for the left constant of the radix terminal to be prefixed with the negation terminal which will result in the corresponding negative value of the rational value produced by the radix terminal.
+		</p></li>
+		<li><p>
+			Neither the negation or the radix terminal are associative.
+		</p></li>
+	</ol>
+	<h2 id="character_values">Character Values</h2>
+	<ol>
+		<li><p>
+			A character value is the whole numerical value associated with an ASCII or Unicode character.
+		</p></li>
+		<li><p>
+			A character value is declared by writing a single ASCII or Unicode character surrounded by ASCII double quotations such as the character value 65 as <code>"A"</code>.
+			This method requires UTF-8, UTF-16, or UTF-32 text encoding in order to express a Unicode character value.
+		</p></li>
+		<li><p>
+			The character values for the double quotation and the backward slash are expressed as <code>"\""</code> and <code>"\\"</code> respectively, using the backward slash as an escape prefix.
+		</p></li>
+		<li><p>
+			Non-printable values as well as printable values can be declared by writing a two to eight digit hexadecimal numeric constant, prefixed with a backward slash and suffixed by a period dot, such as <code>"\20."</code> to declare the value used to encode the ASCII Space character.
+			This method does not require a Unicode text encoding to express a Unicode character value.
+		</p></li>
+		<li><p>
+			Character values cannot include token delimiters and do not conform to tokenization rules.
+		</p></li>
+	</ol>
+	<h2 id="string_data">String Data</h2>
+	<ol>
+		<li><p>
+			String data consists of a contiguous series of character values surrounded by ASCII double quotation characters.
+		</p></li>
+		<li><p>
+			String data is declared using the same declarative syntax for character values, but including more than one value declaration within a pair of double quotations.
+		</p></li>
+		<li><p>
+			Each character in the string data declaration may use one of the declarative syntaxes described in (<a href="#character_values"><i>Character Values</i></a>).
+		</p></li>
+	</ol>
+	<h2 id="comments">Comments</h2>
+	<ol>
+		<li><p>
+			Comments are delimited by a pair of comment terminals, <code>``</code>.
+		</p></li>
+		<li><p>
+			Comments may include any series of characters excluding the comment terminal.
+		</p></li>
+		<li><p>
+			Comments may be discarded.
+		</p></li>
+	</ol>
+</body>
