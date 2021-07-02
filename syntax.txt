@@ -27,9 +27,18 @@ Operators:
 	Reflection:
 	- Comment Delimiter: `` __ ... ``
 	- Symbol Quotation: '
-	- Type Of: [-
-	- Size Of: #
-	- 
+	- Type Of: [- __
+	- Indicies In: # __
+	- Size Of: $# __
+
+	Representations:
+	- Equal Size Cast: __ [=> __
+	- Inequal Size Cast: __ [-> __
+
+	Assignment:
+	- Single Assignment: __ = __
+	- One to Many Assignment: ( __ , ... ) = __
+	- Multiple Assignment: ( __ , ... ) = ( __ , ... )
 
 Evaluation:
 - Expression Evaluation: ( __ )
