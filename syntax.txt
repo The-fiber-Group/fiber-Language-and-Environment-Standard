@@ -1,0 +1,44 @@
+ASC Syntax
+
+Operators:
+
+	Arithmetic:
+	- Addition: __ + __
+	- Subtraction: __ - __
+	- Multiplication: __ * __
+	- Division: __ / __
+
+	Logic:
+	- And __ /\ __
+	- Or __ \/ __ 
+	- Not -. __
+	
+	Binary Logic:
+	- Xor: __ ^^ __ 
+
+	Structured Data:
+	- Field access: __ . __
+	- Index Access: __ _ __
+
+	Indirection:
+	- Location Of: ~/ __
+	- In Location: __ /.
+
+	Reflection:
+	- Comment Delimiter: `` __ ... ``
+	- Symbol Quotation: '
+	- Type Of: [-
+	- Size Of: #
+	- 
+
+Evaluation:
+- Expression Evaluation: ( __ )
+- Function Evaluation: ( __ __ ... )
+- Continuation: ( . __ )
+
+Function Declaration:
+- Opening Delimiter: { ...
+- Closing Delimiter: ... }
+- Return Parameter Prefix: -> __ ...
+- Definition Prefix: | __ ... 
+
