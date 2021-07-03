@@ -33,36 +33,46 @@
 	<h2 id="rationale">Rationale</h2>
 	<ol>
 		<li>
-			<p><rec>The following is not a part of the standard documentation of ASC, but rather a summary of the reasons for its inception...</rec></p>
 			<p>
-				Computing is a relatively new field of study compared to mathematics and science.
-				Algebra and the classical sciences have existed for more than a thousand years.
-				What sets computing apart as a new field, rather than an another area of study, is that classical fields are concerned with the result of a calculation, whereas computing is concerned with the means.
-				The broad field of computing can then be generalized as the study of how something might be calculated.
+				Computation has traditionally be reasoned about as a side effect of the pursuit of some scientific or mathematical result.
+				As a consequence, computation is always expressed in terms of some mathematical or scientific system.
+				However, computation is inaccurately represented by this approach.
+				Mathematics and the sciences are chiefly concerned with the association of a result with some source data.
+				Computation is inversely concerne with the formulaic means of arriving at a result given some input.
+				There are multiple aspects which pertain only to the pursuit of a result which are negligible in other traditional representations.
 			</p>
 			<p>
-				The means of calculation spans many mathematical and scientific fields depending on what part of calculation is studied.
-				Scientific theory applies to how computation may be realized physically.
-				Mathematical theory applies to how computation may be carried out.
-				This is demonstrated by the famous Turing machine and Lambda Calculus.
-				Both systems are able to generally describe any algorithm performed over some numbers, however their realization of the algorithm is radically different.
-				The Turing machine is a metaphysical design for a device which will interpret symbols to read and write other symbols using a physical medium.
-				Lambda Calculus is a mathematial logic for composing and applying functions.
-				These two systems demonstrate clearly the tendency for computation to be represented as an extension of some other scientific or mathematical system.
-				This makes it difficult for computation itself to be reasoned about as it is always expressed using the terms of another field.
+				The first is <i>precision</i>. 
+				A computation is inherently bound by precision. 
+				Precision directly affects the amount of work performed for any given computation.
+				It also affects the amount of information required for a computation to be performed successfully.
+				Precision directly affects the accuracy of the result of a computation.
+				More precision allows for greater accuracy.
+				Precision also affects how long a computation will continue before arriving at a result.
 			</p>
 			<p>
-				If computation is its own field, and other systems are not suitable for expressing it, a novel system is required to express computation in terms of what it is.
-				But what then are the concepts that are unique to computation?
-				The first is <i>state</i>.
-				When carrying out an algorithm, any amount of temporary information and intermediate products may be used in the calculation of the final result.
-				State is also more generally the concern for how any information may be represented and handled for carrying out an algorithm.
 				The second is <i>temporality</i>.
-				All computation happens over time.
-				Some parts of an algorithm may happen at different points in time, others may occur at the same time.
-				The third is <i>granularity</i>.
-				Parts of a computation may be separated into smaller components which are themselves individual computations.
-				These smaller computations may be observed in larger, separate systems of computation.
+				A computation is never static.
+				It will always change over time.
+				In other fields of study, these changes are discarded or made implicit, in favor of representing the final state.
+				In computation, these changes are much more significant because they provide information to reason abou the precision of a computation.
+				The ordering of each change within a computation has a dynamic effect on the progress of a computation through time.
+			</p>
+			<p>
+				The third is <i>representation</i>.
+				The amount of information which a computation must accept directly affects both its precision and temporal properties.
+				More information requires more time, but provides greater precision.
+				Representation also allows the nature of temporal changes to be reasoned about.
+				How a representation, and the information it contains, changes from one point in time to another greatly affects the properties of a computation.
+			</p>
+			<p>
+				The final aspect is <i>efficiency</i>.
+				The combination of the amount of information required by a computation, the amount of time required by a computation to complete, and the precision of the result is described by the effiiency.
+				A computation which is highly efficient requires less information and less time to provide results with greater precision.
+			</p>
+			<p>
+				Given these aspects which are unique concerns of computing, a new descriptive system should be developed which provides first-order faculties to reason about the precision, temporality, representation, and efficiency of a computation.
+				ASC fulfills these requirements by providing a rich means to represent information and the changes applied to it as well as means to divide a computation according to formulaic ordering and abstract domains of concern.
 			</p>
 		</li>
 	</ol>
