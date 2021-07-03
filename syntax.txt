@@ -43,8 +43,9 @@ Operators:
 	- Multiple Assignment: ( __ , ... ) = ( __ , ... )
 
 Evaluation:
-- Expression Evaluation: ( __ )
+- Expression Evaluation: ( __ ... )
 - Function Evaluation: ( __ __ ... )
+	The first expression is a function name.
 - Continuation: ( . __ )
 
 Function Declaration:
