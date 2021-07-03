@@ -168,7 +168,24 @@
 	<h2 id="creating_syntax">Creating Syntax</h2>
 	<ol>
 		<li><p>
-			New syntax may be defined which relies on symbols patterns or character patterns.
+			New syntax may be defined using a <b>pattern signature</b>.
+			A pattern signature is similar to a function signature.
+			In addition to specifying the number and type of parameters, it also specifies the position of the parameters relative to a number of symbols or character sequences.
 		</p></li>
+		<li><p>
+			A pattern signature may be used in place of a normal function signature.
+		</p></li>
+		<li>
+			<p>The syntax for declaring a patter signature is...</p>
+			<table>
+				<tr><td><b>Pattern</b> &rarr; <code>.</code> <i>Signature</i> <code>-></code> <i>Return</i></td></tr>
+				<tr><td><i>Signature</i> &rarr; <br>
+					&emsp;| <i>Quotation</i><br>
+					&emsp;| <i>String</i><br>
+					&emsp;| <i>Parameter</i>
+				</td></tr>
+				<tr><td><i>Quotation</i> &rArr; <code>'</code> Symbol</td></tr>
+			</table>
+		</li>
 	</ol>
 </body>

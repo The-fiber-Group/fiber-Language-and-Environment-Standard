@@ -11,6 +11,7 @@
 		<a href="syntax.html">Next</a></h2>
 	</div>
 	<h1>Language Concepts</h1>
+	<h2 id="program_structure">Program Structure</h2>
 	<ol>
 		<li><p>
 			An ASC program consists of a number of <b>entities</b> which contain data.
@@ -45,6 +46,66 @@
 				<li>modules</li>
 			</ul>
 		</li>
+		<li><p>
+			Entities are instantiated in a program via <b>declaration</b> and <b>definition</b>.
+		</p></li>
+		<li><p>
+			An entity declaration establishes its name and type.
+		</p></li>
+		<li><p>
+			An entity definition establishes its representation and the initial data that it will contain when 
+		</p></li>
+		<li><p>
+			An entity declaration is required before the definition of that entity occurrs.
+		</p></li>
+		<li><p>
+			The complete definition of an entity may be established by multiple separate expressions.
+		</p></li>
 	</ol>
-	
+	<h2 id="program_execution">Program Execution</h2>
+	<ol>
+		<li><p>
+			Program execution is facilitated by the evaluation of expressions in an environment of data objects.
+		</p></li>
+		<li><p>
+			The evaluation of expressions may produce some value or effect on the data held by mutable entities.
+		</p></li>
+		<li><p>
+			There are three discrete stages in program execution which occurr in the order of, <b>inspection</b>, <b>translation</b>, then <b>interpretation</b>.
+		</p></li>
+		<li><p>
+			Each stage must be completed before the next can occurr.
+		</p></li>
+		<li><p>
+			No stage is required to be completed in a single event.
+		</p></li>
+		<li><p>
+			The execution process may be applied individually to parts of a program, or uniformly to an entire program. 
+			The granularity of execution is implementation dependent.
+		</p></li>
+		<li><p>
+			Program execution begins when an implementation is provided a program to execute through one or more <b>streams</b> containing source text.
+		</p></li>
+	</ol>
+	<h3 id="streams">Streams</h3>
+	<ol>
+		<li><p>
+			A stream is an abstract data buffer containing traversable ASCII or Unicode encoded text.
+		</p></li>
+		<li><p>
+			Streams are only required to be traversable in a forward direction so that the source text may be read in the order it was written.
+		</p></li>
+		<li><p>
+			Streams may support random stream position seeking.
+		</p></li>
+		<li><p>
+			The contents of a stream are not required to be persistent beyond a single reading.
+		</p></li>
+		<li><p>
+			A stream may be derived from the contents of a <b>source file</b> containing ASCII or Unicode encoded source text.
+		</p></li>
+		<li><p>
+			
+		</p></li>
+	</ol>
 </body>
