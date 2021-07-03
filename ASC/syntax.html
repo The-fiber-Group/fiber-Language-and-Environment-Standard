@@ -11,14 +11,14 @@
 		<a href="types.html">Next</a></h2>
 	</div>
 	<h1>Syntax</h1>
-	<h2 id="tokens">Tokens</h2>
+	<h2 id="symbols">Symbols</h2>
 	<ol>
 		<li><p>
-			ASC syntax is composed of individual tokens which consist of contiguous series of characters.
+			ASC syntax is composed of individual symbols which consist of contiguous series of characters.
 		</p></li>
 		<li>
 			<p>
-				Tokens are delimited by any blank or non-printable characters including...
+				Symbols are delimited by any blank or non-printable characters including...
 			</p>
 			<ul>
 				<li>ASCII Control Characters (in a range from Null to Unit Separator)</li>
@@ -37,27 +37,27 @@
 			</ul>
 		</li>
 		<li><p>
-			Tokens are divided into two classes, <b>symbols</b> and <b>terminals</b>.
+			Symbols are divided into two classes, <b>names</b> and <b>terminals</b>.
 			Symbols are used to name entities.
 			Terminals are used to compose and delimit expressions.
 		</p></li>
 	</ol>
-	<h3 id="symbols">Symbols</h3>
+	<h3 id="names">Names</h3>
 	<ol>
 		<li><p>
-			Symbols consist of a contiguous series of alphanumeric characters and the ASCII dash character.
+			Names consist of a contiguous series of alphanumeric characters and the ASCII dash character.
 		</p></li>
 		<li><p>
 			Alphanumeric characters are defined as the ASCII code point ranges 30-39, 41-5A, 61-7A, and any Unicode points that fall under the Unicode standard definition of <i>Writing Systems</i>.
 		</p></li>
 		<li><p>
-			The ASCII dash character is allowed in a symbol at any point where it is not the first or last character in that symbol.
+			The ASCII dash character is allowed in a name at any point where it is not the first or last character in that name.
 		</p></li>
 		<li><p>
-			Symbols are case insensitive.
+			Names are case insensitive.
 			The ASCII code points 41-5A and 61-7A are considered lexically equivalent for the purposes of the ASC language.
 			The equivalence is not general across all points, rather each individual point from the first range is equivalent to the point from the corresponding position in the second range.
-			For example, the symbols <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are considered the same symbol.
+			For example, the names <code>symb</code>, <code>SYMB</code>, and <code>sYmB</code> are considered the same name.
 		</p></li>
 		<li>
 			<p>
@@ -168,7 +168,7 @@
 	<h2 id="creating_syntax">Creating Syntax</h2>
 	<ol>
 		<li><p>
-			New syntax may be created by defining a syntax pattern and some expressions which are evaluated when that pattern occurrs.
+			New syntax may be defined which relies on symbols patterns or character patterns.
 		</p></li>
 	</ol>
 </body>
