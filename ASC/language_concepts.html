@@ -105,7 +105,59 @@
 			A stream may be derived from the contents of a <b>source file</b> containing ASCII or Unicode encoded source text.
 		</p></li>
 		<li><p>
-			
+			Only one stream may be derived from a single source file and it must contain exactly the contents of that file.
+		</p></li>
+		<li><p>
+			If a stream is derived from a source file, the stream should be identified by the name of the file it was derived from.
+		</p></li>
+		<li><p>
+			The design of a stream that fulfills the require behavior is implementation dependent.
+		</p></li>
+	</ol>
+	<h3 id="program_inspection">Program Inspection</h3>
+	<ol>
+		<li><p>
+			The inspection stage is responsible for reading source text from all streams provided to the implementation and verifying that a program is well-formed.
+		</p></li>
+		<li><p>
+			A well-formed program shall conform to the syntactic and semantic constraints which are specified in this standard.
+		</p></li>
+	</ol>
+	<h3 id="program_translation">Program Translation</h3>
+	<ol>
+		<li><p>
+			The translation stage shall be responsible for translating the source text into an interpretable format.
+		</p></li>
+		<li><p>
+			Any number of translations to any interpretable format may take place at this stage.
+		</p></li>
+		<li><p>
+			The interpretable format produced by this stage is only required to preserve the information necessary to carry out all program behavior and effects specified by the source text.
+		</p></li>
+	</ol>
+	<h4 id="cached_files">Cached Files</h4>
+	<ol>
+		<li><p>
+			The interpretable representation of a program or part of a program emitted by the translation stage may be stored and used at a later point.
+			This stored representation is called a <b>cached file</b>.
+		</p></li>
+		<li><p>
+			Depending on which parts of the program are translated and stored together, a cached file may be reused in multiple programs.
+		</p></li>
+		<li><p>
+			The method with which a cached file is stored and possibly reused is implementation dependent.
+		</p></li>
+	</ol>
+	<h3 id="program_interpretation">Program Interpretation</h3>
+	<ol>
+		<li><p>
+			The interpretation stage is responsible for allocating the computing resources required to carry out the program's behavior and effects and for initiating the execution of that program.
+		</p></li>
+		<li><p>
+			The interpretation stage must only produce the behavior and effects that are recorded in the interpretable representation of the program.
+		</p></li>
+		<li><p>
+			The means through which the behaivor and effects of a program are carried out are implementation dependent.
 		</p></li>
 	</ol>
 </body>
