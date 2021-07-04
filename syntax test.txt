@@ -1,0 +1,2 @@
+`` infinite while loop ``
+? t ( 1 ) ( 0 )

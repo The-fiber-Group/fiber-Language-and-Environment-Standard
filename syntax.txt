@@ -12,7 +12,7 @@ Operators:
 	Logic:
 	- And __ /\ __
 	- Or __ \/ __ 
-	- Not -. __
+	- Not -, __
 	
 	Binary Logic:
 	- Xor: __ ^^ __ 
@@ -42,6 +42,8 @@ Operators:
 		One to many destructures sequence types.
 	- Multiple Assignment: ( __ , ... ) = ( __ , ... )
 
+	Conditional Execution: ? ... ( ... ) ( ... )
+
 Evaluation:
 - Expression Evaluation: ( __ ... )
 - Function Evaluation: ( __ __ ... )
@@ -60,5 +62,19 @@ Type Declaration:
 - Field Separator: ; ...
 - Required Use Prefix: . __
 - Optional Use Prefix: , __
+
+Primitive Type Names:
+- Any Type: [*]
+- None Type: [!]
+- Boolean True: t T
+- Boolean False: f F
+- Boolean: B b
+- Natural Number: N n
+- Integer: Z z
+- Rational Number: Q q
+- Type: []
+- Expression: ()
+- Function: {}
+
 
 
