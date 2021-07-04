@@ -1,2 +1,18 @@
 `` infinite while loop ``
 ? t ( 1 ) ( 0 )
+
+`` insertion sort ``
+{insrt list: [N_N] -> list |
+	i: [N < ( # list) ] = 1;
+	j: [N < ( # list) ] = 0;
+	swap = 
+	( . 
+		tmp = list_j 
+		list_j = list_ (j - 1)
+		list_ (j - 1) = tmp
+	)
+	iterate = 
+	( .
+		
+	)
+}
