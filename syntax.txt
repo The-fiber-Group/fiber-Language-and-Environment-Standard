@@ -38,9 +38,7 @@ Operators:
 
 	Assignment:
 	- Single Assignment: __ = __
-	- One to Many Assignment: ( __ , ... ) = __
-		One to many destructures sequence types.
-	- Multiple Assignment: ( __ , ... ) = ( __ , ... )
+	- Destructuring Assignment: ( __ ... ) =: __
 
 	Conditional Execution: ? ... ( ... ) ( ... )
 

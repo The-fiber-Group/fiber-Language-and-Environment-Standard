@@ -1,25 +1,26 @@
 ``insertion sort``
 
-{insrt list: [n_n] -> list |
-	i: [n < # list] = 0
-	j: [n < # list]
-	swap = ( .
-		? list_j < list_ (j - 1)
-		( 
-			(list_j list_ (j - 1) ) 
-				= 
-			(list_ (j - 1) list_j)
-
-			? j > 0 (j = j - 1 (sort) ) ()
-		) (/)
-	)
+{insrt list: [any_N] -> list | 
+	i: [N < #list] = 0
+	j: [N < #list]
+	tmp: ( [-list ) _ 1
+	swap: ()
 	( loop = ( .
-		? i < # loop 
-		( 
-			i = i + 1
+		? i < # loop
+		(
+			tmp = list_i
 			j = i
 			(swap)
+			list_j = tmp
 			(loop)
-		) (/)
+		)
+		( )
+	) )
+	swap = ( .
+		? (j > 0) /\ (list _ (j - 1) > tmp)
+		(
+			list_j = list_ (j - 1) 
+			j = j - 1  
+		)
 	)
 }
