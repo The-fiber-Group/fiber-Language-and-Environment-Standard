@@ -3,8 +3,8 @@
         ``i and j must be positive and less than the length of list``
         i: [ N < #list] = 0
         j: [ N < #list]
-        tmp: ( [- list ) _ 1
-        ``   ^^^^^^^^^^^^^^^
+        tmp: [- list_1
+        ``   ^^^^^^^^^
 	  this ensures that tmp has the same type as the list elements
 	``
 
