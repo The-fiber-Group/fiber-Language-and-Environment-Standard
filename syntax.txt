@@ -10,9 +10,34 @@ Operators:
 	- Remainder: __ % __
 
 	Logic:
-	- And __ /\ __
-	- Or __ \/ __ 
-	- Not -, __
+	- And 
+		__ /\ __
+		__ ∧ __
+	- Or 
+		__ \/ __ 
+		__ ∨ __
+	- Not 
+		-, __
+		¬ __
+	
+	Comparison:
+	- Equal
+		__ = __ 
+		__ ≡ __
+	- Not Equal
+		__ /= __
+		__ ≠ __
+	- Less Than or Equal
+		__ <= __
+		__ ≤ __
+	- Greater Than or Equal
+		__ >= __
+		__ ≥ __
+	- Less Than
+		__ < __
+	- Greater Than
+		__ > __
+	
 	
 	Binary Logic:
 	- Xor: __ ^^ __ 
@@ -22,23 +47,38 @@ Operators:
 	- Index Access: __ _ __
 
 	Indirection:
-	- Location Of: ~/ __
-	- In Location: __ /.
+	- Location Of: 
+		~/ __
+		⊰ __
+	- In Location: 
+		__ /.
+		__ ⊱
 
 	Reflection:
-	- Comment Delimiter: `` __ ... ``
-	- Symbol Quotation: '
-	- Type Of: [- __
-	- Indicies In: # __
+	- Comment Delimiter: 
+		`` __ ... ``
+		◖ ... ◗
+	- Symbol Quotation: ' __
+	- Type Of: 
+		[- __
+		⊸ __
+	- Indicies Of: # __
 	- Size Of: $# __
 
 	Representations:
-	- Equal Size Cast: __ [=> __
-	- Inequal Size Cast: __ [-> __
+	- Equal Size Cast: 
+		__ [=> __
+		__ ⇒ __
+	- Inequal Size Cast: 
+		__ [-> __
+		__ ⇨ __
 
 	Assignment:
-	- Single Assignment: __ = __
-	- Destructuring Assignment: ( __ ... ) =: __
+	- Single Assignment: 
+		__ = __
+	- Destructuring Assignment: 
+		( __ ... ) =: __
+		( __ ... ) ⊨ __
 
 	Conditional Execution: ? ... ( ... ) ( ... )
 
@@ -51,7 +91,9 @@ Evaluation:
 Function Declaration:
 - Opening Delimiter: { ...
 - Closing Delimiter: ... }
-- Return Parameter Prefix: -> __ ...
+- Return Parameter Prefix: 
+	-> __ ...
+	→ __ ...
 - Definition Prefix: | __ ... 
 
 Type Declaration:
@@ -62,17 +104,14 @@ Type Declaration:
 - Optional Use Prefix: , __
 
 Primitive Type Names:
-- Any Type: [*]
-- None Type: [!]
-- Boolean True: t T
-- Boolean False: f F
-- Boolean: B b
-- Natural Number: N n
-- Integer: Z z
-- Rational Number: Q q
-- Type: []
-- Expression: ()
-- Function: {}
-
-
-
+- Any Type: [*] ○
+- None Type: [!] ●
+- Boolean True: t T ▯
+- Boolean False: f F ▮
+- Boolean: B b ▭
+- Natural Number: N n ℕ
+- Integer: Z z ℤ
+- Rational Number: Q q ℚ
+- Type: [] ▫
+- Expression: () △
+- Function: {} ◇

@@ -1,26 +1,38 @@
 ``insertion sort``
+{insrt list: [ [*] _ N] -> list |
+        ``i and j must be positive and less than the length of list``
+        i: [ N < #list] = 0
+        j: [ N < #list]
+        tmp: ( [- list ) _ 1
+        ``   ^^^^^^^^^^^^^^^
+	  this ensures that tmp has the same type as the list elements
+	``
 
-{insrt list: [any_N] -> list | 
-	i: [N < #list] = 0
-	j: [N < #list]
-	tmp: ( [-list ) _ 1
-	swap: ()
-	( loop = ( .
-		? i < # loop
-		(
-			tmp = list_i
-			j = i
-			(swap)
-			list_j = tmp
-			(loop)
-		)
-		( )
-	) )
-	swap = ( .
-		? (j > 0) /\ (list _ (j - 1) > tmp)
-		(
-			list_j = list_ (j - 1) 
-			j = j - 1  
-		)
-	)
+        shift: ()
+	``the closed parens is the continuation type``
+
+        (loop = ( . ``outer loop iterates up the list elements``
+                ? i < # loop ``only run the loop if i is within the list``
+                (
+                        tmp = list_i
+                        j = i
+                        (shift) ``run the swap loop to shift elements up``
+                        list_j = tmp ``place the element``
+                        (loop) ``keep looping``
+                ) ( ) ``empty else condition``
+        ) )
+
+        shift = ( . ``shift list elements upward``
+                ? (j > 0) /\ (list _ (j - 1) > tmp)
+                (
+                        list _ j = list _ (j - 1)
+                        j = j - 1
+                ) ( )
+        )
 }
+
+``declare some unsorted list``
+(stuff = [N_5] ) :=: (7;45;9;2;0)
+stuff = (insrt stuff)
+stuff ``=> 0, 2, 7, 9, 45``
+
