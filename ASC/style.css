@@ -1,4 +1,4 @@
-body{padding:0;padding-left:7%;padding-right:7%;margin-bottom:13ch;background-color:rgb(243, 238, 223); color:rgb(29, 0, 29);font-size:medium; font-family: serif;}
+body{padding:0;padding-left:7%;padding-right:7%;margin-bottom:13%;background-color:rgb(243, 238, 223); color:rgb(29, 0, 29);font-size:medium; font-family: serif;}
 p, dl, ul, ol, dl{margin:0;margin-left:7%;margin-right:7%;padding-left:7%;margin-bottom:1ch;font-family:serif;}
 table{margin-left:13%;padding-left:0;margin-bottom:1ch;}
 h1{border-bottom:3px solid rgb(41, 9, 33);}
@@ -18,9 +18,7 @@ h3, h4, h5, h6 {font-size:x-large;}
 rec{font-size:smaller;color:#83817a;}
 #bottom{background-color:inherit;position:fixed;bottom:0;width:90%;text-align:center;border-top:3px solid rgb(41, 9, 33);}
 #bottom a{margin-right:3%;}
-@media only screen and (max-width: 600px) {
-	body{}
-	
+@media only screen and (max-width: 600px) {	
 }
 @media print {
 	h1{page-break-before:always;}
