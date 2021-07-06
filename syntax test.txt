@@ -36,3 +36,52 @@
 stuff = (insrt stuff)
 stuff ``=> 0, 2, 7, 9, 45``
 
+
+``proving left-pad``
+
+{left-pad 
+  c:char ``padding character`` 
+  count:N ``number of pads``
+  str: [char_N] ``string to pad``
+-> 
+  padded: [ (c) _count ; (str) ]
+  ``this  ^^^^^^^^^^^^^^^^^^^^^^ says that
+    the first portion of the string must be an array of the "c" parameter's 
+    character and the second portion of the string must be the original 
+    string.
+  ``
+|
+  i: [N < #padded] = 0 
+  ``iterator must be positive and less than the length of "padded"
+
+  (pad-loop = ( . 
+    padded_i = c 
+    ? (i < # padded) /\ (i < count) 
+    ( i = i + 1 (pad-loop) )
+    (/) ``no else condition``
+  ) )
+
+  j = [N < #str] = 0
+ 
+  (copy-loop = ( . 
+    padded_i = str_j
+    ? (i < # padded) /\ (j < #str)
+    ( 
+      i = i + 1 
+      j = j + 1
+      (copy-loop)
+    ) 
+    (/)
+  ) )
+}
+
+
+
+``prove a tree depth``
+
+end = N
+next = [ a: @.tree ; end ]
+list = [end next]
+
+{depth s:list -> depth:N |
+	

@@ -1,5 +1,5 @@
 body{padding:0;padding-left:7%;padding-right:7%;margin-bottom:13%;background-color:rgb(243, 238, 223); color:rgb(29, 0, 29);font-size:medium; font-family: serif;}
-p, dl, ul, ol, dl{margin:0;margin-left:7%;margin-right:7%;padding-left:7%;margin-bottom:1ch;font-family:serif;}
+p, dl, ul, ol, dl{margin:0;margin-left:7%;margin-right:7%;padding-left:7%;margin-bottom:1ch;}
 table{margin-left:13%;padding-left:0;margin-bottom:1ch;}
 h1{border-bottom:3px solid rgb(41, 9, 33);}
 dt{font-style:italic;}
@@ -19,6 +19,9 @@ rec{font-size:smaller;color:#83817a;}
 #bottom{background-color:inherit;position:fixed;bottom:0;width:90%;text-align:center;border-top:3px solid rgb(41, 9, 33);}
 #bottom a{margin-right:3%;}
 @media only screen and (max-width: 600px) {	
+	body{margin-bottom:25%;padding:0;}
+	#bottom h2{font-size:medium;width:100%;padding:0;}
+	p, dl, ul, ol, dl{margin-left:5%;margin-right:5%;padding-left:0;padding-right:0;}
 }
 @media print {
 	h1{page-break-before:always;}
