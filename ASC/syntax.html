@@ -157,19 +157,19 @@
 			Comments are delimited by a pair of comment terminals, <code>``</code>.
 		</p></li>
 		<li><p>
-			The Unicode character <code>&#x220e;</code> may be used in place of a comment terminal where a Unicode text encoding is supported.
-		</p></li>
-		<li><p>
 			Comments may include any series of characters excluding the comment terminal.
 		</p></li>
 		<li><p>
-			Comments may be discarded.
+			Pairs of comment terminal symbols may not be nested within each other.
+		</p></li>
+		<li><p>
+			Comments may be discarded without further processing.
 		</p></li>
 	</ol>
 	<h2 id="quoting">Quoting</h2>
 	<ol>
 		<li><p>
-			A symbol may be quoted so that the symbol itself may be handled by the program as a unique entity rather than representing the entity which it names.
+			A symbol may be quoted so that the symbol itself may be handled by the program as a unique entity rather than representing the entity which it refers to.
 		</p></li>
 		<li><p>
 			The quotation terminal, <code>'</code> prefixes any symbol which produces that symbol as an entity.
@@ -177,64 +177,6 @@
 	</ol>
 	<h2 id="creating_syntax">Creating Syntax</h2>
 	<ol>
-		<li><p>
-			New syntax may be defined using a <b>pattern signature</b>.
-			A pattern signature is similar to a function signature.
-			In addition to specifying the number and type of parameters, it also specifies the position of the parameters relative to a number of symbols or character sequences.
-		</p></li>
-		<li><p>
-			A pattern signature may be used in place of a normal function signature.
-		</p></li>
-		<li>
-			<p>The syntax for declaring a patter signature is...</p>
-			<table>
-				<tr><td><b>Pattern</b> &rarr; <code>.</code> <u><i>PreContext</i></u> <i>Signature</i> <u><i>PostContext</i></u> <code>-></code> <i>Return</i></td></tr>
-				<tr><td><i>PreContext</i> &rarr; <br>
-					&emsp;| <i>PreContext</i> <i>PreContext</i><br>
-					&emsp;| <i>Quotation</i> <code>...</code><br>
-					&emsp;| <i>String</i> <code>...</code>
-				</td></tr>
-				<tr><td><i>Signature</i> &rarr; <br>
-					&emsp;| <i>Signature</i> <i>Signature</i><br>
-					&emsp;| <i>Quotation</i><br>
-					&emsp;| <i>String</i><br>
-					&emsp;| <i>Parameter</i>
-				</td></tr>
-				<tr><td><i>Quotation</i> &rArr; <code>'</code> Symbol</td></tr>
-				<tr><td><i>String</i> &rArr; String Data</td></tr>
-				<tr><td><i>Parameter</i> &rArr; Function Parameter</td></tr>
-				<tr><td><i>PostContext</i> &rarr; <br>
-					&emsp;| <i>PostContext</i> <i>PostContext</i><br>
-					&emsp;| <code>...</code> <i>Quotation</i> <br>
-					&emsp;| <code>...</code> <i>String</i>
-				</td></tr>
-			</table>
-		</li>
-		<li><p>
-			The <i>Signature</i> parameter list contains function parameter declarations and a syntax pattern defined using quoted symbols or string data.
-		</p></li>
-		<li><p>
-			The <i>Return</i> parameter list contains return parameter declarations.
-		</p></li>
-		<li><p>
-			A pattern must exclusively use either quoted symbols or string data.
-			A pattern cannot consist of a mixture of the two.
-		</p></li>
-		<li><p>
-			Parameters for a pattern signature consisting of quoted symbols may be any parameter declaration which is accepted for a normal function signature.
-		</p></li>
-		<li><p>
-			Parameters for a pattern signature consisting of string data may only be some array of a number of characters.
-			The length of the array may be variadic.
-		</p></li>
-	</ol>
-	<h3 id="pattern_context">Pattern Context</h3>
-	<ol>
-		<li><p>
-			A pattern signature may optionally be declared with a context using the <i>PreContext</i> or <i>PostContext</i> declarations.
-		</p></li>
-		<li><p>
-			A context limits where a pattern signature may be engaged by adding additional symbols or string data which must occur before or after a pattern in order for the pattern to be applied.
-		</p></li>
+		
 	</ol>
 </body>

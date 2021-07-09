@@ -75,13 +75,9 @@ stuff ``=> 0, 2, 7, 9, 45``
   ) )
 }
 
-
-
-``prove a tree depth``
-
-end = N
-next = [ a: @.tree ; end ]
-list = [end next]
-
-{depth s:list -> depth:N |
-	
+``mccarthy's 91 function``
+{ m91 h:N -> k | 
+	? h > 100
+	( k = h - 10 )
+	( (m91 (m91 h + 11) ) )
+}

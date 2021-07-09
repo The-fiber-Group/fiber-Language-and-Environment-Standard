@@ -104,14 +104,16 @@ Type Declaration:
 - Optional Use Prefix: , __
 
 Primitive Type Names:
-- Any Type: [*] ○
-- None Type: [!] ●
-- Boolean True: t T ▯
-- Boolean False: f F ▮
-- Boolean: B b ▭
+- Any Type: [*] ◯
+- None Type: (/) ⬤
+- Boolean True: t T ◓
+- Boolean False: f F ◒
+- Boolean: B b ◌
 - Natural Number: N n ℕ
 - Integer: Z z ℤ
 - Rational Number: Q q ℚ
-- Type: [] ▫
-- Expression: () △
-- Function: {} ◇
+- Any Number: V ▣
+- Character: C c ⛶
+- Type: [] ■
+- Expression: () ▲
+- Function: {} ◆

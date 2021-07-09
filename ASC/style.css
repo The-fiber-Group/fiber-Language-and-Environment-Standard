@@ -9,7 +9,7 @@ ul li{border:none;}
 table{border:3px solid black; border-spacing:3ch 1ch; margin-top: 3ch;}
 a{color:inherit;}
 a:hover{background-color: lightgrey;}
-code{background-color:lightgrey;}
+code{background-color:lightgrey;width:100%;}
 table table{border-style:none;}
 h3 {text-align:center;border-bottom:3px solid rgb(41, 9, 33); width:50%;margin-left:25%;margin-right:50%;}
 h4, h5, h6 {text-align:center;width:50%;margin-left:25%;margin-right:50%;}
